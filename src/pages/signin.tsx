@@ -4,24 +4,33 @@ import Button from "@mui/material/Button";
 import LockIcon from "@mui/icons-material/Lock";
 import { useForm, SubmitHandler } from "react-hook-form";
 import useColorTheme from "@/hooks/UseColorTheme";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+import { useRouter } from "next/router";
 
 type Inputs = {
   email: string;
   password: string;
 };
 
-const login = () => {
+const Signin = () => {
+  const router = useRouter();
   const { palette } = useColorTheme();
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-
-  console.log(watch("email"));
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const email = data.email;
+    const password = data.password;
+    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+      router.push('/');
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
 
   return (
     <Box
@@ -72,6 +81,7 @@ const login = () => {
                 </Grid>
                 <Grid item width="100%">
                   <TextField
+                    type="password"
                     fullWidth
                     id="outlined-controlled"
                     label="password"
@@ -88,9 +98,9 @@ const login = () => {
             </FormControl>
           </Box>
         </form>
-      </Box>
-    </Box>
+      </Box >
+    </Box >
   );
 };
 
-export default login;
+export default Signin;
