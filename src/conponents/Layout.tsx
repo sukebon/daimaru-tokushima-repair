@@ -5,8 +5,8 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { ReactNode, useContext } from "react";
 import { AuthContext } from "./auth/AuthProvider";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
+import Header from "./header/Header";
+import Sidebar from "./sidebar/Sidebar";
 
 type Props = {
   children: ReactNode;
@@ -14,7 +14,6 @@ type Props = {
 
 const Layout: NextPage<Props> = ({ children }) => {
   const { currentUser } = useContext(AuthContext);
-  const router = useRouter();
   return (
     <>
       {currentUser ? (

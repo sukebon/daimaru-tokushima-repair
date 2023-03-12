@@ -5,24 +5,18 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
-import { AuthContext } from './auth/AuthProvider';
+import { AuthContext } from '../auth/AuthProvider';
 import { signOut } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth } from "../../../firebase";
 import useSWRImmutable from "swr/immutable";
-import { UserType } from "../../types/Users";
+import { UserType } from "../../../types/Users";
+import HeaderMenu from "./HeaderMenu";
 
 const Header = () => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useSWRImmutable('/api/users');
-
-  const logout = () => {
-    signOut(auth).then(() => {
-      // Sign-out successful.
-    }).catch((error) => {
-      // An error happened.
-    });
-  };
 
   const getUserName = (uid: string) => {
     const result = data?.users.find((user: UserType) => (
@@ -47,15 +41,16 @@ const Header = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             News
           </Typography>
+
           {currentUser !== undefined && (
-            <>
-              {getUserName(currentUser.uid)}
-              <Button color="inherit" onClick={logout}>Logout</Button>
-            </>
+            <Box textAlign="right">
+              {/* {getUserName(currentUser.uid)} */}
+              <HeaderMenu />
+            </Box>
           )}
         </Toolbar>
       </AppBar>
-    </Box>
+    </Box >
   );
 };
 

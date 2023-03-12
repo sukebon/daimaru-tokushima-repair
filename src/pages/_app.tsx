@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AuthProvider } from "@/conponents/auth/AuthProvider";
 import { SWRConfig } from "swr";
 import axios from "axios";
+import '../styles/global.css';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
