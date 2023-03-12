@@ -11,7 +11,7 @@ import { AuthContext } from '../auth/AuthProvider';
 import { signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
 import useSWRImmutable from "swr/immutable";
-import { UserType } from "../../../types/Users";
+import { UserType } from "../../../types/UserType";
 import HeaderMenu from "./HeaderMenu";
 
 const Header = () => {
@@ -26,7 +26,7 @@ const Header = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} position="sticky" top="0" zIndex={100}>
       <AppBar position="static" color="secondary" sx={{ boxShadow: "none", bgcolor: "#fff" }}>
         <Toolbar>
           <IconButton

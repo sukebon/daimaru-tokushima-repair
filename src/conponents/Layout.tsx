@@ -17,13 +17,14 @@ const Layout: NextPage<Props> = ({ children }) => {
   return (
     <>
       {currentUser ? (
-        <Grid container height="100vh" justifyContent="space-between" bgcolor="#f4f4f4">
-          <Grid item xs={0} lg={2} display={{ xs: "none", lg: "block" }}>        <Sidebar />
+        <Grid container height="100vh" justifyContent="space-between" bgcolor="#f4f4f4" >
+          <Grid item xs={0} lg={2} display={{ xs: "none", lg: "block" }}>
+            <Sidebar />
           </Grid>
           <Grid item xs={12} lg={10}>
-            <Box >
+            <Box>
               <Header />
-              <Box p={6}>{children}</Box>
+              <Box p={6} bgcolor="#f4f4f4">{children}</Box>
             </Box>
           </Grid>
         </Grid>
@@ -34,4 +35,4 @@ const Layout: NextPage<Props> = ({ children }) => {
   );
 };
 
-export default Layout;
+export default Layout;;;

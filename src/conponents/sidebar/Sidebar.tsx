@@ -20,7 +20,7 @@ const Sidebar = () => {
 
 
   return (
-    <Box height='100vh' sx={{ width: '100%', bgcolor: LIST_BGCOLOR, overflowY: 'auto' }}>
+    <Box height='100vh' position="sticky" top="0" sx={{ width: '100%', bgcolor: LIST_BGCOLOR, overflowY: 'auto' }}>
       <Grid container p={3} height="64px" alignItems="center" color="#fff">修理伝票アプリ</Grid>
       <Divider light sx={{ background: "rgba(255, 255, 255, 0.2)" }} />
       <List

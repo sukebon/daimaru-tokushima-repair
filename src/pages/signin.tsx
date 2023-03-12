@@ -48,7 +48,7 @@ const Signin = () => {
           transform: "translate(-50%,-50%)",
         }}
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
           <Box
             sx={{
               width: 350,
@@ -56,48 +56,46 @@ const Signin = () => {
               flexDirection: "column",
             }}
           >
-            <FormControl>
-              <Grid
-                container
-                width="100%"
-                spacing={2}
-                direction="column"
-                alignItems="center"
-              >
-                <Grid container direction="column" alignItems="center">
-                  <Grid item>
-                    <LockIcon />
-                  </Grid>
-                  <Grid item>Sign In</Grid>
+            <Grid
+              container
+              width="100%"
+              spacing={2}
+              direction="column"
+              alignItems="center"
+            >
+              <Grid container direction="column" alignItems="center">
+                <Grid item>
+                  <LockIcon />
                 </Grid>
-                <Grid item width="100%">
-                  <TextField
-                    fullWidth
-                    id="outlined-controlled"
-                    label="email"
-                    {...register("email", { required: true })}
-                  />
-                  {errors.email && <span>This field is required</span>}
-                </Grid>
-                <Grid item width="100%">
-                  <TextField
-                    type="password"
-                    fullWidth
-                    id="outlined-controlled"
-                    label="password"
-                    {...register("password", { required: true })}
-                  />
-                  {errors.password && <span>This field is required</span>}
-                </Grid>
-                <Grid item sx={{ width: "100%" }}>
-                  <Button type="submit" variant="contained" fullWidth>
-                    送信
-                  </Button>
-                </Grid>
+                <Grid item>Sign In</Grid>
               </Grid>
-            </FormControl>
+              <Grid item width="100%">
+                <TextField
+                  fullWidth
+                  id="outlined-controlled"
+                  label="email"
+                  {...register("email", { required: true })}
+                />
+                {errors.email && <span>This field is required</span>}
+              </Grid>
+              <Grid item width="100%">
+                <TextField
+                  type="password"
+                  fullWidth
+                  id="outlined-controlled"
+                  label="password"
+                  {...register("password", { required: true })}
+                />
+                {errors.password && <span>This field is required</span>}
+              </Grid>
+              <Grid item sx={{ width: "100%" }}>
+                <Button type="submit" variant="contained" fullWidth>
+                  送信
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
-        </form>
+        </Box>
       </Box >
     </Box >
   );
