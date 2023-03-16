@@ -5,20 +5,21 @@ import { AuthProvider } from "@/conponents/auth/AuthProvider";
 import { SWRConfig } from "swr";
 import axios from "axios";
 import '../styles/global.css';
+import { blue } from '@mui/material/colors';
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
 const theme = createTheme({
   palette: {
     primary: {
-      light: '#757ce8',
-      main: '#3f50b5',
-      dark: '#002884',
+      light: '#6573c3',
+      main: "#3f51b5",
+      dark: '#2c387e',
       contrastText: '#fff',
     },
     secondary: {
       light: '#ff7961',
-      main: '#f44336',
+      main: '#3f51b5',
       dark: '#ba000d',
       contrastText: '#000',
     },

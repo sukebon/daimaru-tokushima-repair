@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Box, FormControl, Grid, Input, TextField } from "@mui/material";
+import { Box, Grid, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import LockIcon from "@mui/icons-material/Lock";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -76,7 +76,7 @@ const Signin = () => {
                   label="email"
                   {...register("email", { required: true })}
                 />
-                {errors.email && <span>This field is required</span>}
+                {errors.email && <span>emailを入力してください</span>}
               </Grid>
               <Grid item width="100%">
                 <TextField
@@ -86,7 +86,7 @@ const Signin = () => {
                   label="password"
                   {...register("password", { required: true })}
                 />
-                {errors.password && <span>This field is required</span>}
+                {errors.password && <span>パスワードを入力してください</span>}
               </Grid>
               <Grid item sx={{ width: "100%" }}>
                 <Button type="submit" variant="contained" fullWidth>

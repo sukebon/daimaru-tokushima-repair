@@ -1,33 +1,27 @@
-import { FormControl, OutlinedInput, TableCell, TableRow } from '@mui/material';
+import { Button, FormControl, OutlinedInput, TableCell, TableRow } from '@mui/material';
 import { NextPage } from 'next';
 import React from 'react';
-import { MarkType } from '../../../types/MarkType';
+import { UseFormRegister } from 'react-hook-form';
+import ClearIcon from '@mui/icons-material/Clear';
 
-type Props = {
-  items: MarkType;
-  setItems: Function;
-  product: {
-    productNumber: string;
-    size: string;
-    quantity: number;
+type Inputs = {
+  factory: string;
+  deliveryPlace: string;
+  products: {
+    productNumber: string,
+    size: string,
+    quantity: number,
     comment: string;
-  };
-  rowIndex: number;
+  }[];
 };
 
-const MarkRow: NextPage<Props> = ({ items, setItems, product, rowIndex }) => {
+type Props = {
+  register: UseFormRegister<Inputs>;
+  productIndex: number;
+  removeProduct: (index: number) => void;
+};
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setItems(() => {
-      let newArray = [];
-      newArray = items.products.map((product, index) =>
-        index === rowIndex ? { ...product, [name]: value } : product
-      );
-      return { ...items, products: [...newArray] };
-    });
-  };
+const MarkRow: NextPage<Props> = ({ register, productIndex, removeProduct }) => {
 
   return (
     <>
@@ -35,46 +29,34 @@ const MarkRow: NextPage<Props> = ({ items, setItems, product, rowIndex }) => {
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
         <TableCell>
-          <FormControl fullWidth>
+          <FormControl fullWidth size="small">
             <OutlinedInput
-              name="productNumber"
-              size="small"
-              placeholder="品番"
-              value={product.productNumber}
-              onChange={handleChange} />
-
+              {...register(`products.${productIndex}.productNumber` as const, { required: true })}
+            />
           </FormControl>
         </TableCell>
         <TableCell>
-          <FormControl fullWidth>
+          <FormControl fullWidth size="small">
             <OutlinedInput
-              name="size"
-              size="small"
-              placeholder="サイズ"
-              value={product.size}
-              onChange={handleChange} />
+              {...register(`products.${productIndex}.size` as const, { required: true })}
+            />
           </FormControl>
         </TableCell>
         <TableCell >
-          <FormControl fullWidth>
-            <OutlinedInput
-              type='number'
-              name="quantity"
-              size="small"
-              placeholder="数量"
-              value={product.quantity}
-              onChange={handleChange} />
+          <FormControl fullWidth size="small" >
+            <OutlinedInput type="number"
+              {...register(`products.${productIndex}.quantity` as const, { required: true, min: 0 })}
+            />
           </FormControl>
         </TableCell>
         <TableCell>
-          <FormControl fullWidth>
+          <FormControl fullWidth size="small">
             <OutlinedInput
-              name="comment"
-              size="small"
-              placeholder="備考"
-              value={product.comment}
-              onChange={handleChange} />
+              {...register(`products.${productIndex}.comment`)} />
           </FormControl>
+        </TableCell>
+        <TableCell>
+          <ClearIcon sx={{ color: "black", cursor: "pointer" }} onClick={() => removeProduct(productIndex)} />
         </TableCell>
       </TableRow>
     </>

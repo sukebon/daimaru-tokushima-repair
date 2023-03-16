@@ -1,64 +1,110 @@
 // import Input from '@mui/joy/Input';
-import { useState } from 'react';
-import { Box, Paper, Input, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import { Box, Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button } from '@mui/material';
 import MarkRow from '@/conponents/mark/MarkRow';
-import { MarkType } from '../../../types/MarkType';
-// import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
+import TextField from '@mui/material/TextField';
+import { Typography, MenuItem, Grid } from '@mui/material';
+import { grey } from '@mui/material/colors';
+
+type Inputs = {
+  factory: string;
+  deliveryPlace: string;
+  products: {
+    productNumber: string,
+    size: string,
+    quantity: number,
+    comment: string;
+  }[];
+};
 
 const MarksNew = () => {
-  const [items, setItems] = useState({
-    products: [
-      {
+  const { register, handleSubmit, control, } = useForm<Inputs>({
+    defaultValues: {
+      factory: "",
+      deliveryPlace: "",
+      products: [{
         productNumber: "",
         size: "",
         quantity: 0,
         comment: ""
-      },
-    ]
-  } as MarkType);
+      }]
+    }
+  });
 
-  const addRow = () => {
-    setItems((prev) => {
-      const newItems = {
-        ...prev,
-        products: [
-          ...items.products, {
-            productNumber: "",
-            size: "",
-            quantity: 0,
-            comment: ""
-          },]
-      };
-      return newItems;
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "products",
+  });
+
+  const addProduct = () => {
+    append({
+      productNumber: "",
+      size: "",
+      quantity: 0,
+      comment: ""
     });
   };
-  console.log(items);
+
+  const removeProduct = (index: number) => {
+    remove(index);
+  };
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+  };
+
   return (
-    <Box p={1} bgcolor="#fff">
-      <TableContainer component={Paper}>
-        <Table size="small" sx={{ minWidth: 1000 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell width="300px">品名</TableCell>
-              <TableCell width="50px">サイズ</TableCell>
-              <TableCell width="50px">数量</TableCell>
-              <TableCell width="200px">備考</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {items.products.map((product, index) => (
-              <MarkRow
-                key={index}
-                items={items}
-                setItems={setItems}
-                product={product}
-                rowIndex={index} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Box onClick={addRow}>追加</Box>
-    </Box >
+    <Paper elevation={2} >
+      <Box p={2} bgcolor="#fff" borderRadius={6}>
+        <Box width="100%" textAlign="center">
+          <Typography variant="h4" component="h2">修理伝票</Typography>
+        </Box>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Grid container flexDirection="column" gap={2}>
+            <TextField select sx={{ width: "300px" }} label="加工場" variant="outlined" size="small"
+              {...register("factory", { required: true })}
+            >
+              <MenuItem value="徳島">
+                徳島工場
+              </MenuItem>
+              <MenuItem value="大野制帽所">
+                大野制帽所
+              </MenuItem>
+            </TextField>
+            <TextField sx={{ width: "300px" }} label="納入先" variant="outlined" size="small"
+              {...register("deliveryPlace", { required: true })}
+            />
+          </Grid>
+          <TableContainer component={Paper} variant="outlined" sx={{ mt: 3 }}>
+            <Table size="small" sx={{ minWidth: 1000 }} aria-label="simple table">
+              <TableHead sx={{ backgroundColor: grey["A100"] }}>
+                <TableRow>
+                  <TableCell width="40%">品名</TableCell>
+                  <TableCell width="10%">サイズ</TableCell>
+                  <TableCell width="10%">数量</TableCell>
+                  <TableCell width="30%">備考</TableCell>
+                  <TableCell width="10%">削除</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {fields.map((field, index) => (
+                  <MarkRow
+                    key={field.id}
+                    register={register}
+                    productIndex={index}
+                    removeProduct={removeProduct}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Button variant="contained" onClick={addProduct} sx={{ mt: 3 }} > 追加</Button>
+          <Button type="submit" variant="contained" fullWidth sx={{ mt: 6 }}>
+            送信
+          </Button>
+        </form>
+      </Box >
+    </Paper>
   );
 };
 
