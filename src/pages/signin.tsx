@@ -1,12 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Box, Grid, TextField } from "@mui/material";
-import Button from "@mui/material/Button";
-import LockIcon from "@mui/icons-material/Lock";
 import { useForm, SubmitHandler } from "react-hook-form";
-import useColorTheme from "@/hooks/UseColorTheme";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useRouter } from "next/router";
+import { Box, Button, Flex, Paper, PasswordInput, Stack, TextInput } from "@mantine/core";
 
 type Inputs = {
   email: string;
@@ -15,7 +12,6 @@ type Inputs = {
 
 const Signin = () => {
   const router = useRouter();
-  const { palette } = useColorTheme();
   const {
     register,
     handleSubmit,
@@ -33,71 +29,48 @@ const Signin = () => {
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "90vh",
-        position: "relative",
-      }}
+    <Flex
+      justify="center"
+      align="center"
+      h="100vh"
+      bg="#f4f4f4"
     >
-      <Box
-        sx={{
-          top: "50%",
-          left: "50%",
-          position: "absolute",
-          transform: "translate(-50%,-50%)",
-        }}
-      >
-        <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-          <Box
-            sx={{
-              width: 350,
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Grid
-              container
-              width="100%"
-              spacing={2}
-              direction="column"
-              alignItems="center"
-            >
-              <Grid container direction="column" alignItems="center">
-                <Grid item>
-                  <LockIcon />
-                </Grid>
-                <Grid item>Sign In</Grid>
-              </Grid>
-              <Grid item width="100%">
-                <TextField
-                  fullWidth
+      <Paper shadow="md" radius="md" p="xl" withBorder>
+        <Box component="form" w="100%" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+          <Flex w="100%" justify="center" direction="column" align="center">
+            Sign In
+            <Stack spacing="sm" w="350px">
+              <Box>
+                <TextInput
+                  w="100%"
                   id="outlined-controlled"
                   label="email"
                   {...register("email", { required: true })}
+                  required
                 />
                 {errors.email && <span>emailを入力してください</span>}
-              </Grid>
-              <Grid item width="100%">
-                <TextField
-                  type="password"
-                  fullWidth
-                  id="outlined-controlled"
+              </Box>
+              <Box>
+                <PasswordInput
+                  w="100%"
                   label="password"
+                  placeholder="Your password"
+                  id="your-password"
                   {...register("password", { required: true })}
+                  required
                 />
                 {errors.password && <span>パスワードを入力してください</span>}
-              </Grid>
-              <Grid item sx={{ width: "100%" }}>
-                <Button type="submit" variant="contained" fullWidth>
+              </Box>
+              <Flex w="100%">
+                <Button mt={6} type="submit" fullWidth>
                   送信
                 </Button>
-              </Grid>
-            </Grid>
-          </Box>
+              </Flex>
+            </Stack>
+          </Flex>
         </Box>
-      </Box >
-    </Box >
+      </Paper>
+    </Flex >
   );
 };
 

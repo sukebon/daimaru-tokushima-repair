@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Paper from '@mui/material/Paper';
-import Divider from '@mui/material/Divider';
-import MenuList from '@mui/material/MenuList';
-import IconButton from '@mui/material/IconButton';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
+import { Button } from '@mantine/core';
 
 const HeaderMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -29,39 +22,17 @@ const HeaderMenu = () => {
   };
   return (
     <>
-      <IconButton aria-controls={open ? 'demo-positioned-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}>
-        <AccountCircleIcon />
-      </IconButton>
-      <Paper sx={{ width: 320 }}>
-        <Menu
-          id="demo-positioned-menu"
-          aria-labelledby="demo-positioned-button"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-        >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={
-            () => {
-              handleClose();
-              logout();
-            }}>
-            Logout
-          </MenuItem>
-        </Menu>
-      </Paper>
+
+
+      <Button onClick={
+        () => {
+          handleClose();
+          logout();
+        }}>Logout</Button>
+
+
+
+
     </>
   );
 };

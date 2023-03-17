@@ -1,12 +1,10 @@
-import { Box, createTheme } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import { display } from "@mui/system";
+import { Box, Flex } from "@mantine/core";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { ReactNode, useContext } from "react";
 import { AuthContext } from "./auth/AuthProvider";
 import Header from "./header/Header";
-import Sidebar from "./sidebar/Sidebar";
+import { Sidebar } from "./sidebar/Sidebar";
 
 type Props = {
   children: ReactNode;
@@ -17,17 +15,17 @@ const Layout: NextPage<Props> = ({ children }) => {
   return (
     <>
       {currentUser ? (
-        <Grid container height="100vh" justifyContent="space-between" bgcolor="#f4f4f4" >
-          <Grid item xs={0} lg={2} display={{ xs: "none", lg: "block" }}>
+        <Flex w="100%" h="100vh" justify="space-between" bg="#f4f4f4">
+          <Flex justify="left" display={{ xs: "none", lg: "block" }}>
             <Sidebar />
-          </Grid>
-          <Grid item xs={12} lg={10}>
+          </Flex>
+          <Flex >
             <Box>
               <Header />
-              <Box p={6} bgcolor="#f4f4f4">{children}</Box>
+              <Box p={6} bg="#f4f4f4">{children}</Box>
             </Box>
-          </Grid>
-        </Grid>
+          </Flex>
+        </Flex>
       ) : (
         <Box>{children}</Box>
       )}
