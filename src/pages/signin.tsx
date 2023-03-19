@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useRouter } from "next/router";
 import { Box, Button, Flex, Paper, PasswordInput, Stack, TextInput } from "@mantine/core";
+import { MdLock } from "react-icons/md";
 
 type Inputs = {
   email: string;
@@ -17,6 +18,7 @@ const Signin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const email = data.email;
@@ -35,11 +37,12 @@ const Signin = () => {
       h="100vh"
       bg="#f4f4f4"
     >
-      <Paper shadow="md" radius="md" p="xl" withBorder>
-        <Box component="form" w="100%" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-          <Flex w="100%" justify="center" direction="column" align="center">
+      <Paper w={{ base: "100%", xs: "350px" }} shadow="md" radius="md" m="xs" p="xl" withBorder>
+        <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+          <Flex justify="center" direction="column" align="center">
+            <MdLock size="30px" />
             Sign In
-            <Stack spacing="sm" w="350px">
+            <Stack spacing="sm" w="100%">
               <Box>
                 <TextInput
                   w="100%"

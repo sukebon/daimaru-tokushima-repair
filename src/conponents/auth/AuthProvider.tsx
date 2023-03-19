@@ -26,12 +26,13 @@ const AuthProvider: NextPage<Props> = ({ children }) => {
 
   const [signInCheck, setSignInCheck] = useState(false);
 
-  // ログイン状態を確認する
+  // // ログイン状態を確認する
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         setCurrentUser(user);
         setSignInCheck(true);
+        router.push('/');
       } else {
         setCurrentUser(undefined);
         setSignInCheck(true);

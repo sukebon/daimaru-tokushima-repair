@@ -1,10 +1,10 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
-import { Box, FormControl, Grid, TextField } from "@mui/material";
-import Button from "@mui/material/Button";
-import LockIcon from "@mui/icons-material/Lock";
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useRouter } from 'next/router';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+import { useRouter } from "next/router";
+import { Box, Button, Flex, Paper, PasswordInput, Stack, TextInput } from "@mantine/core";
+import { MdLock } from "react-icons/md";
 
 type Inputs = {
   email: string;
@@ -13,7 +13,6 @@ type Inputs = {
 
 const Signup = () => {
   const router = useRouter();
-
   const {
     register,
     handleSubmit,
@@ -23,9 +22,7 @@ const Signup = () => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const email = data.email;
     const password = data.password;
-    createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      const user = userCredential.user;
-      console.log(user.uid);
+    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
       router.push('/');
     }).catch((error) => {
       console.log(error);
@@ -33,73 +30,49 @@ const Signup = () => {
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "90vh",
-        position: "relative",
-      }}
+    <Flex
+      justify="center"
+      align="center"
+      h="100vh"
+      bg="#f4f4f4"
     >
-      <Box
-        sx={{
-          top: "50%",
-          left: "50%",
-          position: "absolute",
-          transform: "translate(-50%,-50%)",
-        }}
-      >
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Box
-            sx={{
-              width: 350,
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <FormControl>
-              <Grid
-                container
-                width="100%"
-                spacing={2}
-                direction="column"
-                alignItems="center"
-              >
-
-                <Grid container direction="column" alignItems="center">
-                  <Grid item>
-                    <LockIcon />
-                  </Grid>
-                  <Grid item>Sign Up</Grid>
-                </Grid>
-                <Grid item width="100%">
-                  <TextField
-                    fullWidth
-                    id="outlined-controlled"
-                    label="email"
-                    {...register("email", { required: true })}
-                  />
-                  {errors.email && <span>This field is required</span>}
-                </Grid>
-                <Grid item width="100%">
-                  <TextField
-                    fullWidth
-                    id="outlined-controlled"
-                    label="password"
-                    {...register("password", { required: true, minLength: 6 })}
-                  />
-                  {errors.password && <span>パスワードは6文字以上で設定してください</span>}
-                </Grid>
-                <Grid item sx={{ width: "100%" }}>
-                  <Button type="submit" variant="contained" fullWidth>
-                    送信
-                  </Button>
-                </Grid>
-              </Grid>
-            </FormControl>
-          </Box>
-        </form>
-      </Box >
-    </Box >
+      <Paper w={{ base: "100%", xs: "350px" }} shadow="md" radius="md" m="xs" p="xl" withBorder>
+        <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+          <Flex justify="center" direction="column" align="center">
+            <MdLock size="30px" />
+            Sign In
+            <Stack spacing="sm" w="100%">
+              <Box>
+                <TextInput
+                  w="100%"
+                  id="outlined-controlled"
+                  label="email"
+                  {...register("email", { required: true })}
+                  required
+                />
+                {errors.email && <span>emailを入力してください</span>}
+              </Box>
+              <Box>
+                <PasswordInput
+                  w="100%"
+                  label="password"
+                  placeholder="Your password"
+                  id="your-password"
+                  {...register("password", { required: true })}
+                  required
+                />
+                {errors.password && <span>パスワードを入力してください</span>}
+              </Box>
+              <Flex w="100%">
+                <Button mt={6} type="submit" fullWidth>
+                  送信
+                </Button>
+              </Flex>
+            </Stack>
+          </Flex>
+        </Box>
+      </Paper>
+    </Flex >
   );
 };
 

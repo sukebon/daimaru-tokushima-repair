@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { Inter } from 'next/font/google';
-import { Button } from '@mui/material';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '@/conponents/auth/AuthProvider';
 import { doc, getDoc, setDoc } from 'firebase/firestore';

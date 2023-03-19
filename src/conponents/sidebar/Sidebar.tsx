@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { createStyles, Navbar, Group, Code, getStylesRef, rem } from '@mantine/core';
+import React, { useState } from 'react';
+import { createStyles, Navbar, Group, getStylesRef, rem, Box } from '@mantine/core';
+import Link from 'next/link';
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -30,7 +31,6 @@ const useStyles = createStyles((theme) => ({
     ...theme.fn.focusStyles(),
     display: 'flex',
     alignItems: 'center',
-    textDecoration: 'none',
     fontSize: theme.fontSizes.sm,
     color: theme.white,
     padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
@@ -66,13 +66,10 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const data = [
-  { link: '', label: '修理伝票一覧', icon: "" },
-  { link: '', label: '修理伝票作成', icon: "" },
+  { link: '/marks', label: '修理伝票一覧', icon: "" },
+  { link: '/marks/new', label: '修理伝票作成', icon: "" },
   { link: '', label: 'テンプレート一覧', icon: "" },
   { link: '', label: 'テンプレート作成', icon: "" },
-  { link: '', label: 'Databases', icon: "" },
-  { link: '', label: 'Authentication', icon: "" },
-  { link: '', label: 'Other Settings', icon: "" },
 ];
 
 export const Sidebar = () => {
@@ -80,21 +77,22 @@ export const Sidebar = () => {
   const [active, setActive] = useState('Billing');
 
   const links = data.map((item) => (
-    <a
-      className={cx(classes.link, { [classes.linkActive]: item.label === active })}
-      href={item.link}
-      key={item.label}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(item.label);
-      }}
-    >
-      <span>{item.label}</span>
-    </a>
+
+    <Link key={item.label} href={item.link} style={{ textDecoration: "none" }}>
+      <Box
+        className={cx(classes.link, { [classes.linkActive]: item.label === active })}
+        onClick={(event) => {
+          setActive(item.label);
+        }}
+      >
+        <Box component='span'>{item.label}</Box>
+      </Box>
+    </Link >
+
   ));
 
   return (
-    <Navbar height={"100vh"} width={{ sm: 300 }} p="md" className={classes.navbar}>
+    <Navbar sx={{ position: "sticky", top: 0 }} height={"100vh"} width={{ sm: 300 }} p="md" className={classes.navbar}>
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
           修理伝票

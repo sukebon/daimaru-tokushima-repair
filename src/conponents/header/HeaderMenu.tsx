@@ -13,21 +13,12 @@ const HeaderMenu = () => {
     setAnchorEl(null);
   };
 
-  const logout = () => {
-    signOut(auth).then(() => {
-      // Sign-out successful.
-    }).catch((error) => {
-      // An error happened.
-    });
-  };
   return (
     <>
-
-
       <Button onClick={
         () => {
-          handleClose();
-          logout();
+          // handleClose();
+          // logout();
         }}>Logout</Button>
 
 
