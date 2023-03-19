@@ -1,8 +1,6 @@
 import { Box, Flex } from "@mantine/core";
 import { NextPage } from "next";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import React, { ReactNode, useContext } from "react";
+import React, { ReactNode, useContext, useEffect, useState } from "react";
 import { AuthContext } from "./auth/AuthProvider";
 import Header from "./header/Header";
 import { Sidebar } from "./sidebar/Sidebar";
@@ -13,10 +11,9 @@ type Props = {
 
 const Layout: NextPage<Props> = ({ children }) => {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser?.uid);
   return (
     <>
-      {currentUser?.uid !== undefined ? (
+      {currentUser !== undefined ? (
         <Flex w="100%" bg="#f4f4f4" >
           <Flex sx={{ display: "none" }} display={{ lg: "block" }}>
             <Sidebar />
@@ -28,8 +25,7 @@ const Layout: NextPage<Props> = ({ children }) => {
         </Flex>
       ) : (
         <Box>{children}</Box>
-      )
-      }
+      )}
     </>
   );
 };

@@ -21,7 +21,7 @@ type Props = {
 };
 
 
-const MarkRow: NextPage<Props> = ({
+const RepairRow: NextPage<Props> = ({
   register,
   getValues,
   productIndex,
@@ -72,4 +72,4 @@ const MarkRow: NextPage<Props> = ({
   );
 };
 
-export default MarkRow;
+export default RepairRow;

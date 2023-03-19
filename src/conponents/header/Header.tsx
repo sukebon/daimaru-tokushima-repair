@@ -41,9 +41,6 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-
-
-
 const HeaderArea = () => {
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();

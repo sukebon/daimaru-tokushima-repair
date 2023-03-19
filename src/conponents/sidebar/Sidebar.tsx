@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createStyles, Navbar, Group, getStylesRef, rem, Box } from '@mantine/core';
 import Link from 'next/link';
+import { useAuth } from "../../hooks/useAuth";
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -66,13 +67,14 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const data = [
-  { link: '/marks', label: '修理伝票一覧', icon: "" },
-  { link: '/marks/new', label: '修理伝票作成', icon: "" },
+  { link: '/repairs', label: '修理伝票一覧', icon: "" },
+  { link: '/repairs/new', label: '修理伝票作成', icon: "" },
   { link: '', label: 'テンプレート一覧', icon: "" },
   { link: '', label: 'テンプレート作成', icon: "" },
 ];
 
 export const Sidebar = () => {
+  const { logout, reset } = useAuth();
   const { classes, cx } = useStyles();
   const [active, setActive] = useState('Billing');
 
@@ -101,10 +103,7 @@ export const Sidebar = () => {
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-          <span>Change account</span>
-        </a>
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+        <a href="#" className={classes.link} onClick={logout}>
           <span>Logout</span>
         </a>
       </Navbar.Section>

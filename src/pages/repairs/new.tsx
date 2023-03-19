@@ -1,13 +1,12 @@
 // import Input from '@mui/joy/Input';
 import { Button, Table, TextInput, Flex, Paper, Stack, NumberInput, Box, Input, Autocomplete, Textarea, Radio, Group } from '@mantine/core';
-import MarkRow from '@/conponents/mark/MarkRow';
+import MarkRow from '@/conponents/repair/RepairRow';
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import { MarkInputs } from '../../../types/repair';
-import styles from "../../styles/input.module.css";
 import { useState } from 'react';
 import { MdAddCircle } from "react-icons/md";
 
-const MarksNew = () => {
+const RepairNew = () => {
   const [dragIndex, setDragIndex] = useState<any>(null);
   const defaultProducts = () => {
     const obj = {
@@ -183,4 +182,4 @@ const MarksNew = () => {
   );
 };
 
-export default MarksNew;
+export default RepairNew;

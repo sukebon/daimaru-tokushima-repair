@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { signOut } from "firebase/auth";
-import { auth } from "../../../firebase";
 import { Button } from '@mantine/core';
+import { useAuth } from '@/hooks/useAuth';
+
 
 const HeaderMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -12,18 +12,13 @@ const HeaderMenu = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const { logout } = useAuth();
+
+
 
   return (
     <>
-      <Button onClick={
-        () => {
-          // handleClose();
-          // logout();
-        }}>Logout</Button>
-
-
-
-
+      <Button onClick={() => logout()}>Logout</Button>
     </>
   );
 };

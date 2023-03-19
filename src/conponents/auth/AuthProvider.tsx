@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { createContext, useEffect, useState, ReactNode } from "react";
-import { auth, db } from "../../../firebase";
+import { supabase } from "../../../utils/supabase";
 import Loading from "../Loading";
 export type User = any;
 
@@ -20,23 +20,44 @@ type Props = {
 };
 
 const AuthProvider: NextPage<Props> = ({ children }) => {
-  const router = useRouter();
+  const { push, pathname } = useRouter();
   const [currentUser, setCurrentUser] =
     useState<User | null | undefined>(undefined);
 
   const [signInCheck, setSignInCheck] = useState(false);
 
+  useEffect(() => {
+    const validateSession = async () => {
+      setSignInCheck(true);
+      const { data } = await supabase.auth.getUser();
+      console.log(data.user);
+      if (data.user) {
+        setCurrentUser(data.user);
+      } else if (data.user && pathname === "/signin") {
+        push('/');
+      } else if (!data.user) {
+        setCurrentUser(undefined);
+        push('/signin');
+      }
+    };
+    validateSession();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
   // // ログイン状態を確認する
   useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        setCurrentUser(user);
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      const { data } = await supabase.auth.getUser();
+      if (event === "SIGNED_IN") {
         setSignInCheck(true);
-        router.push('/');
-      } else {
+        setCurrentUser(data.user);
+        push('/');
+      }
+      if (event === "SIGNED_OUT") {
+        setSignInCheck(true);
         setCurrentUser(undefined);
-        setSignInCheck(true);
-        router.push('/signin');
+        push('/signin');
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -49,8 +70,8 @@ const AuthProvider: NextPage<Props> = ({ children }) => {
       </AuthContext.Provider>
     );
   } else {
-    // ログイン確認中
-    // 自分で作ったローディングコンポーネントをレンダリングする
+    //   // ログイン確認中
+    //   // 自分で作ったローディングコンポーネントをレンダリングする
 
     return <Loading />;
   }

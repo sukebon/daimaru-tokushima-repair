@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useForm, SubmitHandler } from "react-hook-form";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
-import { useRouter } from "next/router";
 import { Box, Button, Flex, Paper, PasswordInput, Stack, TextInput } from "@mantine/core";
 import { MdLock } from "react-icons/md";
+import { useAuth } from "@/hooks/useAuth";
 
 type Inputs = {
   email: string;
@@ -12,7 +10,7 @@ type Inputs = {
 };
 
 const Signup = () => {
-  const router = useRouter();
+  const { signup, setEmail, setPassword } = useAuth();
   const {
     register,
     handleSubmit,
@@ -20,13 +18,9 @@ const Signup = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const email = data.email;
-    const password = data.password;
-    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      router.push('/');
-    }).catch((error) => {
-      console.log(error);
-    });
+    setEmail(data.email);
+    setPassword(data.password);
+    signup();
   };
 
   return (
@@ -40,7 +34,7 @@ const Signup = () => {
         <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
           <Flex justify="center" direction="column" align="center">
             <MdLock size="30px" />
-            Sign In
+            Sign Up
             <Stack spacing="sm" w="100%">
               <Box>
                 <TextInput
@@ -65,7 +59,7 @@ const Signup = () => {
               </Box>
               <Flex w="100%">
                 <Button mt={6} type="submit" fullWidth>
-                  送信
+                  登録
                 </Button>
               </Flex>
             </Stack>

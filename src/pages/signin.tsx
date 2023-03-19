@@ -1,33 +1,32 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useForm, SubmitHandler } from "react-hook-form";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
-import { useRouter } from "next/router";
 import { Box, Button, Flex, Paper, PasswordInput, Stack, TextInput } from "@mantine/core";
 import { MdLock } from "react-icons/md";
-
+import { useAuth } from "../hooks/useAuth";
+import { useEffect } from 'react';
 type Inputs = {
   email: string;
   password: string;
 };
 
 const Signin = () => {
-  const router = useRouter();
+  const { login, setEmail, setPassword } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    defaultValues: {
+      email: '',
+      password: ''
+    }
+  });
 
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const email = data.email;
-    const password = data.password;
-    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      router.push('/');
-    }).catch((error) => {
-      console.log(error);
-    });
+    setEmail(data.email);
+    setPassword(data.password);
+    login();
   };
 
   return (
@@ -46,7 +45,9 @@ const Signin = () => {
               <Box>
                 <TextInput
                   w="100%"
-                  id="outlined-controlled"
+                  autoComplete="off"
+                  placeholder="email"
+                  id="email"
                   label="email"
                   {...register("email", { required: true })}
                   required
@@ -56,9 +57,10 @@ const Signin = () => {
               <Box>
                 <PasswordInput
                   w="100%"
+                  autoComplete="off"
+                  placeholder="password"
                   label="password"
-                  placeholder="Your password"
-                  id="your-password"
+                  id="password"
                   {...register("password", { required: true })}
                   required
                 />
@@ -66,7 +68,7 @@ const Signin = () => {
               </Box>
               <Flex w="100%">
                 <Button mt={6} type="submit" fullWidth>
-                  送信
+                  ログイン
                 </Button>
               </Flex>
             </Stack>

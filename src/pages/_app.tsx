@@ -21,13 +21,13 @@ export default function App({ Component, pageProps }: AppProps) {
         theme={{
           colorScheme: 'light',
         }}>
-        <AuthProvider>
-          <SWRConfig value={{ fetcher }}>
+        <SWRConfig value={{ fetcher }}>
+          <AuthProvider>
             <Layout>
               <Component {...pageProps} />
             </Layout>
-          </SWRConfig>
-        </AuthProvider>
+          </AuthProvider>
+        </SWRConfig>
       </MantineProvider>
     </>
   );
