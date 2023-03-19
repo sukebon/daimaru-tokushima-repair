@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Box, Button, Flex, Paper, PasswordInput, Stack, TextInput } from "@mantine/core";
 import { MdLock } from "react-icons/md";
 import { useAuth } from "../hooks/useAuth";
-import { useEffect } from 'react';
+
 type Inputs = {
   email: string;
   password: string;
