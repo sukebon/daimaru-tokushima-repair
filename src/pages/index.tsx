@@ -1,34 +1,12 @@
 import Head from 'next/head';
 import { Inter } from 'next/font/google';
 import { useContext, useEffect } from 'react';
-import { AuthContext } from '@/conponents/auth/AuthProvider';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
-  const { currentUser } = useContext(AuthContext);
-  useEffect(() => {
-    if (currentUser?.uid) {
-      const docRef = doc(db, "users", `${currentUser.uid}`);
-      const addUsers = async () => {
-        const docSnap = await getDoc(docRef);
-        if (!docSnap.exists()) {
-          await setDoc(docRef, {
-            uid: currentUser.uid,
-            name: currentUser?.email || "",
-            rank: 1000,
-            email: currentUser?.email || "",
-          });
-        }
-        return;
-      };
-      addUsers();
-    }
-    return;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
 
   return (
     <>

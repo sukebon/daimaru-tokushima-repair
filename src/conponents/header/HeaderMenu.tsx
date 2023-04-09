@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import { useRouter } from "next/router";
+import React from 'react';
 import { Button } from '@mantine/core';
-import { useAuth } from '@/hooks/useAuth';
-
+import axios from 'axios';
+import { useQueryClient } from "@tanstack/react-query";
 
 const HeaderMenu = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const logout = async () => {
+    try {
+      queryClient.removeQueries(['user']);
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`);
+      router.push('/login');
+    } catch (e) {
+      console.log(e);
+    }
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const { logout } = useAuth();
 
 
 

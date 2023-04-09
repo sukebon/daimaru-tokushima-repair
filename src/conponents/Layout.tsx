@@ -1,7 +1,8 @@
 import { Box, Flex } from "@mantine/core";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import React, { ReactNode, useContext, useEffect, useState } from "react";
-import { AuthContext } from "./auth/AuthProvider";
+// import { AuthContext } from "./auth/AuthProvider";
 import Header from "./header/Header";
 import { Sidebar } from "./sidebar/Sidebar";
 
@@ -10,22 +11,33 @@ type Props = {
 };
 
 const Layout: NextPage<Props> = ({ children }) => {
-  const { currentUser } = useContext(AuthContext);
+  const router = useRouter();
   return (
     <>
-      {currentUser !== undefined ? (
-        <Flex w="100%" bg="#f4f4f4" >
-          <Flex sx={{ display: "none" }} display={{ lg: "block" }}>
-            <Sidebar />
+      <Flex w="100%" bg="#f4f4f4" >
+        {(['/login', '/signup'].includes(router.pathname)) ? (
+          <Flex
+            justify="center"
+            align="center"
+            w="100%"
+            h="100vh"
+            bg="#f4f4f4"
+          >{children}
           </Flex>
-          <Flex w="100%" direction="column" justify="start">
-            <Header />
-            <Flex p={24} bg="#f4f4f4">{children}</Flex>
-          </Flex>
-        </Flex>
-      ) : (
-        <Box>{children}</Box>
-      )}
+        ) : (
+          <>
+            <Flex sx={{ display: "none" }} display={{ lg: "block" }}>
+              <Sidebar />
+            </Flex>
+            <Flex w="100%" direction="column" justify="start">
+              <Header />
+              <Flex p={24} bg="#f4f4f4">{children}</Flex>
+            </Flex>
+          </>
+
+        )
+        }
+      </Flex>
     </>
   );
 };

@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { AuthContext } from '../auth/AuthProvider';
-import useSWRImmutable from "swr/immutable";
-import { UserType } from "../../../types/UserType";
+// import { AuthContext } from '../auth/AuthProvider';
 import HeaderMenu from "./HeaderMenu";
 import { Header, Box, Burger, createStyles, Group, rem, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { UserInfo } from "../UserInfo";
+import { useQueryClient } from "@tanstack/react-query";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -44,15 +44,6 @@ const useStyles = createStyles((theme) => ({
 const HeaderArea = () => {
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
-  const { currentUser } = useContext(AuthContext);
-  const { data } = useSWRImmutable('/api/users');
-
-  const getUserName = (uid: string) => {
-    const result = data?.users.find((user: UserType) => (
-      user.uid === currentUser.uid
-    ));
-    return result?.name;
-  };
 
   return (
     <Header w="100%" height={56} className={classes.header} >
@@ -62,16 +53,15 @@ const HeaderArea = () => {
             <Burger opened={opened} onClick={toggle} size="sm" />
           </Flex>
           <Box sx={{ display: "none" }} display={{ lg: "block" }}>
-            {/* {getUserName(currentUser.uid)} */}
           </Box>
         </Group>
         <Group>
           <Group ml={50} spacing={5} className={classes.links}>
-            {/* {currentUser !== undefined && ( */}
+            <UserInfo />
             <>
               <HeaderMenu />
             </>
-            {/* )} */}
+
           </Group>
         </Group>
       </div>
