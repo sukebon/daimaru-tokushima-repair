@@ -2,15 +2,15 @@ import { Flex, NumberInput, TextInput } from '@mantine/core';
 import { NextPage } from 'next';
 import React from 'react';
 import { UseFormRegister } from 'react-hook-form';
-import { MarkInputs } from '../../../types/repair';
+import { RepaireInputs } from '../../../types';
 import { MdOutlineCancel } from "react-icons/md";
 import styles from "../../styles/input.module.css";
 import { MdDragIndicator } from "react-icons/md";
 
 
 type Props = {
-  register: UseFormRegister<MarkInputs>;
-  getValues: UseFormRegister<MarkInputs>;
+  register: UseFormRegister<RepaireInputs>;
+  getValues: UseFormRegister<RepaireInputs>;
   productIndex: number;
   removeProduct: (index: number) => void;
   dragStart: (index: number) => void;

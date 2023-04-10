@@ -2,9 +2,9 @@
 import { Button, Table, TextInput, Flex, Paper, Stack, NumberInput, Box, Input, Autocomplete, Textarea, Radio, Group } from '@mantine/core';
 import MarkRow from '@/conponents/repair/RepairRow';
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
-import { MarkInputs } from '../../../types/repair';
 import { useState } from 'react';
 import { MdAddCircle } from "react-icons/md";
+import { RepaireInputs } from '../../../types';
 
 const RepairNew = () => {
   const [dragIndex, setDragIndex] = useState<any>(null);
@@ -18,14 +18,15 @@ const RepairNew = () => {
     const array = [...Array(5)].map(() => (obj));
     return array;
   };
-  const { getValues, register, handleSubmit, control, } = useForm<MarkInputs>({
+  const { getValues, register, handleSubmit, control, } = useForm<RepaireInputs>({
     defaultValues: {
       factory: "",
       deadline: null,
       deliveryPlace: "",
       client: "",
       price: 0,
-      orderType: "",
+      title: "",
+      orderType: "REPAIRE",
       category: "",
       products: defaultProducts(),
     }
@@ -49,7 +50,7 @@ const RepairNew = () => {
     remove(index);
   };
 
-  const onSubmit: SubmitHandler<MarkInputs> = (data) => {
+  const onSubmit: SubmitHandler<RepaireInputs> = (data) => {
     console.log(data);
   };
 
@@ -104,6 +105,9 @@ const RepairNew = () => {
               data={['配送センター', 'ウィルフィット', '神戸店']}
             />
           </Flex>
+          <TextInput w="100%" label="タイトル" required
+            {...register("title", { required: true })}
+          />
           <Flex gap={16} align="center">
             <TextInput type="date" w="50%" maw="200px" label="納期"
               {...register("deliveryPlace")}
@@ -119,23 +123,26 @@ const RepairNew = () => {
             <Radio.Group
               withAsterisk
               label="タイプ"
+              defaultValue='REPAIRE'
               px={20}
             >
               <Group mt="xs">
-                <Radio value="1" label="修理"  {...register("orderType", { required: true })} />
-                <Radio value="2" label="マーク"  {...register("orderType", { required: true })} />
+                <Radio value="REPAIRE" label="修理"  {...register("orderType", { required: true })} />
+                <Radio value="MARK" label="マーク"  {...register("orderType", { required: true })} />
               </Group>
             </Radio.Group>
             <Radio.Group
               withAsterisk
               label="区分"
+              defaultValue='PREV'
             >
               <Group mt="xs">
-                <Radio value="1" label="前回通り"  {...register("category", { required: true })} />
-                <Radio value="2" label="新規"  {...register("category", { required: true })} />
+                <Radio value="PREV" label="前回通り"  {...register("category", { required: true })} />
+                <Radio value="NEW" label="新規"  {...register("category", { required: true })} />
               </Group>
             </Radio.Group>
           </Flex>
+
           <Box sx={{ overflowX: "auto" }}>
             <Table sx={{ width: "1000px" }} w={{ xl: "auto" }} verticalSpacing="xs" fontSize="md" onMouseOut={() => setDragIndex(null)} >
               <thead >

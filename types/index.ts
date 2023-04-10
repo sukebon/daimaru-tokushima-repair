@@ -11,12 +11,13 @@ export type UserType = {
   rank: number;
 };
 
-export type MarkInputs = {
+export type RepaireInputs = {
   factory: string;
   deliveryPlace: string;
   deadline: Date | null;
   client: string;
   price: any;
+  title: string;
   orderType: string;
   category: string;
   products: {
