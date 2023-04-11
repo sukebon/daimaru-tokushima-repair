@@ -1,9 +1,8 @@
-import { useEffect } from 'react';
+import Head from "next/head";
 import type { AppProps } from "next/app";
 import Layout from "@/conponents/Layout";
 import axios from "axios";
 import { MantineProvider } from '@mantine/core';
-import Head from "next/head";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 

@@ -1,4 +1,4 @@
-import useQueryUser from '@/hooks/useQueryUser';
+import { useQueryUser } from '@/hooks/useQueryUser';
 import React from 'react';
 import { Loader } from '@mantine/core';
 

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { User } from '@prisma/client';
-const useQueryUser = () => {
+export const useQueryUser = () => {
   const router = useRouter();
 
   const getUser = async () => {
@@ -21,5 +21,3 @@ const useQueryUser = () => {
     },
   });
 };
-
-export default useQueryUser;
