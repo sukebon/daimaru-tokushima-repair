@@ -1,29 +1,41 @@
 import React, { useState } from 'react';
-import { createStyles, Navbar, Group, getStylesRef, rem, Box } from '@mantine/core';
+import {
+  createStyles,
+  Navbar,
+  Group,
+  getStylesRef,
+  rem,
+  Box,
+} from '@mantine/core';
 import Link from 'next/link';
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from '../../hooks/useAuth';
 
 const useStyles = createStyles((theme) => ({
   navbar: {
-    backgroundColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background,
-    overflowY: "auto"
+    backgroundColor: theme.fn.variant({
+      variant: 'filled',
+      color: theme.primaryColor,
+    }).background,
+    overflowY: 'auto',
   },
 
   header: {
     paddingBottom: theme.spacing.md,
     marginBottom: `calc(${theme.spacing.md} * 1.5)`,
     borderBottom: `${rem(1)} solid ${theme.fn.lighten(
-      theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background!,
+      theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
+        .background!,
       0.1
     )}`,
-    color: theme.white
+    color: theme.white,
   },
 
   footer: {
     paddingTop: theme.spacing.md,
     marginTop: theme.spacing.md,
     borderTop: `${rem(1)} solid ${theme.fn.lighten(
-      theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background!,
+      theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
+        .background!,
       0.1
     )}`,
   },
@@ -40,7 +52,8 @@ const useStyles = createStyles((theme) => ({
 
     '&:hover': {
       backgroundColor: theme.fn.lighten(
-        theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background!,
+        theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
+          .background!,
         0.1
       ),
     },
@@ -56,7 +69,8 @@ const useStyles = createStyles((theme) => ({
   linkActive: {
     '&, &:hover': {
       backgroundColor: theme.fn.lighten(
-        theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background!,
+        theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
+          .background!,
         0.15
       ),
       [`& .${getStylesRef('icon')}`]: {
@@ -67,10 +81,10 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const data = [
-  { link: '/repairs', label: '修理伝票一覧', icon: "" },
-  { link: '/repairs/new', label: '修理伝票作成', icon: "" },
-  { link: '', label: 'テンプレート一覧', icon: "" },
-  { link: '', label: 'テンプレート作成', icon: "" },
+  { link: '/repairs', label: '修理伝票一覧', icon: '' },
+  { link: '/repairs/new', label: '修理伝票作成', icon: '' },
+  { link: '', label: 'テンプレート一覧', icon: '' },
+  { link: '', label: 'テンプレート作成', icon: '' },
 ];
 
 export const Sidebar = () => {
@@ -79,22 +93,28 @@ export const Sidebar = () => {
   const [active, setActive] = useState('Billing');
 
   const links = data.map((item) => (
-
-    <Link key={item.label} href={item.link} style={{ textDecoration: "none" }}>
+    <Link key={item.label} href={item.link} style={{ textDecoration: 'none' }}>
       <Box
-        className={cx(classes.link, { [classes.linkActive]: item.label === active })}
-        onClick={(event) => {
+        className={cx(classes.link, {
+          [classes.linkActive]: item.label === active,
+        })}
+        onClick={(e) => {
           setActive(item.label);
         }}
       >
-        <Box component='span'>{item.label}</Box>
+        <Box component="span">{item.label}</Box>
       </Box>
-    </Link >
-
+    </Link>
   ));
 
   return (
-    <Navbar sx={{ position: "sticky", top: 0 }} height={"100vh"} width={{ sm: 300 }} p="md" className={classes.navbar}>
+    <Navbar
+      sx={{ position: 'sticky', top: 0 }}
+      height={'100vh'}
+      width={{ sm: 300 }}
+      p="md"
+      className={classes.navbar}
+    >
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
           修理伝票

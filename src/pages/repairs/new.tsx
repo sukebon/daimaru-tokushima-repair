@@ -1,48 +1,64 @@
 // import Input from '@mui/joy/Input';
-import { Button, Table, TextInput, Flex, Paper, Stack, NumberInput, Box, Input, Autocomplete, Textarea, Radio, Group } from '@mantine/core';
+import {
+  Button,
+  Table,
+  TextInput,
+  Flex,
+  Paper,
+  Stack,
+  NumberInput,
+  Box,
+  Input,
+  Autocomplete,
+  Textarea,
+  Radio,
+  Group,
+} from '@mantine/core';
 import MarkRow from '@/conponents/repair/RepairRow';
-import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
+import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { useState } from 'react';
-import { MdAddCircle } from "react-icons/md";
+import { MdAddCircle } from 'react-icons/md';
 import { RepaireInputs } from '../../../types';
 
 const RepairNew = () => {
   const [dragIndex, setDragIndex] = useState<any>(null);
   const defaultProducts = () => {
     const obj = {
-      productNumber: "",
-      size: "",
-      quantity: "",
-      comment: ""
+      productNumber: '',
+      size: '',
+      quantity: '',
+      comment: '',
     };
-    const array = [...Array(5)].map(() => (obj));
+    const array = [...Array(5)].map(() => obj);
     return array;
   };
-  const { getValues, register, handleSubmit, control, } = useForm<RepaireInputs>({
-    defaultValues: {
-      factory: "",
-      deadline: null,
-      deliveryPlace: "",
-      client: "",
-      price: 0,
-      title: "",
-      orderType: "REPAIRE",
-      category: "",
-      products: defaultProducts(),
+  const { getValues, register, handleSubmit, control } = useForm<RepaireInputs>(
+    {
+      defaultValues: {
+        factory: '',
+        deadline: null,
+        deliveryPlace: '',
+        client: '',
+        price: 0,
+        title: '',
+        orderType: 'REPAIRE',
+        category: '',
+        products: defaultProducts(),
+      },
     }
-  });
+  );
 
   const { fields, append, remove, update } = useFieldArray({
     control,
-    name: "products",
+    name: 'products',
   });
 
   const addProduct = () => {
     append({
-      productNumber: "",
-      size: "",
-      quantity: "",
-      comment: ""
+      productNumber: '',
+      size: '',
+      quantity: '',
+      comment: '',
     });
   };
 
@@ -64,10 +80,10 @@ const RepairNew = () => {
     const startElement = { ...getValues().products[dragIndex] };
     const enterElment = { ...getValues().products[index] };
     update(index, {
-      ...startElement
+      ...startElement,
     });
     update(dragIndex, {
-      ...enterElment
+      ...enterElment,
     });
     setDragIndex(index);
   };
@@ -81,39 +97,58 @@ const RepairNew = () => {
   };
 
   return (
-    <Paper
-      w="100%"
-      shadow="md"
-      radius="md"
-      p="lg"
-      withBorder
-    >
+    <Paper w="100%" shadow="md" radius="md" p="lg" withBorder>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack>
-          <Autocomplete w="100%" label="加工場" maw="500px" required
-            {...register("factory", { required: true })}
+          <Autocomplete
+            w="100%"
+            label="加工場"
+            maw="500px"
+            required
+            {...register('factory', { required: true })}
             onChange={getValues}
             data={['徳島工場', '大野制帽所', 'ひつじや', 'トシカワ']}
           />
-          <Flex gap={16} sx={{ flexDirection: "column" }} direction={{ sm: "row" }}>
-            <TextInput w="100%" label="顧客名" required
-              {...register("client", { required: true })}
+          <Flex
+            gap={16}
+            sx={{ flexDirection: 'column' }}
+            direction={{ sm: 'row' }}
+          >
+            <TextInput
+              w="100%"
+              label="顧客名"
+              required
+              {...register('client', { required: true })}
             />
-            <Autocomplete w="100%" label="納入先" required
-              {...register("deadline", { required: true })}
+            <Autocomplete
+              w="100%"
+              label="納入先"
+              required
+              {...register('deadline', { required: true })}
               onChange={getValues}
               data={['配送センター', 'ウィルフィット', '神戸店']}
             />
           </Flex>
-          <TextInput w="100%" label="タイトル" required
-            {...register("title", { required: true })}
+          <TextInput
+            w="100%"
+            label="修理名"
+            required
+            {...register('title', { required: true })}
           />
           <Flex gap={16} align="center">
-            <TextInput type="date" w="50%" maw="200px" label="納期"
-              {...register("deliveryPlace")}
+            <TextInput
+              type="date"
+              w="50%"
+              maw="200px"
+              label="納期"
+              {...register('deliveryPlace')}
             />
-            <NumberInput w="50%" maw="200px" label="価格" required
-              {...register("price", { required: true })}
+            <NumberInput
+              w="50%"
+              maw="200px"
+              label="価格"
+              required
+              {...register('price', { required: true })}
               onChange={() => Number(getValues('price'))}
               max={1000000}
               min={0}
@@ -123,30 +158,48 @@ const RepairNew = () => {
             <Radio.Group
               withAsterisk
               label="タイプ"
-              defaultValue='REPAIRE'
+              defaultValue="REPAIRE"
               px={20}
             >
               <Group mt="xs">
-                <Radio value="REPAIRE" label="修理"  {...register("orderType", { required: true })} />
-                <Radio value="MARK" label="マーク"  {...register("orderType", { required: true })} />
+                <Radio
+                  value="REPAIRE"
+                  label="修理"
+                  {...register('orderType', { required: true })}
+                />
+                <Radio
+                  value="MARK"
+                  label="マーク"
+                  {...register('orderType', { required: true })}
+                />
               </Group>
             </Radio.Group>
-            <Radio.Group
-              withAsterisk
-              label="区分"
-              defaultValue='PREV'
-            >
+            <Radio.Group withAsterisk label="区分" defaultValue="PREV">
               <Group mt="xs">
-                <Radio value="PREV" label="前回通り"  {...register("category", { required: true })} />
-                <Radio value="NEW" label="新規"  {...register("category", { required: true })} />
+                <Radio
+                  value="PREV"
+                  label="前回通り"
+                  {...register('category', { required: true })}
+                />
+                <Radio
+                  value="NEW"
+                  label="新規"
+                  {...register('category', { required: true })}
+                />
               </Group>
             </Radio.Group>
           </Flex>
 
-          <Box sx={{ overflowX: "auto" }}>
-            <Table sx={{ width: "1000px" }} w={{ xl: "auto" }} verticalSpacing="xs" fontSize="md" onMouseOut={() => setDragIndex(null)} >
-              <thead >
-                <tr >
+          <Box sx={{ overflowX: 'auto' }}>
+            <Table
+              sx={{ width: '1000px' }}
+              w={{ xl: 'auto' }}
+              verticalSpacing="xs"
+              fontSize="md"
+              onDragOver={(e) => e.preventDefault()}
+            >
+              <thead>
+                <tr>
                   <th></th>
                   <th>品名</th>
                   <th>サイズ</th>
@@ -173,19 +226,22 @@ const RepairNew = () => {
             </Table>
           </Box>
           <Flex justify="center">
-            <Button leftIcon={<MdAddCircle />} variant="outline" size="md" onClick={addProduct}> 追加</Button>
+            <Button
+              leftIcon={<MdAddCircle />}
+              variant="outline"
+              size="md"
+              onClick={addProduct}
+            >
+              追加
+            </Button>
           </Flex>
-          <Textarea
-            placeholder="コメント"
-            label="コメント"
-            size="sm"
-          />
+          <Textarea placeholder="コメント" label="コメント" size="sm" />
           <Button type="submit" fullWidth sx={{ mt: 6 }}>
             送信
           </Button>
         </Stack>
       </form>
-    </Paper >
+    </Paper>
   );
 };
 
