@@ -1,10 +1,10 @@
-import { useContext } from "react";
-// import { AuthContext } from '../auth/AuthProvider';
-import HeaderMenu from "./HeaderMenu";
-import { Header, Box, Burger, createStyles, Group, rem, Flex } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { UserInfo } from "../UserInfo";
-import { useQueryClient } from "@tanstack/react-query";
+import { useContext } from 'react';
+import HeaderMenu from './HeaderMenu';
+import { Header, Box, createStyles, Group, rem, Flex } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { UserInfo } from '../UserInfo';
+import { useQueryClient } from '@tanstack/react-query';
+import { SidebarDrawer } from '../sidebar/SidebarDrawer';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -31,12 +31,18 @@ const useStyles = createStyles((theme) => ({
     padding: `${rem(8)} ${rem(12)}`,
     borderRadius: theme.radius.sm,
     textDecoration: 'none',
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+    color:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[0]
+        : theme.colors.gray[7],
     fontSize: theme.fontSizes.sm,
     fontWeight: 500,
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[6]
+          : theme.colors.gray[0],
     },
   },
 }));
@@ -46,14 +52,13 @@ const HeaderArea = () => {
   const { classes } = useStyles();
 
   return (
-    <Header w="100%" height={56} className={classes.header} >
+    <Header w="100%" height={56} className={classes.header}>
       <div className={classes.inner}>
         <Group>
-          <Flex display={{ lg: "none" }} gap={2}>
-            <Burger opened={opened} onClick={toggle} size="sm" />
+          <Flex display={{ lg: 'none' }} gap={2}>
+            <SidebarDrawer />
           </Flex>
-          <Box sx={{ display: "none" }} display={{ lg: "block" }}>
-          </Box>
+          <Box sx={{ display: 'none' }} display={{ lg: 'block' }}></Box>
         </Group>
         <Group>
           <Group ml={50} spacing={5} className={classes.links}>
@@ -61,12 +66,10 @@ const HeaderArea = () => {
             <>
               <HeaderMenu />
             </>
-
           </Group>
         </Group>
       </div>
     </Header>
-
   );
 };
 
