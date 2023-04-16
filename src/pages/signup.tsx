@@ -4,8 +4,13 @@ import { Box, Button, Flex, Paper, PasswordInput, Stack, TextInput } from "@mant
 import { MdLock } from "react-icons/md";
 import { AuthForm } from "../../types";
 import axios from "axios";
+import { useMutateAuth } from "@/hooks/useMutateAuth";
+import { useRouter } from "next/router";
 
 const Signup = () => {
+  const router = useRouter();
+  const { registerMutation } = useMutateAuth();
+
   const {
     register,
     handleSubmit,
@@ -20,10 +25,7 @@ const Signup = () => {
 
   const onSubmit: SubmitHandler<AuthForm> = async (data) => {
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, {
-        email: data.email,
-        password: data.password
-      });
+      registerMutation.mutate(data);
       reset();
     } catch (e) {
       console.log(e);
@@ -31,7 +33,6 @@ const Signup = () => {
   };
 
   return (
-
     <Paper w={{ base: "100%", xs: "350px" }} shadow="md" radius="md" m="xs" p="xl" withBorder>
       <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <Flex justify="center" direction="column" align="center">

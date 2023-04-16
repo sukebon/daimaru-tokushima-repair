@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -5,92 +8,4 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-model Task {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime
-  title       String
-  description String?
-  userId      Int
-  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model Todo {
-  id    Int    @id @default(autoincrement())
-  title String
-}
-
-model User {
-  id             Int       @id @default(autoincrement())
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime
-  email          String    @unique
-  hashedPassword String
-  nickName       String?
-  role           Role?     @default(USER)
-  Repaire        Repaire[]
-  Task           Task[]
-}
-
-model Repaire {
-  id            Int             @id @default(autoincrement())
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime
-  factory       String
-  deleveryPlace String
-  deadline      DateTime
-  client        String
-  price         Int
-  orderType     OrderType       @default(REPAIRE)
-  newOrPrevious NewOrPrevious   @default(PREVIOUS)
-  userId        Int
-  User          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  RepaireDetail RepaireDetail[]
-}
-
-model RepaireDetail {
-  id            Int      @id @default(autoincrement())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime
-  repaireId     Int?
-  productNumber String?
-  size          String?
-  quantity      Int?
-  comment       String?
-  Repaire       Repaire? @relation(fields: [repaireId], references: [id])
-}
-
-model RepaireTemplate {
-  id            Int           @id @default(autoincrement())
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime
-  factory       String?
-  deleveryPlace String?
-  client        String?
-  price         Int
-  orderType     OrderType     @default(REPAIRE)
-  newOrPrevious NewOrPrevious
-}
-
-enum NewOrPrevious {
-  NEW
-  PREVIOUS
-}
-
-enum OrderType {
-  REPAIRE
-  MARK
-}
-
-enum Role {
-  USER
-  SALES
-  RD
-  LOGISTICS
-  ACCOUNTING
-  TOKUSHIMA
-  WILLFIT
-  ADMIN
 }

@@ -3,12 +3,21 @@ export type AuthForm = {
   password: string;
 };
 
-export type UserType = {
-  id: string;
-  name: string;
-  email: string;
-  uid: string;
-  rank: number;
+export type Profile = {
+  id: string | undefined;
+  updated_at: string;
+  created_at: string;
+  username: string | undefined;
+  email: string | undefined;
+  avatar_url: string | undefined;
+  favorites: string | undefined;
+};
+
+export type EditedProfile = {
+  username: string | undefined;
+  email: string | undefined;
+  avatar_url: string | undefined;
+  favorites: string | undefined;
 };
 
 export type RepaireInputs = {

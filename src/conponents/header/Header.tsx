@@ -1,10 +1,8 @@
-import { useContext } from 'react';
 import HeaderMenu from './HeaderMenu';
 import { Header, Box, createStyles, Group, rem, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { UserInfo } from '../UserInfo';
-import { useQueryClient } from '@tanstack/react-query';
 import { SidebarDrawer } from '../sidebar/SidebarDrawer';
+
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -55,14 +53,13 @@ const HeaderArea = () => {
     <Header w="100%" height={56} className={classes.header}>
       <div className={classes.inner}>
         <Group>
-          <Flex display={{ lg: 'none' }} gap={2}>
+          <Flex display={{ md: 'none' }} gap={2}>
             <SidebarDrawer />
           </Flex>
           <Box sx={{ display: 'none' }} display={{ lg: 'block' }}></Box>
         </Group>
         <Group>
           <Group ml={50} spacing={5} className={classes.links}>
-            <UserInfo />
             <>
               <HeaderMenu />
             </>

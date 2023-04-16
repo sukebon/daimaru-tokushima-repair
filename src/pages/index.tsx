@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import { Inter } from 'next/font/google';
-import { useContext, useEffect } from 'react';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import useQueryProfiles from '@/hooks/useQueryProfiles';
+import { useEffect } from 'react';
+import { Box } from '@mantine/core';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,7 +18,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        {/* <Button variant="contained">Hello World</Button> */}
+
       </div>
     </>
   );

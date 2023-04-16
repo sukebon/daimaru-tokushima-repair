@@ -1,24 +1,41 @@
-import create from 'zustand';
-import { EditedTask } from '../types';
+import { create } from 'zustand';
+import { EditedProfile, EditedTask } from '../types';
+import { Session } from '@supabase/supabase-js';
 
 type State = {
-  editedTask: EditedTask;
-  updateEditedTask: (payload: EditedTask) => void;
-  resetEditedTask: () => void;
+  session: Session | null;
+  setSession: (payload: Session | null) => void;
+  isLoading: boolean;
+  setIsLoading: (payload: boolean) => void;
+  editedProfile: EditedProfile;
+  updateEditedProfile: (payload: EditedProfile) => void;
+  resetEditedProfile: () => void;
 };
 
 const useStore = create<State>((set) => ({
-  editedTask: { id: 0, title: '', description: '' },
-  updateEditedTask: (payload) =>
+  session: null,
+  setSession: (payload) => set({ session: payload }),
+  isLoading: false,
+  setIsLoading: (payload) => set({ isLoading: payload }),
+  editedProfile: { username: '', email: '', favorites: '', avatar_url: '' },
+  updateEditedProfile: (payload) =>
     set({
-      editedTask: {
-        id: payload.id,
-        title: payload.title,
-        description: payload.description,
+      editedProfile: {
+        username: payload.username,
+        email: payload.email,
+        favorites: payload.favorites,
+        avatar_url: payload.avatar_url,
       },
     }),
-  resetEditedTask: () =>
-    set({ editedTask: { id: 0, title: '', description: '' } }),
+  resetEditedProfile: () =>
+    set({
+      editedProfile: {
+        username: '',
+        email: '',
+        favorites: '',
+        avatar_url: '',
+      },
+    }),
 }));
 
 export default useStore;

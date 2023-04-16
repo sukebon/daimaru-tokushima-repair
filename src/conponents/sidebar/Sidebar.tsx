@@ -8,14 +8,9 @@ import {
   Box,
 } from '@mantine/core';
 import Link from 'next/link';
-import { useAuth } from '../../hooks/useAuth';
 
 const useStyles = createStyles((theme) => ({
   navbar: {
-    backgroundColor: theme.fn.variant({
-      variant: 'filled',
-      color: theme.primaryColor,
-    }).background,
     overflowY: 'auto',
   },
 
@@ -23,18 +18,17 @@ const useStyles = createStyles((theme) => ({
     paddingBottom: theme.spacing.md,
     marginBottom: `calc(${theme.spacing.md} * 1.5)`,
     borderBottom: `${rem(1)} solid ${theme.fn.lighten(
-      theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
+      theme.fn.variant({ variant: 'filled', color: "gray" })
         .background!,
       0.1
     )}`,
-    color: theme.white,
   },
 
   footer: {
     paddingTop: theme.spacing.md,
     marginTop: theme.spacing.md,
     borderTop: `${rem(1)} solid ${theme.fn.lighten(
-      theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
+      theme.fn.variant({ variant: 'filled', color: "gray" })
         .background!,
       0.1
     )}`,
@@ -45,19 +39,16 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     fontSize: theme.fontSizes.sm,
-    color: theme.white,
+    color: theme.black,
     padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
     borderRadius: theme.radius.sm,
     fontWeight: 500,
 
     '&:hover': {
-      backgroundColor: theme.fn.lighten(
-        theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
-          .background!,
-        0.1
-      ),
-    },
+      backgroundColor: theme.fn.lighten('#f4f4f4', 0.1)
+    }
   },
+
 
   linkIcon: {
     ref: getStylesRef('icon'),
@@ -68,11 +59,7 @@ const useStyles = createStyles((theme) => ({
 
   linkActive: {
     '&, &:hover': {
-      backgroundColor: theme.fn.lighten(
-        theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
-          .background!,
-        0.15
-      ),
+      backgroundColor: theme.fn.lighten('#f4f4f4', 0.1),
       [`& .${getStylesRef('icon')}`]: {
         opacity: 0.9,
       },
@@ -85,10 +72,11 @@ const data = [
   { link: '/repairs/new', label: '修理伝票作成', icon: '' },
   { link: '', label: 'テンプレート一覧', icon: '' },
   { link: '', label: 'テンプレート作成', icon: '' },
+  { link: '/profile', label: 'プロフィール', icon: '' },
+  { link: '/auth', label: '管理画面', icon: '' },
 ];
 
 export const Sidebar = () => {
-  const { logout, reset } = useAuth();
   const { classes, cx } = useStyles();
   const [active, setActive] = useState('Billing');
 
@@ -123,7 +111,7 @@ export const Sidebar = () => {
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <a href="#" className={classes.link} onClick={logout}>
+        <a href="#" className={classes.link} >
           <span>Logout</span>
         </a>
       </Navbar.Section>

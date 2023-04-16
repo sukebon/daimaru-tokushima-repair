@@ -4,11 +4,16 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Box, Button, Flex, Paper, PasswordInput, Stack, TextInput } from "@mantine/core";
 import { MdLock } from "react-icons/md";
 import { AuthForm } from "../../types";
-import axios from "axios";
+import { useMutateAuth } from '@/hooks/useMutateAuth';
+import useStore from '../../store';
+import { useEffect } from 'react';
+import { supabase } from '../../utils/supabase';
 
 const Login = () => {
+  const session = useStore((state) => state.session);
+  const setSession = useStore((state) => state.setSession);
   const router = useRouter();
-  // const { login, setEmail, setPassword } = useAuth();
+  const { loginMutation } = useMutateAuth();
   const {
     register,
     handleSubmit,
@@ -21,20 +26,20 @@ const Login = () => {
     }
   });
 
-
   const onSubmit: SubmitHandler<AuthForm> = async (data) => {
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-        email: data.email,
-        password: data.password,
-      });
-      router.push('/');
+      loginMutation.mutate(data);
     } catch (e) {
       console.log(e);
     }
   };
 
+  useEffect(() => {
+    if (session) router.push('/');
+  }, [session, router]);
+
   return (
+
     <Paper w={{ base: "100%", xs: "350px" }} shadow="md" radius="md" m="xs" p="xl" withBorder>
       <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <Flex justify="center" direction="column" align="center">
