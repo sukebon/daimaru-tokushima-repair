@@ -12,14 +12,9 @@ const HeaderMenu = () => {
   const logout = async () => {
     try {
       queryClient.removeQueries(['user']);
-      queryClient.setQueryData(['profiles'], [{
-        username: "",
-        email: "",
-        favorites: "",
-        avatar_url: "",
-      }]);
-      const { error } = await supabase.auth.signOut();
-      router.push('/login');
+      await supabase.auth.signOut();
+      await router.push('/login');
+      router.reload();
     } catch (e) {
       console.log(e);
     }

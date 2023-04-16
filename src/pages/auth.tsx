@@ -1,10 +1,9 @@
 import useQueryProfiles from '@/hooks/useQueryProfiles';
 import { Paper, Table } from '@mantine/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const Auth = () => {
   const { data, error } = useQueryProfiles();
-  if (error) console.log(error);
   return (
     <Paper w="100%" shadow="md" radius="md" p="lg" withBorder>
       <Table>
