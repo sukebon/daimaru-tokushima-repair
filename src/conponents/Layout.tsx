@@ -1,4 +1,4 @@
-import { Box, Flex } from '@mantine/core';
+import { Box, Flex, useMantineColorScheme } from '@mantine/core';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { ReactNode, useContext, useEffect, useState } from 'react';
@@ -12,9 +12,11 @@ type Props = {
 
 const Layout: NextPage<Props> = ({ children }) => {
   const router = useRouter();
+  const { colorScheme } = useMantineColorScheme();
+  const dark = colorScheme === 'dark';
   return (
     <>
-      <Flex w="100%" h={{ base: '100vh', md: 'auto' }} bg="#f4f4f4">
+      <Flex w="100%" h={{ base: '100vh', md: 'auto' }} bg={dark ? "#1A1B1E" : "#f4f4f4"}>
         {['/login', '/signup'].includes(router.pathname) ? (
           <Flex justify="center" align="center" w="100%" h="100vh" bg="#f4f4f4">
             {children}
@@ -26,7 +28,7 @@ const Layout: NextPage<Props> = ({ children }) => {
             </Flex>
             <Flex w="100%" direction="column" justify="start">
               <Header />
-              <Flex p={24} bg="#f4f4f4">
+              <Flex p={24} >
                 {children}
               </Flex>
             </Flex>

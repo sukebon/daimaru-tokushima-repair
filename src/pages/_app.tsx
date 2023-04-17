@@ -2,13 +2,14 @@
 import Head from "next/head";
 import type { AppProps } from "next/app";
 import Layout from "@/conponents/Layout";
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import useStore from '../../store';
-import { useEffect } from "react";
+import { useEffect, createContext, useState } from "react";
 import { supabase } from "../../utils/supabase";
 import { useRouter } from 'next/router';
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,6 +22,11 @@ const queryClient = new QueryClient({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+
+
   const setSession = useStore((state) => state.setSession);
   const router = useRouter();
 
@@ -31,9 +37,10 @@ export default function App({ Component, pageProps }: AppProps) {
         setSession(session);
       });
       setSession(session);
+      if (session) router.push('/');
       if (!session && router.pathname === "/signup") {
         router.push('/signup');
-      } else if (!session) { router.push('/login'); }
+      } else if (!session) router.push('/login');
     };
     getSession();
   }, [setSession]);
@@ -46,21 +53,22 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
       <QueryClientProvider client={queryClient}>
-        <MantineProvider
-          withGlobalStyles
-          withNormalizeCSS
-          theme={{
-            colorScheme: 'light',
-            fontFamily: 'Verdana, sans-serif'
-          }}>
+        <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+          <MantineProvider
+            withGlobalStyles
+            withNormalizeCSS
+            theme={{
+              colorScheme,
+              fontFamily: 'Verdana, sans-serif',
+            }}>
 
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-
-        </MantineProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </MantineProvider>
+        </ColorSchemeProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </>
   );
-}
+};

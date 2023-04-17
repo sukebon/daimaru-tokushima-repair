@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 
 const Signup = () => {
   const router = useRouter();
-  const { registerMutation } = useMutateAuth();
+  const { registerMutation, loginMutation } = useMutateAuth();
 
   const {
     register,
@@ -26,6 +26,7 @@ const Signup = () => {
   const onSubmit: SubmitHandler<AuthForm> = async (data) => {
     try {
       registerMutation.mutate(data);
+      loginMutation.mutate(data);
       reset();
     } catch (e) {
       console.log(e);

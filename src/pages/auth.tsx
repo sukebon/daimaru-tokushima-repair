@@ -1,6 +1,7 @@
 import useQueryProfiles from '@/hooks/useQueryProfiles';
 import { Paper, Table } from '@mantine/core';
 import React, { useEffect } from 'react';
+import { Profile } from '../../types';
 
 const Auth = () => {
   const { data, error } = useQueryProfiles();
@@ -17,7 +18,8 @@ const Auth = () => {
           {data?.map((value) => (
             <tr key={value.id}>
               <td>{value.username}</td>
-              <td>{value.email}</td></tr>
+              <td>{value.email}</td>
+            </tr>
           ))}
         </tbody></Table>
     </Paper>
