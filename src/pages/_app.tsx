@@ -6,9 +6,10 @@ import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import useStore from '../../store';
-import { useEffect, createContext, useState } from "react";
+import { useEffect } from "react";
 import { supabase } from "../../utils/supabase";
 import { useRouter } from 'next/router';
+import { useLocalStorage } from "@mantine/hooks";
 
 
 const queryClient = new QueryClient({
@@ -22,10 +23,14 @@ const queryClient = new QueryClient({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
+  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
+    key: 'mantine-color-scheme',
+    defaultValue: 'light',
+    getInitialValueInEffect: true,
+  });
+
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
-
 
   const setSession = useStore((state) => state.setSession);
   const router = useRouter();
@@ -44,7 +49,6 @@ export default function App({ Component, pageProps }: AppProps) {
     };
     getSession();
   }, [setSession]);
-
 
   return (
     <>

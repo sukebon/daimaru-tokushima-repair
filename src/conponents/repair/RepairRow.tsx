@@ -33,6 +33,7 @@ const RepairRow: NextPage<Props> = ({
   return (
     <>
       <tr
+        draggable={true}
         className={
           productIndex === dragIndex ? styles.trDrag : styles.trNotDrag
         }
@@ -45,25 +46,25 @@ const RepairRow: NextPage<Props> = ({
         onDragEnd={dragEnd}
         onDrop={dragOndrop}
       >
-        <td draggable={true}>
+        <td>
           <MdDragIndicator
             style={{ verticalAlign: 'middle' }}
             cursor="pointer"
             size="25px"
           />
         </td>
-        <td width="50%">
+        <td width="50%" >
           <TextInput
             {...register(`products.${productIndex}.productNumber` as const)}
           />
         </td>
-        <td>
+        <td draggable={false} >
           <TextInput
             w="90px"
             {...register(`products.${productIndex}.size` as const)}
           />
         </td>
-        <td>
+        <td >
           <NumberInput
             w="90px"
             {...register(`products.${productIndex}.quantity`)}
@@ -74,7 +75,7 @@ const RepairRow: NextPage<Props> = ({
             min={0}
           />
         </td>
-        <td width="50%">
+        <td >
           <Flex gap={5} align="center">
             <TextInput
               w="100%"

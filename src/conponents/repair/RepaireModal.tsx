@@ -134,7 +134,7 @@ export const RepaireModal: FC = () => {
       </Modal>
 
       <Group position="center">
-        <Button onClick={open}>詳細</Button>
+        <Button color="teal" onClick={open}>詳細</Button>
       </Group>
     </>
   );

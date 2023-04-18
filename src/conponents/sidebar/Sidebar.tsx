@@ -7,8 +7,10 @@ import {
   rem,
   Box,
   useMantineColorScheme,
+  Text,
 } from '@mantine/core';
 import Link from 'next/link';
+import { useMutateAuth } from '@/hooks/useMutateAuth';
 
 
 
@@ -26,10 +28,10 @@ export const Sidebar = () => {
   const [active, setActive] = useState('Billing');
   const { colorScheme } = useMantineColorScheme();
   const dark = colorScheme === 'dark';
+  const { logout } = useMutateAuth();
 
   const links = data.map((item) => (
     <Link key={item.label} href={item.link} style={{ textDecoration: 'none' }}>
-
       <Box
         className={cx(classes.link, {
           [classes.linkActive]: item.label === active,
@@ -41,7 +43,6 @@ export const Sidebar = () => {
       >
         <Box component="span" >{item.label}</Box>
       </Box>
-
     </Link>
   ));
 
@@ -60,10 +61,8 @@ export const Sidebar = () => {
         {links}
       </Navbar.Section>
 
-      <Navbar.Section className={classes.footer}>
-        <a href="#" className={classes.link} >
-          <span >Logout</span>
-        </a>
+      <Navbar.Section className={classes.footer} >
+        <Box className={classes.link} sx={{ cursor: 'pointer' }} onClick={() => logout()} >Logout</Box>
       </Navbar.Section>
     </Navbar>
   );
@@ -79,21 +78,13 @@ const useStyles = createStyles((theme) => ({
     color: theme.colorScheme === "dark" ? "white" : "black",
     paddingBottom: theme.spacing.md,
     marginBottom: `calc(${theme.spacing.md} * 1.5)`,
-    borderBottom: `${rem(1)} solid ${theme.fn.lighten(
-      theme.fn.variant({ variant: 'filled', color: "gray" })
-        .background!,
-      0.1
-    )}`,
+    borderBottom: `0.0625rem solid ${theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'};`,
   },
 
   footer: {
     paddingTop: theme.spacing.md,
     marginTop: theme.spacing.md,
-    borderTop: `${rem(1)} solid ${theme.fn.lighten(
-      theme.fn.variant({ variant: 'filled', color: "gray" })
-        .background!,
-      0.1
-    )}`,
+    borderTop: `0.0625rem solid ${theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'};`,
   },
 
   link: {
@@ -104,11 +95,11 @@ const useStyles = createStyles((theme) => ({
     color: theme.colorScheme === "dark" ? "white" : "black",
     padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
     borderRadius: theme.radius.sm,
-    fontWeight: 500,
+    fontWeight: 600,
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === "dark" ? "#12B886" : '#f4f4f4',
-      opacity: 0.9
+      // color: theme.colorScheme === "dark" ? "#12B886" : '#f4f4f4',
+      // opacity: 0.9
     }
   },
 
@@ -122,7 +113,7 @@ const useStyles = createStyles((theme) => ({
 
   linkActive: {
     '&, &:hover': {
-      backgroundColor: theme.colorScheme === "dark" ? "#12B886" : '#f4f4f4',
+      color: theme.colorScheme === "dark" ? "#12B886" : '#12B886',
       opacity: 0.9
     },
   },

@@ -168,11 +168,13 @@ const RepairNew = () => {
                 >
                   <Group mt="xs">
                     <Radio
+                      color="teal"
                       value="REPAIRE"
                       label="修理"
                       {...register('orderType', { required: true })}
                     />
                     <Radio
+                      color="teal"
                       value="MARK"
                       label="マーク"
                       {...register('orderType', { required: true })}
@@ -182,11 +184,13 @@ const RepairNew = () => {
                 <Radio.Group withAsterisk label="区分" defaultValue="PREV">
                   <Group mt="xs">
                     <Radio
+                      color="teal"
                       value="PREV"
                       label="前回通り"
                       {...register('category', { required: true })}
                     />
                     <Radio
+                      color="teal"
                       value="NEW"
                       label="新規"
                       {...register('category', { required: true })}
@@ -232,6 +236,7 @@ const RepairNew = () => {
               </Box>
               <Flex justify="center">
                 <Button
+                  color="teal"
                   leftIcon={<MdAddCircle />}
                   variant="outline"
                   size="md"
@@ -241,7 +246,7 @@ const RepairNew = () => {
                 </Button>
               </Flex>
               <Textarea placeholder="コメント" label="コメント" size="sm" />
-              <Button type="submit" fullWidth sx={{ mt: 6 }}>
+              <Button color="teal" type="submit" fullWidth sx={{ mt: 6 }}>
                 送信
               </Button>
             </Stack>

@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { supabase } from '../../utils/supabase';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const useMutateAuth = () => {
   const router = useRouter();
@@ -34,8 +35,22 @@ export const useMutateAuth = () => {
       },
     }
   );
+
+  const queryClient = useQueryClient();
+  const logout = async () => {
+    try {
+      await supabase.auth.signOut();
+      queryClient.removeQueries(['user']);
+      await router.push('/login');
+      router.reload();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return {
     loginMutation,
     registerMutation,
+    logout,
   };
 };

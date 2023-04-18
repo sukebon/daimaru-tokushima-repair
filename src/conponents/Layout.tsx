@@ -18,7 +18,7 @@ const Layout: NextPage<Props> = ({ children }) => {
     <>
       <Flex w="100%" h={{ base: '100vh', md: 'auto' }} bg={dark ? "#1A1B1E" : "#f4f4f4"}>
         {['/login', '/signup'].includes(router.pathname) ? (
-          <Flex justify="center" align="center" w="100%" h="100vh" bg="#f4f4f4">
+          <Flex justify="center" align="center" w="100%" h="100vh" bg={dark ? "#1A1B1E" : "#f4f4f4"}>
             {children}
           </Flex>
         ) : (
