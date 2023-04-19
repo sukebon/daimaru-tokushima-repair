@@ -23,12 +23,13 @@ export type EditedProfile = {
 export type RepaireInputs = {
   factory: string;
   deliveryPlace: string;
-  deadline: Date | null;
+  deadline: string | null;
   client: string;
   price: any;
   title: string;
   orderType: string;
   category: string;
+  comment: string;
   products: {
     productNumber: string;
     size: string;

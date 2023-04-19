@@ -6,6 +6,7 @@ import { RepaireInputs } from '../../../types';
 import { MdOutlineCancel } from 'react-icons/md';
 import styles from '../../styles/input.module.css';
 import { MdDragIndicator } from 'react-icons/md';
+import useRepaireStore from '../../../store/useRepaireStore';
 
 type Props = {
   register: UseFormRegister<RepaireInputs>;
@@ -30,6 +31,7 @@ const RepairRow: NextPage<Props> = ({
   dragOndrop,
   dragIndex,
 }) => {
+  const repaire = useRepaireStore((state) => state.repaire);
   return (
     <>
       <tr
@@ -67,6 +69,7 @@ const RepairRow: NextPage<Props> = ({
         <td >
           <NumberInput
             w="90px"
+            defaultValue={Number(repaire?.products[productIndex]?.quantity || "")}
             {...register(`products.${productIndex}.quantity`)}
             onChange={() =>
               Number(getValues(`products.${productIndex}.quantity`))
