@@ -1,7 +1,7 @@
 export type MarkInputs = {
   factory: string;
   deliveryPlace: string;
-  deadline: Date | null;
+  deadline: string | null;
   client: string;
   price: any;
   orderType: string;

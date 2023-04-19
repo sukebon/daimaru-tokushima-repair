@@ -12,8 +12,6 @@ import {
 import Link from 'next/link';
 import { useMutateAuth } from '@/hooks/useMutateAuth';
 
-
-
 const data = [
   { link: '/repairs', label: '修理伝票一覧', icon: '' },
   { link: '/repairs/new', label: '修理伝票作成', icon: '' },
