@@ -1,11 +1,5 @@
 import { FC } from 'react';
-import {
-  Text,
-  Flex,
-  Box,
-  Stack,
-  Table,
-} from '@mantine/core';
+import { Text, Flex, Box, Stack, Table } from '@mantine/core';
 import useRepaireStore from '../../../store/useRepaireStore';
 
 export const RepaireConfirm: FC = () => {
@@ -41,11 +35,15 @@ export const RepaireConfirm: FC = () => {
         <Flex gap={24} direction={{ base: 'column', md: 'row' }}>
           <Box>
             <Text fz="xs">タイプ</Text>
-            <Text fz="xl">{repaire?.orderType === 'REPAIRE' ? '修理' : "マーク"}</Text>
+            <Text fz="xl">
+              {repaire?.orderType === 'REPAIRE' ? '修理' : 'マーク'}
+            </Text>
           </Box>
           <Box>
             <Text fz="xs">区分</Text>
-            <Text fz="xl">{repaire?.category === 'PREV' ? "前回通り" : "新規"}</Text>
+            <Text fz="xl">
+              {repaire?.category === 'PREV' ? '前回通り' : '新規'}
+            </Text>
           </Box>
           <Box>
             <Text fz="xs">単価</Text>
@@ -53,7 +51,7 @@ export const RepaireConfirm: FC = () => {
           </Box>
         </Flex>
 
-        <Box sx={{ overflow: "auto" }}>
+        <Box sx={{ overflow: 'auto' }}>
           <Table
             horizontalSpacing="xs"
             verticalSpacing="xs"
@@ -69,19 +67,31 @@ export const RepaireConfirm: FC = () => {
                 <th>備考</th>
               </tr>
             </thead>
-            <tbody>{repaire?.products.map((product: { productNumber: string; size: string; quantity: number; comment: string; }, index: number) => (
-              <tr key={index}>
-                <td>{product.productNumber}</td>
-                <td>{product.size}</td>
-                <td>{product.quantity}</td>
-                <td>{product.comment}</td>
-              </tr>
-            ))}</tbody>
+            <tbody>
+              {repaire?.products.map(
+                (
+                  product: {
+                    productNumber: string;
+                    size: string;
+                    quantity: number;
+                    comment: string;
+                  },
+                  index: number
+                ) => (
+                  <tr key={index}>
+                    <td>{product.productNumber}</td>
+                    <td>{product.size}</td>
+                    <td>{product.quantity}</td>
+                    <td>{product.comment}</td>
+                  </tr>
+                )
+              )}
+            </tbody>
           </Table>
         </Box>
         <Box>
           <Text fz="xs">コメント</Text>
-          <Box>{repaire?.comment}</Box>
+          <Box sx={{ whiteSpace: 'pre-wrap' }}>{repaire?.comment}</Box>
         </Box>
       </Stack>
     </>
