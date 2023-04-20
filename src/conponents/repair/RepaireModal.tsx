@@ -106,7 +106,7 @@ export const RepaireModal: FC = () => {
             horizontalSpacing="xs"
             verticalSpacing="xs"
             fontSize="xs"
-            miw={500}
+            miw={1000}
             maw={1000}
           >
             <thead>
@@ -134,7 +134,9 @@ export const RepaireModal: FC = () => {
       </Modal>
 
       <Group position="center">
-        <Button color="teal" onClick={open}>詳細</Button>
+        <Button size="xs" color="teal" onClick={open}>
+          詳細
+        </Button>
       </Group>
     </>
   );

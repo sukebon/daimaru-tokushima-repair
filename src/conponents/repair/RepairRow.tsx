@@ -35,7 +35,6 @@ const RepairRow: NextPage<Props> = ({
   return (
     <>
       <tr
-        draggable={true}
         className={
           productIndex === dragIndex ? styles.trDrag : styles.trNotDrag
         }
@@ -48,28 +47,31 @@ const RepairRow: NextPage<Props> = ({
         onDragEnd={dragEnd}
         onDrop={dragOndrop}
       >
-        <td>
+        <td draggable={true}>
           <MdDragIndicator
             style={{ verticalAlign: 'middle' }}
             cursor="pointer"
             size="25px"
           />
         </td>
-        <td width="50%" >
+        <td width="50%">
           <TextInput
+            required
             {...register(`products.${productIndex}.productNumber` as const)}
           />
         </td>
-        <td draggable={false} >
+        <td draggable={false}>
           <TextInput
             w="90px"
             {...register(`products.${productIndex}.size` as const)}
           />
         </td>
-        <td >
+        <td>
           <NumberInput
             w="90px"
-            defaultValue={Number(repaire?.products[productIndex]?.quantity || "")}
+            defaultValue={Number(
+              repaire?.products[productIndex]?.quantity || ''
+            )}
             {...register(`products.${productIndex}.quantity`)}
             onChange={() =>
               Number(getValues(`products.${productIndex}.quantity`))
@@ -78,16 +80,20 @@ const RepairRow: NextPage<Props> = ({
             min={0}
           />
         </td>
-        <td >
+        <td>
           <Flex gap={5} align="center">
             <TextInput
               w="100%"
               {...register(`products.${productIndex}.comment`)}
             />
             <MdOutlineCancel
-              size={25}
-              cursor="pointer"
-              onClick={() => removeProduct(productIndex)}
+              size={20}
+              cursor={productIndex === 0 ? '' : 'pointer'}
+              opacity={productIndex === 0 ? '0' : 1}
+              onClick={() => {
+                if (productIndex === 0) return;
+                removeProduct(productIndex);
+              }}
             />
           </Flex>
         </td>
