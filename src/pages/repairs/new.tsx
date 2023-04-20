@@ -24,10 +24,12 @@ import useRepaireStore from '../../../store/useRepaireStore';
 import { RepaireStepper } from '@/conponents/repair/RepaireStepper';
 import { RepaireConfirm } from '@/conponents/repair/RepaireConfirm';
 import { RepaireComplete } from '@/conponents/repair/RepaireComplete';
+import { FactoryModal } from '@/conponents/repair/FactoryModal';
 
 const RepairNew = () => {
   const session = useStore((state) => state.session);
   const [dragIndex, setDragIndex] = useState<any>(null);
+  const [factory, setFactory] = useState("");
   const repaire = useRepaireStore((state) => state.repaire);
   const setRepaire = useRepaireStore((state) => state.setRepaire);
   const [active, setActive] = useState(1);
@@ -36,7 +38,7 @@ const RepairNew = () => {
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
 
-  const { getValues, register, handleSubmit, control } = useForm<RepaireInputs>(
+  const { getValues, setValue, watch, register, handleSubmit, control } = useForm<RepaireInputs>(
     {
       defaultValues: {
         ...repaire,
@@ -65,7 +67,7 @@ const RepairNew = () => {
 
   const onSubmit: SubmitHandler<RepaireInputs> = (data) => {
     nextStep();
-    setRepaire(data);
+    setRepaire({ ...data, factory });
   };
   console.log('repair', repaire);
 
@@ -133,16 +135,23 @@ const RepairNew = () => {
                     sx={{ flexDirection: 'column' }}
                     direction={{ sm: 'row' }}
                   >
-                    <Autocomplete
+                    <Flex
+                      gap={6}
+                      align="end"
                       w="100%"
-                      maw={{ md: '350px' }}
-                      label="加工場"
-                      required
-                      defaultValue={repaire?.factory}
-                      {...register('factory', { required: true })}
-                      onChange={getValues}
-                      data={['徳島工場', '大野制帽所', 'ひつじや', 'トシカワ']}
-                    />
+                      maw={{ md: '350px' }}>
+                      <TextInput
+                        w="100%"
+                        label="加工場"
+                        required
+                        disabled
+                        defaultValue={repaire?.factory}
+                        {...register('factory', { required: true })}
+                        value={factory}
+                        onChange={() => setValue('factory', factory)}
+                      />
+                      <FactoryModal factory={factory} setFactory={setFactory} />
+                    </Flex>
                     <Autocomplete
                       w="100%"
                       maw={{ md: '500px' }}
