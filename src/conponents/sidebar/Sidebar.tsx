@@ -19,6 +19,7 @@ const data = [
   { link: '', label: 'テンプレート作成', icon: '' },
   { link: '/profile', label: 'プロフィール', icon: '' },
   { link: '/auth', label: '管理画面', icon: '' },
+  { link: '/settings/factories', label: '工場', icon: '' },
 ];
 
 export const Sidebar = () => {

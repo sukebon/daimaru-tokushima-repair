@@ -29,7 +29,7 @@ import { FactoryModal } from '@/conponents/repair/FactoryModal';
 const RepairNew = () => {
   const session = useStore((state) => state.session);
   const [dragIndex, setDragIndex] = useState<any>(null);
-  const [factory, setFactory] = useState("");
+  const [factory, setFactory] = useState({ id: "1", name: "徳島工場" });
   const repaire = useRepaireStore((state) => state.repaire);
   const setRepaire = useRepaireStore((state) => state.setRepaire);
   const [active, setActive] = useState(1);
@@ -65,11 +65,11 @@ const RepairNew = () => {
     remove(index);
   };
 
+  console.log('repair', repaire);
   const onSubmit: SubmitHandler<RepaireInputs> = (data) => {
     nextStep();
-    setRepaire({ ...data, factory });
+    setRepaire({ ...data, factory: factory.id });
   };
-  console.log('repair', repaire);
 
   // ドラッグ&ドロップ
   const dragStart = (index: any) => {
@@ -145,10 +145,9 @@ const RepairNew = () => {
                         label="加工場"
                         required
                         disabled
-                        defaultValue={repaire?.factory}
-                        {...register('factory', { required: true })}
-                        value={factory}
-                        onChange={() => setValue('factory', factory)}
+                        // {...register('factory')}
+                        onChange={(e) => setFactory({ ...factory, name: e.target.value })}
+                        value={factory.name}
                       />
                       <FactoryModal factory={factory} setFactory={setFactory} />
                     </Flex>

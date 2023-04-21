@@ -4,17 +4,17 @@ import { FC } from 'react';
 import { FaListAlt } from "react-icons/fa";
 
 type Props = {
-  factory: string;
-  setFactory: (payload: string) => void;
+  factory: { id: string, name: string; };
+  setFactory: (payload: { id: string, name: string; }) => void;
 };
 
 export const FactoryModal: FC<Props> = ({ factory, setFactory }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
   const array = [
-    { id: 1, name: '徳島工場' },
-    { id: 2, name: '高田屋刺繍' },
-    { id: 3, name: '船越刺繍' }
+    { id: "1", name: '徳島工場' },
+    { id: "2", name: '高田屋刺繍' },
+    { id: "3", name: '船越刺繍' }
   ];
 
   return (
@@ -27,7 +27,7 @@ export const FactoryModal: FC<Props> = ({ factory, setFactory }) => {
       >
         <Flex gap={6}>
           {array?.map((value) => (
-            <Button color='teal' key={value.id} onClick={() => { setFactory(value.name); close(); }}>{value.name}</Button>
+            <Button color='teal' key={value.id} onClick={() => { setFactory({ id: value.id, name: value.name }); close(); }}>{value.name}</Button>
           ))}
         </Flex>
       </Modal>

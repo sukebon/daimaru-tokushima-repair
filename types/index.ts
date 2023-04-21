@@ -39,6 +39,13 @@ export type RepaireInputs = {
   user_id: string | undefined;
 };
 
+export type Factory = {
+  id: string;
+  name: string;
+  updated_at: string;
+  created_at: string;
+};
+
 export type EditedTask = {
   id: number;
   title: string;
