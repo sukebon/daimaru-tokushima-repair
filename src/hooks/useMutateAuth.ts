@@ -6,35 +6,31 @@ import { useQueryClient } from '@tanstack/react-query';
 export const useMutateAuth = () => {
   const router = useRouter();
 
-  const loginMutation = useMutation(
-    async (params: { email: string; password: string }) => {
-      const { data, error } = await supabase.auth.signInWithPassword({
+  const loginMutation = useMutation({
+    mutationFn: async (params: { email: string; password: string }) => {
+      const { error } = await supabase.auth.signInWithPassword({
         email: params.email,
         password: params.password,
       });
       if (error) throw new Error(error.message);
     },
-    {
-      onError: (err: any) => {
-        alert(err.message);
-      },
-    }
-  );
+    onError: (err: any) => {
+      alert(err.message);
+    },
+  });
 
-  const registerMutation = useMutation(
-    async (params: { email: string; password: string }) => {
+  const registerMutation = useMutation({
+    mutationFn: async (params: { email: string; password: string }) => {
       const { error } = await supabase.auth.signUp({
         email: params.email,
         password: params.password,
       });
       if (error) throw new Error(error.message);
     },
-    {
-      onError: (err: any) => {
-        alert(err.message);
-      },
-    }
-  );
+    onError: (err: any) => {
+      alert(err.message);
+    },
+  });
 
   const queryClient = useQueryClient();
   const logout = async () => {

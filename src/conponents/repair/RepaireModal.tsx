@@ -106,7 +106,6 @@ export const RepaireModal: FC = () => {
             horizontalSpacing="xs"
             verticalSpacing="xs"
             fontSize="xs"
-            miw={1000}
             maw={1000}
           >
             <thead>
