@@ -1,21 +1,30 @@
-import { RepaireInputs } from '../types';
+import { RepairInputs } from '../types';
 import { create } from 'zustand';
 type State = {
-  repaire: RepaireInputs | null;
-  setRepaire: (payload: RepaireInputs | null) => void;
+  repair: RepairInputs | null;
+  setRepair: (payload: RepairInputs | null) => void;
+  resetRepair: () => void;
 };
 const useRepaireStore = create<State>((set) => ({
-  repaire: {
-    factory: '',
-    deadline: null,
+  repair: {
+    factory: {
+      id: '',
+      name: '',
+    },
+    deadline: '',
     deliveryPlace: '',
     client: '',
-    price: 0,
-    title: '',
     orderType: 'REPAIRE',
     category: 'PREV',
     user_id: '',
     comment: '',
+    contents: [
+      {
+        title: '',
+        price: '',
+        path: '',
+      },
+    ],
     products: [
       {
         productNumber: '',
@@ -25,9 +34,40 @@ const useRepaireStore = create<State>((set) => ({
       },
     ],
   },
-  setRepaire: (payload) =>
+  setRepair: (payload) =>
     set({
-      repaire: payload,
+      repair: payload,
+    }),
+  resetRepair: () =>
+    set({
+      repair: {
+        factory: {
+          id: '',
+          name: '',
+        },
+        deadline: '',
+        deliveryPlace: '',
+        client: '',
+        orderType: 'REPAIRE',
+        category: 'PREV',
+        user_id: '',
+        comment: '',
+        contents: [
+          {
+            title: '',
+            price: 0,
+            path: '',
+          },
+        ],
+        products: [
+          {
+            productNumber: '',
+            size: '',
+            quantity: '',
+            comment: '',
+          },
+        ],
+      },
     }),
 }));
 

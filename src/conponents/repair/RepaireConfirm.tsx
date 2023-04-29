@@ -3,7 +3,7 @@ import { Text, Flex, Box, Stack, Table } from '@mantine/core';
 import useRepaireStore from '../../../store/useRepaireStore';
 
 export const RepaireConfirm: FC = () => {
-  const repaire = useRepaireStore((state) => state.repaire);
+  const repaire = useRepaireStore((state) => state.repair);
   return (
     <>
       <Flex p={6} justify="center">
@@ -12,7 +12,7 @@ export const RepaireConfirm: FC = () => {
       <Stack mt={24} p={6} spacing={24}>
         <Box>
           <Text fz="xs">工場名</Text>
-          <Text fz="xl">{repaire?.factory}</Text>
+          <Text fz="xl">{repaire?.factory.name}</Text>
         </Box>
         <Flex gap={24} direction={{ base: 'column', md: 'row' }}>
           <Box>
@@ -26,10 +26,6 @@ export const RepaireConfirm: FC = () => {
           <Box>
             <Text fz="xs">顧客名</Text>
             <Text fz="xl">{repaire?.client}</Text>
-          </Box>
-          <Box>
-            <Text fz="xs">修理名</Text>
-            <Text fz="xl">{repaire?.title}</Text>
           </Box>
         </Flex>
         <Flex gap={24} direction={{ base: 'column', md: 'row' }}>
@@ -45,17 +41,44 @@ export const RepaireConfirm: FC = () => {
               {repaire?.category === 'PREV' ? '前回通り' : '新規'}
             </Text>
           </Box>
-          <Box>
-            <Text fz="xs">単価</Text>
-            <Text fz="xl">{repaire?.price}円</Text>
-          </Box>
         </Flex>
 
         <Box sx={{ overflow: 'auto' }}>
           <Table
             horizontalSpacing="xs"
             verticalSpacing="xs"
-            fontSize="md"
+            fontSize="sm"
+            miw={500}
+            maw={1000}
+          >
+            <thead>
+              <tr>
+                <th>修理名</th>
+                <th>価格</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {repaire?.contents.map(
+                (
+                  content,
+                  index: number
+                ) => (
+                  <tr key={index}>
+                    <td style={{ width: "75%" }}>{content.title}</td>
+                    <td style={{ width: "25%" }}>{content.price}円</td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </Table>
+        </Box>
+
+        <Box sx={{ overflow: 'auto' }}>
+          <Table
+            horizontalSpacing="xs"
+            verticalSpacing="xs"
+            fontSize="sm"
             miw={500}
             maw={1000}
           >
@@ -70,19 +93,14 @@ export const RepaireConfirm: FC = () => {
             <tbody>
               {repaire?.products.map(
                 (
-                  product: {
-                    productNumber: string;
-                    size: string;
-                    quantity: number;
-                    comment: string;
-                  },
+                  product,
                   index: number
                 ) => (
                   <tr key={index}>
-                    <td>{product.productNumber}</td>
+                    <td style={{ width: "50%" }}>{product.productNumber}</td>
                     <td>{product.size}</td>
                     <td>{product.quantity}</td>
-                    <td>{product.comment}</td>
+                    <td style={{ width: "25%" }}>{product.comment}</td>
                   </tr>
                 )
               )}

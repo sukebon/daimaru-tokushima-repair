@@ -1,7 +1,8 @@
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, Group, Button, Box, Input, Flex } from '@mantine/core';
+import { Modal, Button, Flex, TextInput, Box, ScrollArea, Drawer } from '@mantine/core';
 import { FC } from 'react';
-import { FaListAlt } from "react-icons/fa";
+import { useQueryFactories } from '@/hooks/settings/useQueryFactories';
+import { Factory } from '../../../types';
 
 type Props = {
   factory: { id: string, name: string; };
@@ -9,29 +10,41 @@ type Props = {
 };
 
 export const FactoryModal: FC<Props> = ({ factory, setFactory }) => {
+  const { data: factories } = useQueryFactories();
   const [opened, { open, close }] = useDisclosure(false);
-
-  const array = [
-    { id: "1", name: '徳島工場' },
-    { id: "2", name: '高田屋刺繍' },
-    { id: "3", name: '船越刺繍' }
-  ];
 
   return (
     <>
       <Modal
         opened={opened}
         onClose={close}
-        withCloseButton={false}
         yOffset={100}
+        size="lg"
+        zIndex={10000}
+        lockScroll={true}
       >
-        <Flex gap={6}>
-          {array?.map((value) => (
-            <Button color='teal' key={value.id} onClick={() => { setFactory({ id: value.id, name: value.name }); close(); }}>{value.name}</Button>
+        {/* <Drawer opened={opened} onClose={close} position='right' title="Focus demo" size="30%" zIndex={10000} lockScroll={true}> */}
+        <Flex gap={6} direction="row" wrap="wrap">
+          {factories?.map((value: Factory) => (
+            <Box key={value.id} >
+              <Button color='teal' onClick={() => { setFactory({ id: value.id, name: value.name }); close(); }}>{value.name}</Button>
+            </Box>
           ))}
         </Flex>
+        {/* </Drawer> */}
       </Modal>
-      <FaListAlt cursor="pointer" fontSize={37} color="gray" onClick={open} />
+      <TextInput
+        style={{ cursor: 'pointer' }}
+        w="100%"
+        label="加工場"
+        required
+        readOnly
+        onClick={open}
+        onChange={(e) => setFactory({ ...factory, name: e.target.value })}
+        value={factory.name}
+        sx={{}}
+      />
+
     </>
   );
 };

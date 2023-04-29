@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { supabase } from '../../../utils/supabase';
-import { RepaireInputs } from '../../../types';
+import { RepairInputs } from '../../../types';
 
 export const useMutateRepair = () => {
   const queryClient = useQueryClient();
 
   const createRepairMutation = useMutation({
-    mutationFn: async (repair: Omit<RepaireInputs, 'products'>) => {
+    mutationFn: async (repair: Omit<RepairInputs, 'products'>) => {
       const { data, error } = await supabase
         .from('repairs')
         .insert(repair)
