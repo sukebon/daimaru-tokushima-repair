@@ -27,12 +27,12 @@ export type RepairInputs = {
   };
   deliveryPlace: string;
   deadline: string;
-  client: string;
+  customer: string;
   orderType: string;
   category: string;
   contents: { title: string; price: any; path: string }[];
   products: {
-    productNumber: string;
+    product_name: string;
     size: string;
     quantity: any;
     comment: string;
@@ -44,7 +44,7 @@ export type RepairInputs = {
 export type Factory = {
   id: string;
   name: string;
-  updated_at: string;
+  updated_at: string | null;
   created_at: string;
 };
 

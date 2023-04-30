@@ -25,7 +25,7 @@ export const RepaireConfirm: FC = () => {
           </Box>
           <Box>
             <Text fz="xs">顧客名</Text>
-            <Text fz="xl">{repaire?.client}</Text>
+            <Text fz="xl">{repaire?.customer}</Text>
           </Box>
         </Flex>
         <Flex gap={24} direction={{ base: 'column', md: 'row' }}>
@@ -97,7 +97,7 @@ export const RepaireConfirm: FC = () => {
                   index: number
                 ) => (
                   <tr key={index}>
-                    <td style={{ width: "50%" }}>{product.productNumber}</td>
+                    <td style={{ width: "50%" }}>{product.product_name}</td>
                     <td>{product.size}</td>
                     <td>{product.quantity}</td>
                     <td style={{ width: "25%" }}>{product.comment}</td>

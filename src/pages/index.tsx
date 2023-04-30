@@ -1,13 +1,27 @@
 import Head from 'next/head';
 import { Inter } from 'next/font/google';
-import useQueryProfiles from '@/hooks/useQueryProfiles';
-import { useEffect } from 'react';
-import { Box } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import { supabase } from '../../utils/supabase';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function Home() {
+type Factory = {
+  created_at: string | null;
+  id: string;
+  name: string;
+  updated_at: string | null;
+}[] | null;
 
+
+export default function Home() {
+  const [hello, setHello] = useState<Factory>();
+  useEffect(() => {
+    const getHelloWorld = async () => {
+      const { data } = await supabase.rpc('get_factories');
+      setHello(data);
+    };
+    getHelloWorld();
+  }, []);
 
   return (
     <>

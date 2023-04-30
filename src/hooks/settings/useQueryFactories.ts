@@ -1,7 +1,5 @@
-import React from 'react';
 import { supabase } from '../../../utils/supabase';
 import { useQuery } from '@tanstack/react-query';
-import { Factory } from '../../../types';
 
 export const useQueryFactories = () => {
   const getFactories = async () => {
@@ -11,7 +9,7 @@ export const useQueryFactories = () => {
       .order('created_at', { ascending: false });
     return data;
   };
-  return useQuery<any>({
+  return useQuery({
     queryKey: ['factories'],
     queryFn: getFactories,
   });

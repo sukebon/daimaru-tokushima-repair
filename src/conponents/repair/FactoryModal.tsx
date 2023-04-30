@@ -2,7 +2,6 @@ import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button, Flex, TextInput, Box, ScrollArea, Drawer } from '@mantine/core';
 import { FC } from 'react';
 import { useQueryFactories } from '@/hooks/settings/useQueryFactories';
-import { Factory } from '../../../types';
 
 type Props = {
   factory: { id: string, name: string; };
@@ -23,15 +22,13 @@ export const FactoryModal: FC<Props> = ({ factory, setFactory }) => {
         zIndex={10000}
         lockScroll={true}
       >
-        {/* <Drawer opened={opened} onClose={close} position='right' title="Focus demo" size="30%" zIndex={10000} lockScroll={true}> */}
         <Flex gap={6} direction="row" wrap="wrap">
-          {factories?.map((value: Factory) => (
-            <Box key={value.id} >
+          {factories?.map((value) => (
+            <Box key={value?.id} >
               <Button color='teal' onClick={() => { setFactory({ id: value.id, name: value.name }); close(); }}>{value.name}</Button>
             </Box>
           ))}
         </Flex>
-        {/* </Drawer> */}
       </Modal>
       <TextInput
         style={{ cursor: 'pointer' }}

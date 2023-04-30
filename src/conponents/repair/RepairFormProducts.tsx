@@ -27,7 +27,7 @@ export const RepairFormProducts: FC<Props> = ({ register, control, getValues, er
   });
   const addProduct = () => {
     append({
-      productNumber: '',
+      product_name: '',
       size: '',
       quantity: '',
       comment: '',
@@ -109,7 +109,7 @@ export const RepairFormProducts: FC<Props> = ({ register, control, getValues, er
                 <td width="50%">
                   <TextInput
                     required
-                    {...register(`products.${index}.productNumber` as const)}
+                    {...register(`products.${index}.product_name` as const)}
                   />
                 </td>
                 <td draggable={false}>
@@ -124,7 +124,7 @@ export const RepairFormProducts: FC<Props> = ({ register, control, getValues, er
                       fontSize={16}
                       cursor="pointer"
                       onClick={() => update(index, {
-                        productNumber: getValues(`products.${index}.productNumber`),
+                        product_name: getValues(`products.${index}.product_name`),
                         quantity: Number(getValues(`products.${index}.quantity`)) - 1,
                         size: getValues(`products.${index}.size`),
                         comment: getValues(`products.${index}.comment`),
@@ -144,7 +144,7 @@ export const RepairFormProducts: FC<Props> = ({ register, control, getValues, er
                       fontSize={16}
                       cursor="pointer"
                       onClick={() => update(index, {
-                        productNumber: getValues(`products.${index}.productNumber`),
+                        product_name: getValues(`products.${index}.product_name`),
                         quantity: Number(getValues(`products.${index}.quantity`)) + 1,
                         size: getValues(`products.${index}.size`),
                         comment: getValues(`products.${index}.comment`),

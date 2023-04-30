@@ -1,8 +1,8 @@
 import { RepairInputs } from '../types';
 import { create } from 'zustand';
 type State = {
-  repair: RepairInputs | null;
-  setRepair: (payload: RepairInputs | null) => void;
+  repair: RepairInputs;
+  setRepair: (payload: RepairInputs) => void;
   resetRepair: () => void;
 };
 const useRepaireStore = create<State>((set) => ({
@@ -13,7 +13,7 @@ const useRepaireStore = create<State>((set) => ({
     },
     deadline: '',
     deliveryPlace: '',
-    client: '',
+    customer: '',
     orderType: 'REPAIRE',
     category: 'PREV',
     user_id: '',
@@ -27,7 +27,7 @@ const useRepaireStore = create<State>((set) => ({
     ],
     products: [
       {
-        productNumber: '',
+        product_name: '',
         size: '',
         quantity: '',
         comment: '',
@@ -47,7 +47,7 @@ const useRepaireStore = create<State>((set) => ({
         },
         deadline: '',
         deliveryPlace: '',
-        client: '',
+        customer: '',
         orderType: 'REPAIRE',
         category: 'PREV',
         user_id: '',
@@ -61,7 +61,7 @@ const useRepaireStore = create<State>((set) => ({
         ],
         products: [
           {
-            productNumber: '',
+            product_name: '',
             size: '',
             quantity: '',
             comment: '',

@@ -22,6 +22,7 @@ import { FactoryModal } from '@/conponents/repair/FactoryModal';
 import { RepairFormContents } from '@/conponents/repair/RepairFormContents';
 import { RepairFormProducts } from '@/conponents/repair/RepairFormProducts';
 import { Divider } from '@mantine/core';
+import { useMutateRepair } from '@/hooks/repairs/useMutateRepair';
 
 const RepairNew = () => {
   const session = useStore((state) => state.session);
@@ -29,6 +30,7 @@ const RepairNew = () => {
   const repair = useRepaireStore((state) => state.repair);
   const setRepaire = useRepaireStore((state) => state.setRepair);
   const resetRepair = useRepaireStore((state) => state.resetRepair);
+  const { createRepairMutation } = useMutateRepair();
 
   const [active, setActive] = useState(1);
   const nextStep = () =>
@@ -122,7 +124,7 @@ const RepairNew = () => {
                       label="顧客名"
                       maw={{ md: '350px' }}
                       required
-                      {...register('client', { required: true })}
+                      {...register('customer', { required: true })}
                     />
 
                     <Radio.Group
@@ -199,6 +201,7 @@ const RepairNew = () => {
                   戻る
                 </Button>
                 <Button color="teal" onClick={() => {
+                  createRepairMutation.mutate(repair);
                   nextStep();
                   resetRepair();
                 }}>
