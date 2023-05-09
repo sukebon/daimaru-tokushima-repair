@@ -29,8 +29,8 @@ export const Sidebar = () => {
   const dark = colorScheme === 'dark';
   const { logout } = useMutateAuth();
 
-  const links = data.map((item) => (
-    <Link key={item.label} href={item.link} style={{ textDecoration: 'none' }}>
+  const links = data.map((item, index) => (
+    <Link key={index} href={item.link} style={{ textDecoration: 'none' }}>
       <Box
         className={cx(classes.link, {
           [classes.linkActive]: item.label === active,

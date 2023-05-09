@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { Inter } from 'next/font/google';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../utils/supabase';
+import { useQueryRepairs } from '@/hooks/repairs/useQueryRepairs';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,6 +15,7 @@ type Factory = {
 
 
 export default function Home() {
+
   const [hello, setHello] = useState<Factory>();
   useEffect(() => {
     const getHelloWorld = async () => {

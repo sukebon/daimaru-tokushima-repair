@@ -13,9 +13,9 @@ export const SidebarDrawer = () => {
     { link: '', label: 'テンプレート一覧', icon: '' },
     { link: '', label: 'テンプレート作成', icon: '' },
   ];
-  const links = data.map((item) => (
+  const links = data.map((item, index) => (
     <Link
-      key={item.link}
+      key={index}
       href={item.link}
       onClick={close}
       style={{ textDecoration: 'none', color: 'black' }}

@@ -1,65 +1,69 @@
 import { RepaireModal } from '@/conponents/repair/RepaireModal';
-import { Badge, Paper } from '@mantine/core';
+import { useQueryRepairs } from '@/hooks/repairs/useQueryRepairs';
+import { Badge, Box, Paper } from '@mantine/core';
 import { Table } from '@mantine/core';
+import { NextPage } from 'next';
 
-const Repairs = () => {
-  const repaires = [
-    {
-      id: '00005',
-      status: 'END',
-      staff: '向井',
-      client: '共同リネンサプライ',
-      title: '股下修理',
-      totalQuantity: 30,
-      price: 500,
-      deliveryPlace: '配送センター',
-      deadline: '2023-04-26',
-    },
-    {
-      id: '00004',
-      status: 'START',
-      staff: '向井',
-      client: '共同リネンサプライ',
-      title: '股下修理',
-      totalQuantity: 30,
-      price: 500,
-      deliveryPlace: '配送センター',
-      deadline: '2023-04-26',
-    },
-    {
-      id: '00003',
-      status: 'TOKUSHIMA',
-      staff: '向井',
-      client: '総合開発',
-      title: 'ワッペン付け',
-      totalQuantity: 30,
-      price: 500,
-      deliveryPlace: '配送センター',
-      deadline: '2023-04-26',
-    },
-    {
-      id: '00002',
-      status: 'TRANSFER',
-      staff: '向井',
-      client: '総合開発',
-      title: 'ワッペン付け',
-      totalQuantity: 30,
-      price: 500,
-      deliveryPlace: '配送センター',
-      deadline: '2023-04-26',
-    },
-    {
-      id: '00001',
-      status: 'WAREHOUSE',
-      staff: '向井',
-      client: '総合開発',
-      title: 'ワッペン付け',
-      totalQuantity: 30,
-      price: 500,
-      deliveryPlace: '配送センター',
-      deadline: '2023-04-26',
-    },
-  ];
+const Repairs: NextPage = () => {
+  const { data } = useQueryRepairs();
+  console.log(data);
+  // const repaires = [
+  //   {
+  //     id: '00005',
+  //     status: 'END',
+  //     staff: '向井',
+  //     customer: '共同リネンサプライ',
+  //     title: '股下修理',
+  //     totalQuantity: 30,
+  //     price: 500,
+  //     deliveryPlace: '配送センター',
+  //     deadline: '2023-04-26',
+  //   },
+  //   {
+  //     id: '00004',
+  //     status: 'START',
+  //     staff: '向井',
+  //     customer: '共同リネンサプライ',
+  //     title: '股下修理',
+  //     totalQuantity: 30,
+  //     price: 500,
+  //     deliveryPlace: '配送センター',
+  //     deadline: '2023-04-26',
+  //   },
+  //   {
+  //     id: '00003',
+  //     status: 'TOKUSHIMA',
+  //     staff: '向井',
+  //     customer: '総合開発',
+  //     title: 'ワッペン付け',
+  //     totalQuantity: 30,
+  //     price: 500,
+  //     deliveryPlace: '配送センター',
+  //     deadline: '2023-04-26',
+  //   },
+  //   {
+  //     id: '00002',
+  //     status: 'TRANSFER',
+  //     staff: '向井',
+  //     customer: '総合開発',
+  //     title: 'ワッペン付け',
+  //     totalQuantity: 30,
+  //     price: 500,
+  //     deliveryPlace: '配送センター',
+  //     deadline: '2023-04-26',
+  //   },
+  //   {
+  //     id: '00001',
+  //     status: 'WAREHOUSE',
+  //     staff: '向井',
+  //     customer: '総合開発',
+  //     title: 'ワッペン付け',
+  //     totalQuantity: 30,
+  //     price: 500,
+  //     deliveryPlace: '配送センター',
+  //     deadline: '2023-04-26',
+  //   },
+  // ];
 
   const getBadgeColor = (status: string) => {
     switch (status) {
@@ -78,19 +82,18 @@ const Repairs = () => {
     }
   };
 
-  const rows = repaires.map((repaire) => (
+  const rows = data?.map((repaire) => (
     <tr key={repaire.id}>
       <td>
         <RepaireModal />
       </td>
-      <td>{getBadgeColor(repaire.status)}</td>
+      <td>{getBadgeColor('WAREHOUSE')}</td>
       <td>{repaire.id}</td>
-      <td>{repaire.staff}</td>
-      <td>{repaire.client}</td>
-      <td>{repaire.title}</td>
-      <td>{repaire.totalQuantity}</td>
-      <td>{repaire.price}</td>
-      <td>{(repaire.price * repaire.totalQuantity).toLocaleString()}円</td>
+      <td>{repaire.user_id}</td>
+      <td>{repaire.customer}</td>
+      <td>{Array.isArray(repaire?.repair_contents) && repaire?.repair_contents?.map((content: any) => (
+        <Box key={content.id}>{content.title}</Box>
+      ))}</td>
       <td>{repaire.deliveryPlace}</td>
       <td>{repaire.deadline}</td>
     </tr>
