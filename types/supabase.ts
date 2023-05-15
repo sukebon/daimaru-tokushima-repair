@@ -128,6 +128,7 @@ export interface Database {
         Row: {
           created_at: string | null
           id: string
+          is_new: boolean | null
           path: string | null
           price: number | null
           repair_id: number | null
@@ -137,6 +138,7 @@ export interface Database {
         Insert: {
           created_at?: string | null
           id?: string
+          is_new?: boolean | null
           path?: string | null
           price?: number | null
           repair_id?: number | null
@@ -146,6 +148,7 @@ export interface Database {
         Update: {
           created_at?: string | null
           id?: string
+          is_new?: boolean | null
           path?: string | null
           price?: number | null
           repair_id?: number | null

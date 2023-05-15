@@ -111,7 +111,6 @@ const RepairNew = () => {
                       <TextInput
                         type="date"
                         w="100%"
-                        // maw="200px"
                         label="納期"
                         {...register('deadline')}
                       />
@@ -150,7 +149,7 @@ const RepairNew = () => {
                         />
                       </Group>
                     </Radio.Group>
-                    <Radio.Group
+                    {/* <Radio.Group
                       withAsterisk
                       label="区分"
                       defaultValue={repair?.category}
@@ -169,7 +168,7 @@ const RepairNew = () => {
                           {...register('category', { required: true })}
                         />
                       </Group>
-                    </Radio.Group>
+                    </Radio.Group> */}
                   </Flex>
                 </Stack>
                 <Divider

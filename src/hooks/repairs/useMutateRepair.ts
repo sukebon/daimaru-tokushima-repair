@@ -15,7 +15,6 @@ export const useMutateRepair = () => {
           deliveryPlace: repair.deliveryPlace,
           customer: repair.customer,
           order_type: repair.orderType,
-          category: repair.category,
           comment: repair.comment,
           user_id: repair.user_id,
         })
@@ -39,6 +38,7 @@ export const useMutateRepair = () => {
         title: content.title,
         price: Number(content.price),
         path: content.path,
+        is_new: content.is_new,
         repair_id: data[0].id,
       }));
       const { data: contentData } = await supabase

@@ -35,12 +35,12 @@ export const RepaireConfirm: FC = () => {
               {repaire?.orderType === 'REPAIRE' ? '修理' : 'マーク'}
             </Text>
           </Box>
-          <Box>
+          {/* <Box>
             <Text fz="xs">区分</Text>
             <Text fz="xl">
               {repaire?.category === 'PREV' ? '前回通り' : '新規'}
             </Text>
-          </Box>
+          </Box> */}
         </Flex>
 
         <Box sx={{ overflow: 'auto' }}>
@@ -55,7 +55,7 @@ export const RepaireConfirm: FC = () => {
               <tr>
                 <th>修理名</th>
                 <th>価格</th>
-
+                <th style={{ textAlign: "center" }}>新規/前回通り</th>
               </tr>
             </thead>
             <tbody>
@@ -65,8 +65,9 @@ export const RepaireConfirm: FC = () => {
                   index: number
                 ) => (
                   <tr key={index}>
-                    <td style={{ width: "75%" }}>{content.title}</td>
-                    <td style={{ width: "25%" }}>{content.price}円</td>
+                    <td style={{ width: "60%" }}>{content.title}</td>
+                    <td style={{ width: "20%" }}>{content.price}円</td>
+                    <td style={{ width: "20%", textAlign: "center" }}>{content.is_new ? "新規" : "前回通り"}</td>
                   </tr>
                 )
               )}

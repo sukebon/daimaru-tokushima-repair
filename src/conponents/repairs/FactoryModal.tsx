@@ -41,7 +41,6 @@ export const FactoryModal: FC<Props> = ({ factory, setFactory }) => {
         value={factory.name}
         sx={{}}
       />
-
     </>
   );
 };

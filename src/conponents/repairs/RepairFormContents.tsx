@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, NumberInput, TextInput } from '@mantine/core';
+import { Box, Button, Checkbox, Flex, Input, NumberInput, Text, TextInput } from '@mantine/core';
 import React, { FC } from 'react';
 import { Control, UseFormGetValues, UseFormRegister, useFieldArray } from 'react-hook-form';
 import { RepairInputs } from '../../../types';
@@ -22,6 +22,7 @@ export const RepairFormContents: FC<Props> = ({ register, control, getValues }) 
       title: '',
       price: 0,
       path: '',
+      is_new: false
     });
   };
   const removeContent = (index: number) => {
@@ -31,87 +32,55 @@ export const RepairFormContents: FC<Props> = ({ register, control, getValues }) 
   return (
     <>
       <Box sx={{ overflowX: 'auto' }}>
-        <Box
-          sx={{ width: '800px' }}
-          w={{ lg: "100%" }}>
-          {fields.map((field, index) => (
-            <Flex key={field.id} w="100%" gap={16} mb={16}>
-              {index === 0 ? (
-                <>
-                  <TextInput
-                    w="100%"
-                    label="修理名"
-                    required
-                    {...register(`contents.${index}.title` as const, { required: true })}
+        {fields.map((field, index) => (
+          <Box key={field.id} mb={16} sx={{ width: '800px' }} w={{ lg: "100%" }}>
+            <Flex gap={16}  >
+              <TextInput
+                w="100%"
+                label={index === 0 ? "修理名" : ""}
+                required
+                {...register(`contents.${index}.title` as const, { required: true })}
+              />
+              <NumberInput
+                w='150px'
+                label={index === 0 ? "価格" : ""}
+                required
+                defaultValue={0}
+                {...register(`contents.${index}.price` as const, { required: true })}
+                onChange={() => getValues()}
+                max={1000000}
+                min={0}
+              />
+              <TextInput
+                display="none"
+                {...register(`contents.${index}.path` as const)}
+              />
+              <Box>
+                {index === 0 ? <Box>　</Box> : ""}
+                <Flex align="center" gap={12}>
+                  <Button color="teal">テンプレート</Button>
+                  <MdOutlineCancel
+                    size={20}
+                    cursor={index === 0 ? '' : 'pointer'}
+                    opacity={index === 0 ? 0 : 1}
+                    onClick={() => {
+                      if (index === 0) return;
+                      removeContent(index);
+                    }}
                   />
-                  <NumberInput
-                    w='150px'
-                    label="価格"
-                    required
-                    defaultValue={0}
-                    {...register(`contents.${index}.price` as const, { required: true })}
-                    onChange={() => getValues()}
-                    max={1000000}
-                    min={0}
-                  />
-                  <TextInput
-                    display="none"
-                    {...register(`contents.${index}.path` as const)}
-                  />
-                  <Box>
-                    <Box>　</Box>
-                    <Flex align="center" gap={12}>
-                      <Button color="teal">テンプレート</Button>
-                      <MdOutlineCancel
-                        size={20}
-                        cursor={index === 0 ? '' : 'pointer'}
-                        opacity={index === 0 ? '0' : 1}
-                        onClick={() => {
-                          if (index === 0) return;
-                          removeContent(index);
-                        }}
-                      />
-                    </Flex>
-                  </Box>
-                </>
-              ) : (
-                <>
-                  <Input
-                    w="100%"
-                    {...register(`contents.${index}.title` as const)}
-                  />
-                  <NumberInput
-                    w='150px'
-                    required
-                    defaultValue={0}
-                    {...register(`contents.${index}.price` as const, { required: true })}
-                    onChange={() => getValues()}
-                    max={1000000}
-                    min={0}
-                  />
-                  <Input
-                    display="none"
-                    {...register(`contents.${index}.path` as const)}
-                  />
-                  <Flex align="center" gap={12}>
-                    <Button color="teal">テンプレート</Button>
-                    <MdOutlineCancel
-                      size={20}
-                      cursor={index === 0 ? '' : 'pointer'}
-                      opacity={index === 0 ? '0' : 1}
-                      onClick={() => {
-                        if (index === 0) return;
-                        removeContent(index);
-                      }}
-                    />
-                  </Flex>
-                </>
-              )}
+                </Flex>
+              </Box>
             </Flex>
-          ))}
-        </Box>
+            <Checkbox
+              mt="sm"
+              label="新規の場合はチェック"
+              color='teal'
+              {...register(`contents.${index}.is_new` as const)}
+            />
+          </Box>
+        ))}
       </Box>
-      <Flex justify="center">
+      <Flex justify="center" >
         <Button
           color="teal"
           leftIcon={<MdAddCircle />}

@@ -39,6 +39,7 @@ export type Repair = {
     title: string;
     price: number;
     path: string;
+    is_new: boolean;
   }[];
   repair_details: {
     id: string;
@@ -58,8 +59,12 @@ export type RepairInputs = {
   deadline: string;
   customer: string;
   orderType: string;
-  category: string;
-  contents: { title: string; price: any; path: string }[];
+  contents: {
+    title: string;
+    price: any;
+    path: string;
+    is_new: boolean;
+  }[];
   products: {
     product_name: string;
     size: string;

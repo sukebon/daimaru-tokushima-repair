@@ -1,16 +1,14 @@
-import { RepairTableRow } from '@/conponents/repairs/RepairTableRow';
 import { RepaireModal } from '@/conponents/repairs/RepaireModal';
 import { useQueryRepairs } from '@/hooks/repairs/useQueryRepairs';
 import { Badge, Box, Paper } from '@mantine/core';
 import { Table } from '@mantine/core';
 import { NextPage } from 'next';
-import { useState } from 'react';
-import { Repair } from '../../../types';
+import React from 'react';
 
 const Repairs: NextPage = () => {
   const { data, isLoading } = useQueryRepairs();
 
-  const getTotalQuantity = (arr: { quantity: number | null }[]) => {
+  const getTotalQuantity = (arr: { quantity: number | null; }[]) => {
     let total = 0;
     arr.forEach((value) => (total += value.quantity || 0));
     return total;
@@ -63,9 +61,10 @@ const Repairs: NextPage = () => {
             <th>予定納期</th>
           </tr>
         </thead>
+
         <tbody>
           {data?.map((repair) => (
-            <tr key={repair.id}>
+            <tr key={repair?.id}>
               <td>
                 <RepaireModal repair={repair} />
               </td>
@@ -78,17 +77,17 @@ const Repairs: NextPage = () => {
               <td>
                 {Array.isArray(repair?.repair_contents) &&
                   repair?.repair_contents?.map((content) => (
-                    <Box component="span" key={content.id}>
+                    <React.Fragment key={content.id}>
                       {content?.title}
-                    </Box>
+                    </React.Fragment>
                   ))}
               </td>
               <td>
                 {Array.isArray(repair?.repair_contents) &&
                   repair?.repair_contents?.map((content) => (
-                    <Box component="span" key={content.id}>
+                    <React.Fragment key={content.id}>
                       {content.price}
-                    </Box>
+                    </React.Fragment>
                   ))}
               </td>
               <td>
@@ -102,6 +101,7 @@ const Repairs: NextPage = () => {
           ))}
         </tbody>
       </Table>
+
     </Paper>
   );
 };

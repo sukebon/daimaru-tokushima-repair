@@ -15,7 +15,6 @@ const useRepaireStore = create<State>((set) => ({
     deliveryPlace: '',
     customer: '',
     orderType: 'REPAIRE',
-    category: 'PREV',
     user_id: '',
     comment: '',
     contents: [
@@ -23,6 +22,7 @@ const useRepaireStore = create<State>((set) => ({
         title: '',
         price: '',
         path: '',
+        is_new: false,
       },
     ],
     products: [
@@ -49,7 +49,6 @@ const useRepaireStore = create<State>((set) => ({
         deliveryPlace: '',
         customer: '',
         orderType: 'REPAIRE',
-        category: 'PREV',
         user_id: '',
         comment: '',
         contents: [
@@ -57,6 +56,7 @@ const useRepaireStore = create<State>((set) => ({
             title: '',
             price: 0,
             path: '',
+            is_new: false,
           },
         ],
         products: [

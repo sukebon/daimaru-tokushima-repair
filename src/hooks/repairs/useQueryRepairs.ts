@@ -15,7 +15,7 @@ export const useQueryRepairs = () => {
       profiles(id, username),
       factories(id, name),
       repair_details(id, product_name, size, quantity, comment),
-      repair_contents(id, title, price)
+      repair_contents(id, title, price, is_new)
       `);
 
     console.log(data);

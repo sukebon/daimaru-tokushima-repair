@@ -71,7 +71,7 @@ const Login = () => {
               {errors.password && <span>パスワードを入力してください</span>}
             </Box>
             <Flex w="100%">
-              <Button mt={6} type="submit" fullWidth>
+              <Button mt={6} type="submit" fullWidth color="teal">
                 ログイン
               </Button>
             </Flex>
