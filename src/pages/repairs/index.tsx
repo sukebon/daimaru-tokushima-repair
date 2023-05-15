@@ -1,69 +1,20 @@
-import { RepaireModal } from '@/conponents/repair/RepaireModal';
+import { RepairTableRow } from '@/conponents/repairs/RepairTableRow';
+import { RepaireModal } from '@/conponents/repairs/RepaireModal';
 import { useQueryRepairs } from '@/hooks/repairs/useQueryRepairs';
 import { Badge, Box, Paper } from '@mantine/core';
 import { Table } from '@mantine/core';
 import { NextPage } from 'next';
+import { useState } from 'react';
+import { Repair } from '../../../types';
 
 const Repairs: NextPage = () => {
-  const { data } = useQueryRepairs();
-  console.log(data);
-  // const repaires = [
-  //   {
-  //     id: '00005',
-  //     status: 'END',
-  //     staff: '向井',
-  //     customer: '共同リネンサプライ',
-  //     title: '股下修理',
-  //     totalQuantity: 30,
-  //     price: 500,
-  //     deliveryPlace: '配送センター',
-  //     deadline: '2023-04-26',
-  //   },
-  //   {
-  //     id: '00004',
-  //     status: 'START',
-  //     staff: '向井',
-  //     customer: '共同リネンサプライ',
-  //     title: '股下修理',
-  //     totalQuantity: 30,
-  //     price: 500,
-  //     deliveryPlace: '配送センター',
-  //     deadline: '2023-04-26',
-  //   },
-  //   {
-  //     id: '00003',
-  //     status: 'TOKUSHIMA',
-  //     staff: '向井',
-  //     customer: '総合開発',
-  //     title: 'ワッペン付け',
-  //     totalQuantity: 30,
-  //     price: 500,
-  //     deliveryPlace: '配送センター',
-  //     deadline: '2023-04-26',
-  //   },
-  //   {
-  //     id: '00002',
-  //     status: 'TRANSFER',
-  //     staff: '向井',
-  //     customer: '総合開発',
-  //     title: 'ワッペン付け',
-  //     totalQuantity: 30,
-  //     price: 500,
-  //     deliveryPlace: '配送センター',
-  //     deadline: '2023-04-26',
-  //   },
-  //   {
-  //     id: '00001',
-  //     status: 'WAREHOUSE',
-  //     staff: '向井',
-  //     customer: '総合開発',
-  //     title: 'ワッペン付け',
-  //     totalQuantity: 30,
-  //     price: 500,
-  //     deliveryPlace: '配送センター',
-  //     deadline: '2023-04-26',
-  //   },
-  // ];
+  const { data, isLoading } = useQueryRepairs();
+
+  const getTotalQuantity = (arr: { quantity: number | null }[]) => {
+    let total = 0;
+    arr.forEach((value) => (total += value.quantity || 0));
+    return total;
+  };
 
   const getBadgeColor = (status: string) => {
     switch (status) {
@@ -82,22 +33,6 @@ const Repairs: NextPage = () => {
     }
   };
 
-  const rows = data?.map((repaire) => (
-    <tr key={repaire.id}>
-      <td>
-        <RepaireModal />
-      </td>
-      <td>{getBadgeColor('WAREHOUSE')}</td>
-      <td>{repaire.id}</td>
-      <td>{repaire.user_id}</td>
-      <td>{repaire.customer}</td>
-      <td>{Array.isArray(repaire?.repair_contents) && repaire?.repair_contents?.map((content: any) => (
-        <Box key={content.id}>{content.title}</Box>
-      ))}</td>
-      <td>{repaire.deliveryPlace}</td>
-      <td>{repaire.deadline}</td>
-    </tr>
-  ));
   return (
     <Paper
       w="100%"
@@ -121,14 +56,51 @@ const Repairs: NextPage = () => {
             <th>担当</th>
             <th>顧客名</th>
             <th>修理内容</th>
-            <th>数量</th>
             <th>単価</th>
+            <th>数量</th>
             <th>合計</th>
             <th>納品先</th>
             <th>予定納期</th>
           </tr>
         </thead>
-        <tbody>{rows}</tbody>
+        <tbody>
+          {data?.map((repair) => (
+            <tr key={repair.id}>
+              <td>
+                <RepaireModal repair={repair} />
+              </td>
+              <td>{getBadgeColor('WAREHOUSE')}</td>
+              <td>{repair.id}</td>
+              <td>
+                {!Array.isArray(repair?.profiles) && repair?.profiles?.username}
+              </td>
+              <td>{repair.customer}</td>
+              <td>
+                {Array.isArray(repair?.repair_contents) &&
+                  repair?.repair_contents?.map((content) => (
+                    <Box component="span" key={content.id}>
+                      {content?.title}
+                    </Box>
+                  ))}
+              </td>
+              <td>
+                {Array.isArray(repair?.repair_contents) &&
+                  repair?.repair_contents?.map((content) => (
+                    <Box component="span" key={content.id}>
+                      {content.price}
+                    </Box>
+                  ))}
+              </td>
+              <td>
+                {Array.isArray(repair?.repair_details) &&
+                  getTotalQuantity(repair?.repair_details)}
+              </td>
+              <td>{repair.deadline}</td>
+              <td>{repair.deliveryPlace}</td>
+              <td>{repair.deadline}</td>
+            </tr>
+          ))}
+        </tbody>
       </Table>
     </Paper>
   );

@@ -38,6 +38,6 @@
   },
   "devDependencies": {
     "prisma": "^4.12.0",
-    "supabase": "^1.52.2"
+    "supabase": "^1.59.0"
   }
 }
