@@ -20,6 +20,35 @@ export type EditedProfile = {
   favorites: string | undefined;
 };
 
+export type Repair = {
+  id: string;
+  profiles: {
+    id: string;
+    username: string;
+  };
+  factories: {
+    id: string;
+    name: string;
+  };
+  customer: string;
+  deadline: string;
+  deliveryPlace: string;
+  comment: string;
+  repair_contents: {
+    id: string;
+    title: string;
+    price: number;
+    path: string;
+  }[];
+  repair_details: {
+    id: string;
+    product_name: string;
+    size: string;
+    quantity: number;
+    comment: string;
+  }[];
+};
+
 export type RepairInputs = {
   factory: {
     id: string;

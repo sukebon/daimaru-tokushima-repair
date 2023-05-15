@@ -15,18 +15,21 @@ import { useState } from 'react';
 import { RepairInputs } from '../../../types';
 import useStore from '../../../store';
 import useRepaireStore from '../../../store/useRepaireStore';
-import { RepaireStepper } from '@/conponents/repair/RepaireStepper';
-import { RepaireConfirm } from '@/conponents/repair/RepaireConfirm';
-import { RepaireComplete } from '@/conponents/repair/RepaireComplete';
-import { FactoryModal } from '@/conponents/repair/FactoryModal';
-import { RepairFormContents } from '@/conponents/repair/RepairFormContents';
-import { RepairFormProducts } from '@/conponents/repair/RepairFormProducts';
+import { RepaireStepper } from '@/conponents/repairs/RepaireStepper';
+import { RepaireConfirm } from '@/conponents/repairs/RepaireConfirm';
+import { RepaireComplete } from '@/conponents/repairs/RepaireComplete';
+import { FactoryModal } from '@/conponents/repairs/FactoryModal';
+import { RepairFormContents } from '@/conponents/repairs/RepairFormContents';
+import { RepairFormProducts } from '@/conponents/repairs/RepairFormProducts';
 import { Divider } from '@mantine/core';
 import { useMutateRepair } from '@/hooks/repairs/useMutateRepair';
 
 const RepairNew = () => {
   const session = useStore((state) => state.session);
-  const [factory, setFactory] = useState({ id: "c7e7fa95-5949-420b-a7df-9185560b7990", name: "徳島工場" });
+  const [factory, setFactory] = useState({
+    id: 'c7e7fa95-5949-420b-a7df-9185560b7990',
+    name: '徳島工場',
+  });
   const repair = useRepaireStore((state) => state.repair);
   const setRepaire = useRepaireStore((state) => state.setRepair);
   const resetRepair = useRepaireStore((state) => state.resetRepair);
@@ -38,14 +41,18 @@ const RepairNew = () => {
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
 
-  const { getValues, register, handleSubmit, control, formState: { errors } } = useForm<RepairInputs>(
-    {
-      defaultValues: {
-        ...repair,
-        user_id: session?.user.id,
-      },
-    }
-  );
+  const {
+    getValues,
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<RepairInputs>({
+    defaultValues: {
+      ...repair,
+      user_id: session?.user.id,
+    },
+  });
   const onSubmit: SubmitHandler<RepairInputs> = (data) => {
     console.log(data);
     nextStep();
@@ -87,11 +94,7 @@ const RepairNew = () => {
                     sx={{ flexDirection: 'column' }}
                     direction={{ sm: 'row' }}
                   >
-                    <Flex
-                      gap={6}
-                      align="end"
-                      w="100%"
-                      maw={{ md: '350px' }}>
+                    <Flex gap={6} align="end" w="100%" maw={{ md: '350px' }}>
                       <FactoryModal factory={factory} setFactory={setFactory} />
                     </Flex>
                     <Autocomplete
@@ -167,14 +170,39 @@ const RepairNew = () => {
                         />
                       </Group>
                     </Radio.Group>
-
                   </Flex>
                 </Stack>
-                <Divider mt={50} mb={10} variant="dashed" label="修理内容" labelPosition="center" />
-                <RepairFormContents register={register} control={control} getValues={getValues} />
-                <Divider mt={50} variant="dashed" label="修理明細" labelPosition="center" />
-                <RepairFormProducts register={register} control={control} getValues={getValues} errors={errors} />
-                <Divider mt={50} mb={10} variant="dashed" label="修理コメント" labelPosition="center" />
+                <Divider
+                  mt={50}
+                  mb={10}
+                  variant="dashed"
+                  label="修理内容"
+                  labelPosition="center"
+                />
+                <RepairFormContents
+                  register={register}
+                  control={control}
+                  getValues={getValues}
+                />
+                <Divider
+                  mt={50}
+                  variant="dashed"
+                  label="修理明細"
+                  labelPosition="center"
+                />
+                <RepairFormProducts
+                  register={register}
+                  control={control}
+                  getValues={getValues}
+                  errors={errors}
+                />
+                <Divider
+                  mt={50}
+                  mb={10}
+                  variant="dashed"
+                  label="修理コメント"
+                  labelPosition="center"
+                />
                 <Textarea
                   placeholder="コメント"
                   label="コメント"
@@ -189,7 +217,6 @@ const RepairNew = () => {
                     確認画面へ
                   </Button>
                 </Group>
-
               </form>
             </>
           )}
@@ -200,11 +227,14 @@ const RepairNew = () => {
                 <Button variant="default" onClick={prevStep}>
                   戻る
                 </Button>
-                <Button color="teal" onClick={() => {
-                  createRepairMutation.mutate(repair);
-                  nextStep();
-                  resetRepair();
-                }}>
+                <Button
+                  color="teal"
+                  onClick={() => {
+                    createRepairMutation.mutate(repair);
+                    nextStep();
+                    resetRepair();
+                  }}
+                >
                   確定
                 </Button>
               </Group>
