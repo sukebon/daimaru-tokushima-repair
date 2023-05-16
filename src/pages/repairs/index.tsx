@@ -1,14 +1,15 @@
-import { RepaireModal } from '@/conponents/repairs/RepaireModal';
 import { useQueryRepairs } from '@/hooks/repairs/useQueryRepairs';
-import { Badge, Box, Paper } from '@mantine/core';
+import { Badge, Button, Paper } from '@mantine/core';
 import { Table } from '@mantine/core';
 import { NextPage } from 'next';
+import Link from 'next/link';
 import React from 'react';
+import { createStyles } from '@mantine/core';
 
 const Repairs: NextPage = () => {
   const { data, isLoading } = useQueryRepairs();
-
-  const getTotalQuantity = (arr: { quantity: number | null; }[]) => {
+  const { classes } = useStyles();
+  const getTotalQuantity = (arr: { quantity: number | null }[]) => {
     let total = 0;
     arr.forEach((value) => (total += value.quantity || 0));
     return total;
@@ -55,7 +56,7 @@ const Repairs: NextPage = () => {
             <th>顧客名</th>
             <th>修理内容</th>
             <th>単価</th>
-            <th>数量</th>
+            <th className={classes.th}>数量</th>
             <th>合計</th>
             <th>納品先</th>
             <th>予定納期</th>
@@ -66,7 +67,11 @@ const Repairs: NextPage = () => {
           {data?.map((repair) => (
             <tr key={repair?.id}>
               <td>
-                <RepaireModal repair={repair} />
+                <Link href={`/repairs/${repair.id}`}>
+                  <Button size="xs" color="teal">
+                    詳細
+                  </Button>
+                </Link>
               </td>
               <td>{getBadgeColor('WAREHOUSE')}</td>
               <td>{repair.id}</td>
@@ -101,9 +106,15 @@ const Repairs: NextPage = () => {
           ))}
         </tbody>
       </Table>
-
     </Paper>
   );
 };
+
+const useStyles = createStyles((theme) => ({
+  th: {
+    width: '50px',
+    padding: 0,
+  },
+}));
 
 export default Repairs;

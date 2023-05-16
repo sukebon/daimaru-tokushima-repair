@@ -4,7 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 
 export const useQueryRepairs = () => {
   const getRepairs = async () => {
-    const { data } = await supabase.from('repairs').select(`
+    const { data } = await supabase
+      .from('repairs')
+      .select(
+        `
       id,user_id,
       category,
       customer,
@@ -16,9 +19,10 @@ export const useQueryRepairs = () => {
       factories(id, name),
       repair_details(id, product_name, size, quantity, comment),
       repair_contents(id, title, price, is_new)
-      `);
+      `
+      )
+      .order('id', { ascending: false });
 
-    console.log(data);
     return data;
   };
   return useQuery({
