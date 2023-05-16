@@ -43,7 +43,6 @@ export default function App({ Component, pageProps }: AppProps) {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      console.log(session);
       setSession(session);
       if (session) router.push('/');
       if (!session && router.pathname === '/signup') {

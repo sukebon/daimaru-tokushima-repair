@@ -1,18 +1,21 @@
 import { useQueryRepair } from '@/hooks/repairs/useQueryRepair';
 import { useQueryRepairNext } from '@/hooks/repairs/useQueryRepairNext';
 import { useQueryRepairPrev } from '@/hooks/repairs/useQueryRepairPrev';
-import { Badge, Box, Flex, Paper, Stack, Table } from '@mantine/core';
+import { Badge, Box, Button, Flex, Paper, Stack, Table } from '@mantine/core';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 const Repair: NextPage = () => {
   const router = useRouter();
-  const repairId = router.asPath.split('/').pop() || '';
+  const repairId = (router.asPath.split('/').pop() || '');
   const { data: repair } = useQueryRepair(repairId);
-  // const { data: nextlink } = useQueryRepairNext(repairId);
-  // const { data: prevlink } = useQueryRepairPrev(repairId);
+  const { data: prev } = useQueryRepairPrev(repairId);
+  const prevpage = prev?.find((_, i) => i === 0) || "";
+  const { data: next } = useQueryRepairNext(repairId);
+  const nextpage = next?.find((_, i) => i === 0) || "";
 
   return (
     <Paper
@@ -25,14 +28,6 @@ const Repair: NextPage = () => {
       withBorder
     >
       <Stack>
-        <Flex justify="space-between">
-          {/* <Link href={`/repairs/${prevlink?.id && String(prevlink?.id)}`}>
-            <Box>prev</Box>
-          </Link>
-          <Link href={`/repairs/${nextlink?.id && String(nextlink?.id)}`}>
-            <Box>next</Box>
-          </Link> */}
-        </Flex>
         <Badge color="teal" size="lg">
           倉庫
         </Badge>
@@ -82,7 +77,7 @@ const Repair: NextPage = () => {
           maw="auto"
         >
           <thead>
-            <tr>
+            <tr style={{ backgroundColor: "#f4f4f4" }}>
               <th style={{ textAlign: 'center' }}>修理名</th>
               <th style={{ width: '80px', textAlign: 'center' }}>単価</th>
               <th style={{ width: '80px', textAlign: 'center' }}>区分</th>
@@ -91,7 +86,7 @@ const Repair: NextPage = () => {
           <tbody>
             {Array.isArray(repair?.repair_contents) &&
               repair?.repair_contents.map((content) => (
-                <tr key={content.id}>
+                <tr key={content.id} >
                   <td>{content.title}</td>
                   <td style={{ textAlign: 'right' }}>{content.price || 0}円</td>
                   <td style={{ textAlign: 'center' }}>
@@ -111,7 +106,7 @@ const Repair: NextPage = () => {
           withColumnBorders
         >
           <thead>
-            <tr>
+            <tr style={{ backgroundColor: "#f4f4f4" }}>
               <th style={{ textAlign: 'center' }}>商品名</th>
               <th style={{ width: '60px', textAlign: 'center' }}>サイズ</th>
               <th style={{ width: '60px', textAlign: 'center' }}>数量</th>
@@ -136,6 +131,23 @@ const Repair: NextPage = () => {
           <Box>{repair?.comment}</Box>
         </Box>
       </Stack>
+      <Flex justify="center">
+        <Button.Group>
+          {prevpage && (
+            <Link href={`/repairs/${prevpage.id}`}>
+              <Button color="teal" radius={0} variant="default"><FaAngleLeft /></Button>
+            </Link>
+          )}
+          <Link href={`/repairs`}>
+            <Button color="teal" radius={0} variant="default">一覧へ</Button>
+          </Link>
+          {nextpage && (
+            <Link href={`/repairs/${nextpage.id}`}>
+              <Button color="teal" radius={0} variant="default"><FaAngleRight /></Button>
+            </Link>
+          )}
+        </Button.Group>
+      </Flex>
     </Paper>
   );
 };

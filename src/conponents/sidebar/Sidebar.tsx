@@ -9,18 +9,20 @@ import {
 } from '@mantine/core';
 import Link from 'next/link';
 import { useMutateAuth } from '@/hooks/useMutateAuth';
+import { useRouter } from 'next/router';
 
 const data = [
   { link: '/repairs', label: '修理伝票一覧', icon: '' },
   { link: '/repairs/new', label: '修理伝票作成', icon: '' },
-  { link: '', label: 'テンプレート一覧', icon: '' },
-  { link: '', label: 'テンプレート作成', icon: '' },
+  { link: '/templates', label: 'テンプレート一覧', icon: '' },
+  { link: 'templates/new', label: 'テンプレート作成', icon: '' },
   { link: '/profile', label: 'プロフィール', icon: '' },
   { link: '/auth', label: '管理画面', icon: '' },
   { link: '/settings/factories', label: '工場', icon: '' },
 ];
 
 export const Sidebar = () => {
+  const router = useRouter();
   const { classes, cx } = useStyles();
   const [active, setActive] = useState('Billing');
   const { colorScheme } = useMantineColorScheme();
@@ -31,7 +33,7 @@ export const Sidebar = () => {
     <Link key={index} href={item.link} style={{ textDecoration: 'none' }}>
       <Box
         className={cx(classes.link, {
-          [classes.linkActive]: item.label === active,
+          [classes.linkActive]: router.pathname === item.link,
         })}
         color={dark ? 'black' : 'white'}
         onClick={(e) => {
@@ -80,17 +82,15 @@ const useStyles = createStyles((theme) => ({
     color: theme.colorScheme === 'dark' ? 'white' : 'black',
     paddingBottom: theme.spacing.md,
     marginBottom: `calc(${theme.spacing.md} * 1.5)`,
-    borderBottom: `0.0625rem solid ${
-      theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'
-    };`,
+    borderBottom: `0.0625rem solid ${theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'
+      };`,
   },
 
   footer: {
     paddingTop: theme.spacing.md,
     marginTop: theme.spacing.md,
-    borderTop: `0.0625rem solid ${
-      theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'
-    };`,
+    borderTop: `0.0625rem solid ${theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'
+      };`,
   },
 
   link: {

@@ -1,5 +1,5 @@
 import { useQueryRepairs } from '@/hooks/repairs/useQueryRepairs';
-import { Badge, Button, Paper } from '@mantine/core';
+import { Badge, Box, Button, Paper } from '@mantine/core';
 import { Table } from '@mantine/core';
 import { NextPage } from 'next';
 import Link from 'next/link';
@@ -9,9 +9,10 @@ import { createStyles } from '@mantine/core';
 const Repairs: NextPage = () => {
   const { data, isLoading } = useQueryRepairs();
   const { classes } = useStyles();
-  const getTotalQuantity = (arr: { quantity: number | null }[]) => {
+
+  const getTotalQuantity = (arr: { quantity: number | null; }[]) => {
     let total = 0;
-    arr.forEach((value) => (total += value.quantity || 0));
+    arr.forEach((value) => (total += Number(value?.quantity) || 0));
     return total;
   };
 
@@ -83,7 +84,7 @@ const Repairs: NextPage = () => {
                 {Array.isArray(repair?.repair_contents) &&
                   repair?.repair_contents?.map((content) => (
                     <React.Fragment key={content.id}>
-                      {content?.title}
+                      <Box>{content?.title}</Box>
                     </React.Fragment>
                   ))}
               </td>
@@ -91,7 +92,7 @@ const Repairs: NextPage = () => {
                 {Array.isArray(repair?.repair_contents) &&
                   repair?.repair_contents?.map((content) => (
                     <React.Fragment key={content.id}>
-                      {content.price}
+                      <Box>{content?.price}円</Box>
                     </React.Fragment>
                   ))}
               </td>
