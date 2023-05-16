@@ -43,14 +43,18 @@ export default function App({ Component, pageProps }: AppProps) {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session);
-      });
+      console.log(session);
       setSession(session);
       if (session) router.push('/');
       if (!session && router.pathname === '/signup') {
         router.push('/signup');
-      } else if (!session) router.push('/login');
+      } else if (!session) {
+        router.push('/login');
+      }
+      supabase.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN') setSession(session);
+        if (event === 'SIGNED_OUT') setSession(null);
+      });
     };
     getSession();
   }, [setSession]);

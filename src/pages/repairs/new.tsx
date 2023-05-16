@@ -58,98 +58,93 @@ const RepairNew = () => {
     nextStep();
     setRepaire({ ...data, factory: { id: factory.id, name: factory.name } });
   };
-  console.log(errors);
-  return (
-    <>
-      {session && (
-        <Paper
-          w="100%"
-          maw="1050px"
-          shadow="md"
-          radius="md"
-          p="lg"
-          m="auto"
-          withBorder
-        >
-          <Flex p={24} justify="center">
-            <RepaireStepper active={active} />
-          </Flex>
-          {active === 1 && (
-            <>
-              <Group position="center" mt="xl">
-                <Button.Group buttonBorderWidth={1}>
-                  <Button variant="outline" size="xs" color="teal">
-                    ノート貼付
-                  </Button>
-                </Button.Group>
-              </Group>
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                style={{ marginTop: '30px' }}
-              >
-                <Stack w="100%">
-                  <Flex
-                    w="100%"
-                    gap={16}
-                    sx={{ flexDirection: 'column' }}
-                    direction={{ sm: 'row' }}
-                  >
-                    <Flex gap={6} align="end" w="100%" maw={{ md: '350px' }}>
-                      <FactoryModal factory={factory} setFactory={setFactory} />
-                    </Flex>
-                    <Autocomplete
-                      w="100%"
-                      maw={{ md: '500px' }}
-                      label="納入先"
-                      required
-                      defaultValue={repair?.deliveryPlace}
-                      {...register('deliveryPlace', { required: true })}
-                      onChange={getValues}
-                      data={['配送センター', 'ウィルフィット', '神戸店']}
-                    />
-                    <Flex gap={16} align="center">
-                      <TextInput
-                        type="date"
-                        w="100%"
-                        label="納期"
-                        {...register('deadline')}
-                      />
-                    </Flex>
-                  </Flex>
-                  <Flex
-                    gap={16}
-                    sx={{ flexDirection: 'column' }}
-                    direction={{ sm: 'row' }}
-                  >
-                    <TextInput
-                      w="100%"
-                      label="顧客名"
-                      maw={{ md: '350px' }}
-                      required
-                      {...register('customer', { required: true })}
-                    />
 
-                    <Radio.Group
-                      withAsterisk
-                      label="タイプ"
-                      defaultValue={repair?.orderType}
-                    >
-                      <Group mt="xs">
-                        <Radio
-                          color="teal"
-                          value="REPAIRE"
-                          label="修理"
-                          {...register('orderType', { required: true })}
-                        />
-                        <Radio
-                          color="teal"
-                          value="MARK"
-                          label="マーク"
-                          {...register('orderType', { required: true })}
-                        />
-                      </Group>
-                    </Radio.Group>
-                    {/* <Radio.Group
+  return (
+    <Paper
+      w="100%"
+      maw="1050px"
+      shadow="md"
+      radius="md"
+      p="lg"
+      m="auto"
+      withBorder
+    >
+      <Flex p={24} justify="center">
+        <RepaireStepper active={active} />
+      </Flex>
+      {active === 1 && (
+        <>
+          <Group position="center" mt="xl">
+            <Button.Group buttonBorderWidth={1}>
+              <Button variant="outline" size="xs" color="teal">
+                ノート貼付
+              </Button>
+            </Button.Group>
+          </Group>
+          <form onSubmit={handleSubmit(onSubmit)} style={{ marginTop: '30px' }}>
+            <Stack w="100%">
+              <Flex
+                w="100%"
+                gap={16}
+                sx={{ flexDirection: 'column' }}
+                direction={{ sm: 'row' }}
+              >
+                <Flex gap={6} align="end" w="100%" maw={{ md: '350px' }}>
+                  <FactoryModal factory={factory} setFactory={setFactory} />
+                </Flex>
+                <Autocomplete
+                  w="100%"
+                  maw={{ md: '500px' }}
+                  label="納入先"
+                  required
+                  defaultValue={repair?.deliveryPlace}
+                  {...register('deliveryPlace', { required: true })}
+                  onChange={getValues}
+                  data={['配送センター', 'ウィルフィット', '神戸店']}
+                />
+                <Flex gap={16} align="center">
+                  <TextInput
+                    type="date"
+                    w="100%"
+                    label="納期"
+                    {...register('deadline')}
+                  />
+                </Flex>
+              </Flex>
+              <Flex
+                gap={16}
+                sx={{ flexDirection: 'column' }}
+                direction={{ sm: 'row' }}
+              >
+                <TextInput
+                  w="100%"
+                  label="顧客名"
+                  maw={{ md: '350px' }}
+                  required
+                  {...register('customer', { required: true })}
+                />
+
+                <Radio.Group
+                  withAsterisk
+                  label="タイプ"
+                  defaultValue={repair?.orderType}
+                >
+                  <Group mt="xs">
+                    <Radio
+                      color="teal"
+                      value="REPAIRE"
+                      label="修理"
+                      {...register('orderType', { required: true })}
+                    />
+                    <Radio
+                      color="teal"
+                      value="MARK"
+                      label="マーク"
+                      {...register('orderType', { required: true })}
+                    />
+                  </Group>
+                </Radio.Group>
+                {/* <Radio.Group
                       withAsterisk
                       label="区分"
                       defaultValue={repair?.category}
@@ -169,80 +164,78 @@ const RepairNew = () => {
                         />
                       </Group>
                     </Radio.Group> */}
-                  </Flex>
-                </Stack>
-                <Divider
-                  mt={50}
-                  mb={10}
-                  variant="dashed"
-                  label="修理内容"
-                  labelPosition="center"
-                />
-                <RepairFormContents
-                  register={register}
-                  control={control}
-                  getValues={getValues}
-                />
-                <Divider
-                  mt={50}
-                  variant="dashed"
-                  label="修理明細"
-                  labelPosition="center"
-                />
-                <RepairFormProducts
-                  register={register}
-                  control={control}
-                  getValues={getValues}
-                  errors={errors}
-                />
-                <Divider
-                  mt={50}
-                  mb={10}
-                  variant="dashed"
-                  label="修理コメント"
-                  labelPosition="center"
-                />
-                <Textarea
-                  placeholder="コメント"
-                  label="コメント"
-                  size="sm"
-                  maw="1040px"
-                  minRows={5}
-                  autosize
-                  {...register('comment')}
-                />
-                <Group position="center" mt="xl">
-                  <Button color="teal" type="submit" sx={{ mt: 6 }}>
-                    確認画面へ
-                  </Button>
-                </Group>
-              </form>
-            </>
-          )}
-          {active === 2 && (
-            <>
-              <RepaireConfirm />
-              <Group position="center" mt="xl">
-                <Button variant="default" onClick={prevStep}>
-                  戻る
-                </Button>
-                <Button
-                  color="teal"
-                  onClick={() => {
-                    createRepairMutation.mutate(repair);
-                    nextStep();
-                    resetRepair();
-                  }}
-                >
-                  確定
-                </Button>
-              </Group>
-            </>
-          )}
-          {active === 3 && <RepaireComplete />}
-        </Paper>
+              </Flex>
+            </Stack>
+            <Divider
+              mt={50}
+              mb={10}
+              variant="dashed"
+              label="修理内容"
+              labelPosition="center"
+            />
+            <RepairFormContents
+              register={register}
+              control={control}
+              getValues={getValues}
+            />
+            <Divider
+              mt={50}
+              variant="dashed"
+              label="修理明細"
+              labelPosition="center"
+            />
+            <RepairFormProducts
+              register={register}
+              control={control}
+              getValues={getValues}
+              errors={errors}
+            />
+            <Divider
+              mt={50}
+              mb={10}
+              variant="dashed"
+              label="修理コメント"
+              labelPosition="center"
+            />
+            <Textarea
+              placeholder="コメント"
+              label="コメント"
+              size="sm"
+              maw="1040px"
+              minRows={5}
+              autosize
+              {...register('comment')}
+            />
+            <Group position="center" mt="xl">
+              <Button color="teal" type="submit" sx={{ mt: 6 }}>
+                確認画面へ
+              </Button>
+            </Group>
+          </form>
+        </>
       )}
-    </>
+      {active === 2 && (
+        <>
+          <RepaireConfirm />
+          <Group position="center" mt="xl">
+            <Button variant="default" onClick={prevStep}>
+              戻る
+            </Button>
+            <Button
+              color="teal"
+              onClick={() => {
+                createRepairMutation.mutate(repair);
+                nextStep();
+                resetRepair();
+              }}
+            >
+              確定
+            </Button>
+          </Group>
+        </>
+      )}
+      {active === 3 && <RepaireComplete />}
+    </Paper>
   );
 };
 
