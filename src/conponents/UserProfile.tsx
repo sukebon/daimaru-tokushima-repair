@@ -24,7 +24,7 @@ export const UserProfile = () => {
       username: editedProfile.username,
       email: editedProfile.email,
       favorites: editedProfile.favorites,
-      avatar_url: editedProfile.avatar_url
+      avatar_url: editedProfile.avatar_url,
     });
   };
   return (
@@ -36,14 +36,22 @@ export const UserProfile = () => {
       {profile?.updated_at && (
         <Box>{format(new Date(profile.updated_at), 'yyyy-MM-dd HH:mm:ss')}</Box>
       )}
-      <Input value={editedProfile.username || ''} onChange={
-        (e) => update({ ...editedProfile, username: e.target.value })
-      } />
-      <Input value={editedProfile.favorites || ''} onChange={
-        (e) => update({ ...editedProfile, favorites: e.target.value })
-      } />
-      <Button onClick={updateProfile}
-        disabled={updateProfileMutation.isLoading || !editedProfile.username}>{updateProfileMutation.isLoading ? 'Loading...' : 'Update'}</Button>
+      <Input
+        value={editedProfile.username || ''}
+        onChange={(e) => update({ ...editedProfile, username: e.target.value })}
+      />
+      <Input
+        value={editedProfile.favorites || ''}
+        onChange={(e) =>
+          update({ ...editedProfile, favorites: e.target.value })
+        }
+      />
+      <Button
+        onClick={updateProfile}
+        disabled={updateProfileMutation.isLoading || !editedProfile.username}
+      >
+        {updateProfileMutation.isLoading ? 'Loading...' : 'Update'}
+      </Button>
       {avatarUrl && (
         <Image src={avatarUrl} alt="Avatar" width={150} height={150} />
       )}
@@ -52,7 +60,7 @@ export const UserProfile = () => {
         <input
           type="file"
           placeholder="avatar"
-          accept='image/*'
+          accept="image/*"
           onChange={(e) => useMutateUploadAvatarImg.mutate(e)}
         />
       </Box>
