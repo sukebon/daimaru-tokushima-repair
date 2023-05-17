@@ -16,6 +16,7 @@ export const useMutateRepair = () => {
           customer: repair.customer,
           order_type: repair.orderType,
           comment: repair.comment,
+          status: repair.status,
           user_id: repair.user_id,
         })
         .select();

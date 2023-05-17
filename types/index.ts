@@ -73,6 +73,7 @@ export type RepairInputs = {
   }[];
   comment: string;
   user_id: string | undefined;
+  status: 'PICKING' | 'DIRECT';
 };
 
 export type Factory = {

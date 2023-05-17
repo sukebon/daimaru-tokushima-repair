@@ -15,6 +15,7 @@ export const useQueryRepairs = () => {
       deliveryPlace,
       comment,
       order_type,
+      status,
       profiles(id, username),
       factories(id, name),
       repair_details(id, product_name, size, quantity, comment),

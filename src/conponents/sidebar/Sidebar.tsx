@@ -14,17 +14,16 @@ import { useRouter } from 'next/router';
 const data = [
   { link: '/repairs', label: '修理伝票一覧', icon: '' },
   { link: '/repairs/new', label: '修理伝票作成', icon: '' },
-  { link: '/templates', label: 'テンプレート一覧', icon: '' },
-  { link: 'templates/new', label: 'テンプレート作成', icon: '' },
-  { link: '/profile', label: 'プロフィール', icon: '' },
+  // { link: '/templates', label: 'テンプレート一覧', icon: '' },
+  // { link: 'templates/new', label: 'テンプレート作成', icon: '' },
+  // { link: '/profile', label: 'プロフィール', icon: '' },
   { link: '/auth', label: '管理画面', icon: '' },
-  { link: '/settings/factories', label: '工場', icon: '' },
+  { link: '/settings/factories', label: '工場登録', icon: '' },
 ];
 
 export const Sidebar = () => {
   const router = useRouter();
   const { classes, cx } = useStyles();
-  const [active, setActive] = useState('Billing');
   const { colorScheme } = useMantineColorScheme();
   const dark = colorScheme === 'dark';
   const { logout } = useMutateAuth();
@@ -36,9 +35,6 @@ export const Sidebar = () => {
           [classes.linkActive]: router.pathname === item.link,
         })}
         color={dark ? 'black' : 'white'}
-        onClick={(e) => {
-          setActive(item.label);
-        }}
       >
         <Box component="span">{item.label}</Box>
       </Box>

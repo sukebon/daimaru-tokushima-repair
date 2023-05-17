@@ -13,6 +13,7 @@ export const useQueryRepair = (repairId: string | number) => {
       deadline,
       deliveryPlace,
       comment,
+      status,
       order_type,
       profiles(id, username),
       factories(id, name),

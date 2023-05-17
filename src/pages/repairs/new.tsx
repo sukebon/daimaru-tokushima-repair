@@ -144,26 +144,26 @@ const RepairNew = () => {
                     />
                   </Group>
                 </Radio.Group>
-                {/* <Radio.Group
-                      withAsterisk
-                      label="区分"
-                      defaultValue={repair?.category}
-                    >
-                      <Group mt="xs">
-                        <Radio
-                          color="teal"
-                          value="PREV"
-                          label="前回通り"
-                          {...register('category', { required: true })}
-                        />
-                        <Radio
-                          color="teal"
-                          value="NEW"
-                          label="新規"
-                          {...register('category', { required: true })}
-                        />
-                      </Group>
-                    </Radio.Group> */}
+                <Radio.Group
+                  withAsterisk
+                  label="入荷場所"
+                  defaultValue={repair?.status}
+                >
+                  <Group mt="xs">
+                    <Radio
+                      color="teal"
+                      value="PICKING"
+                      label="倉庫入れ"
+                      {...register('status', { required: true })}
+                    />
+                    <Radio
+                      color="teal"
+                      value="DIRECT"
+                      label="工場直送"
+                      {...register('status', { required: true })}
+                    />
+                  </Group>
+                </Radio.Group>
               </Flex>
             </Stack>
             <Divider

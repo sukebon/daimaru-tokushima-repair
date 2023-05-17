@@ -15,13 +15,18 @@ const Repairs: NextPage = () => {
     arr.forEach((value) => (total += Number(value?.quantity) || 0));
     return total;
   };
+  const getTotalPrice = (arr: { price: number | null; }[]) => {
+    let total = 0;
+    arr.forEach((value) => (total += Number(value?.price) || 0));
+    return total;
+  };
 
   const getBadgeColor = (status: string) => {
     switch (status) {
-      case 'WAREHOUSE':
-        return <Badge color="orange">倉庫</Badge>;
-      case 'TRANSFER':
-        return <Badge color="green">転送中</Badge>;
+      case 'PICKING':
+        return <Badge color="orange">倉庫入荷</Badge>;
+      case 'DIRECT':
+        return <Badge color="green">工場直送</Badge>;
       case 'TOKUSHIMA':
         return <Badge color="violet">徳島工場</Badge>;
       case 'FACTORY':
@@ -46,13 +51,13 @@ const Repairs: NextPage = () => {
         horizontalSpacing="xs"
         verticalSpacing="xs"
         fontSize="xs"
-        w={{ base: '1000px', md: '100%' }}
+        w={{ base: '1100px', md: '100%' }}
       >
         <thead>
           <tr>
             <th>詳細 </th>
-            <th>ステータス </th>
-            <th>伝票ナンバー </th>
+            <th>ステータス</th>
+            <th>伝票ナンバー</th>
             <th>担当</th>
             <th>顧客名</th>
             <th>修理内容</th>
@@ -74,7 +79,7 @@ const Repairs: NextPage = () => {
                   </Button>
                 </Link>
               </td>
-              <td>{getBadgeColor('WAREHOUSE')}</td>
+              <td>{getBadgeColor(repair.status)}</td>
               <td>{repair.id}</td>
               <td>
                 {!Array.isArray(repair?.profiles) && repair?.profiles?.username}
@@ -88,7 +93,7 @@ const Repairs: NextPage = () => {
                     </React.Fragment>
                   ))}
               </td>
-              <td>
+              <td className={classes.td}>
                 {Array.isArray(repair?.repair_contents) &&
                   repair?.repair_contents?.map((content) => (
                     <React.Fragment key={content.id}>
@@ -96,11 +101,20 @@ const Repairs: NextPage = () => {
                     </React.Fragment>
                   ))}
               </td>
-              <td>
+              <td className={classes.td}>
                 {Array.isArray(repair?.repair_details) &&
                   getTotalQuantity(repair?.repair_details)}
               </td>
-              <td>{repair.deadline}</td>
+              <td className={classes.td}>
+                {Array.isArray(repair?.repair_contents) &&
+                  repair?.repair_contents?.map((content) => (
+                    <React.Fragment key={content.id}>
+                      {Array.isArray(repair?.repair_details) && (
+                        <Box>{(content?.price || 0) * getTotalQuantity(repair?.repair_details)}円</Box>
+                      )}
+                    </React.Fragment>
+                  ))}
+              </td>
               <td>{repair.deliveryPlace}</td>
               <td>{repair.deadline}</td>
             </tr>
@@ -116,6 +130,9 @@ const useStyles = createStyles((theme) => ({
     width: '50px',
     padding: 0,
   },
+  td: {
+    textAlign: "right"
+  }
 }));
 
 export default Repairs;

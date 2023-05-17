@@ -23,7 +23,7 @@ const Layout: NextPage<Props> = ({ children }) => {
           </Flex>
         ) : (
           <>
-            <Flex sx={{ display: 'none' }} display={{ md: 'block' }}>
+            <Flex sx={{ display: 'none' }} display={{ lg: 'block' }}>
               <Sidebar />
             </Flex>
             <Flex w="100%" direction="column" justify="start">

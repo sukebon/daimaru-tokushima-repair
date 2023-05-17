@@ -17,6 +17,7 @@ const useRepaireStore = create<State>((set) => ({
     orderType: 'REPAIRE',
     user_id: '',
     comment: '',
+    status: 'PICKING',
     contents: [
       {
         title: '',
@@ -51,6 +52,7 @@ const useRepaireStore = create<State>((set) => ({
         orderType: 'REPAIRE',
         user_id: '',
         comment: '',
+        status: 'PICKING',
         contents: [
           {
             title: '',

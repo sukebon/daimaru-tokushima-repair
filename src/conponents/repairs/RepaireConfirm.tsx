@@ -35,12 +35,12 @@ export const RepaireConfirm: FC = () => {
               {repaire?.orderType === 'REPAIRE' ? '修理' : 'マーク'}
             </Text>
           </Box>
-          {/* <Box>
-            <Text fz="xs">区分</Text>
+          <Box>
+            <Text fz="xs">入荷場所</Text>
             <Text fz="xl">
-              {repaire?.category === 'PREV' ? '前回通り' : '新規'}
+              {repaire?.status === 'PICKING' ? '倉庫' : '工場直送'}
             </Text>
-          </Box> */}
+          </Box>
         </Flex>
 
         <Box sx={{ overflow: 'auto' }}>

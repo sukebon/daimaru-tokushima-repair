@@ -1,11 +1,11 @@
 import { useQueryRepair } from '@/hooks/repairs/useQueryRepair';
 import { useQueryRepairNext } from '@/hooks/repairs/useQueryRepairNext';
 import { useQueryRepairPrev } from '@/hooks/repairs/useQueryRepairPrev';
-import { Badge, Box, Button, Flex, Paper, Stack, Table } from '@mantine/core';
+import { Badge, Box, Button, Flex, Paper, Stack, Stepper, Table } from '@mantine/core';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 const Repair: NextPage = () => {
@@ -16,6 +16,26 @@ const Repair: NextPage = () => {
   const prevpage = prev?.find((_, i) => i === 0) || "";
   const { data: next } = useQueryRepairNext(repairId);
   const nextpage = next?.find((_, i) => i === 0) || "";
+  const [active, setActive] = useState(1);
+
+  const getBadgeColor = (status: string = "") => {
+    switch (status) {
+      case 'PICKING':
+        return <Badge color="orange">倉庫入荷</Badge>;
+      case 'DIRECT':
+        return <Badge color="green">工場直送</Badge>;
+      case 'TOKUSHIMA':
+        return <Badge color="violet">徳島工場</Badge>;
+      case 'FACTORY':
+        return <Badge color="violet">外注工場</Badge>;
+      case 'START':
+        return <Badge color="red">加工中</Badge>;
+      case 'END':
+        return <Badge color="indigo">完成</Badge>;
+      default:
+        break;
+    }
+  };
 
   return (
     <Paper
@@ -27,10 +47,15 @@ const Repair: NextPage = () => {
       m="auto"
       withBorder
     >
-      <Stack>
-        <Badge color="teal" size="lg">
-          倉庫
-        </Badge>
+      <Stepper color="teal" size="xs" active={active} >
+        <Stepper.Step label="倉庫" description="Picking" />
+        <Stepper.Step label="工場直送" description="Direct" />
+        <Stepper.Step label="作業A" description="a" />
+        <Stepper.Step label="作業B" description="b" />
+        <Stepper.Step label="作業C" description="c" />
+      </Stepper>
+      <Stack mt={24}>
+        {getBadgeColor(repair?.status)}
         <Flex
           gap={16}
           direction={{ base: 'column', md: 'row' }}
