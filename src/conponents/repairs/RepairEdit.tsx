@@ -17,6 +17,7 @@ import React, { FC } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Factory } from '../../../types';
 import { RepairEditContents } from './RepairEditContents';
+import { RepairEditDetails } from './RepairEditDetails';
 
 type Props = {
   repairId: number | undefined;
@@ -47,7 +48,7 @@ export const RepairEdit: FC<Props> = ({ repairId }) => {
         zIndex={10000}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack mt={24}>
+          <Stack mt={24} p="sm">
             <Flex
               gap={16}
               direction={{ base: 'column', md: 'row' }}
@@ -129,7 +130,12 @@ export const RepairEdit: FC<Props> = ({ repairId }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {Array.isArray(repair?.repair_details) &&
+                  <RepairEditDetails
+                    register={register}
+                    control={control}
+                    getValues={getValues}
+                  />
+                  {/* {Array.isArray(repair?.repair_details) &&
                     repair?.repair_details?.map((detail) => (
                       <tr key={detail.id}>
                         <td>{detail.product_name}</td>
@@ -139,7 +145,7 @@ export const RepairEdit: FC<Props> = ({ repairId }) => {
                         </td>
                         <td>{detail?.comment}</td>
                       </tr>
-                    ))}
+                    ))} */}
                 </tbody>
               </Table>
             </Box>
