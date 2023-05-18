@@ -1,30 +1,22 @@
 import { useDisclosure } from '@mantine/hooks';
-import { Drawer, Button, Group, Box, Text } from '@mantine/core';
+import {
+  Drawer,
+  Button,
+  Group,
+  Box,
+  Text,
+  getStylesRef,
+  createStyles,
+  useMantineColorScheme,
+} from '@mantine/core';
 import { FaHamburger } from 'react-icons/fa';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { SidebarList } from './SidebarList';
 
 export const SidebarDrawer = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const router = useRouter();
-  const data = [
-    { link: '/repairs', label: '修理伝票一覧', icon: '' },
-    { link: '/repairs/new', label: '修理伝票作成', icon: '' },
-    { link: '', label: 'テンプレート一覧', icon: '' },
-    { link: '', label: 'テンプレート作成', icon: '' },
-  ];
-  const links = data.map((item, index) => (
-    <Link
-      key={index}
-      href={item.link}
-      onClick={close}
-      style={{ textDecoration: 'none', color: 'black' }}
-    >
-      <Text color="black" p={9} size="sm">
-        {item.label}
-      </Text>
-    </Link>
-  ));
+
   return (
     <Box>
       <Drawer
@@ -34,9 +26,8 @@ export const SidebarDrawer = () => {
         size="xs"
         zIndex={1000}
       >
-        {links}
+        <SidebarList close={close} />
       </Drawer>
-
       <Group position="center">
         <FaHamburger cursor="pointer" onClick={open} />
       </Group>

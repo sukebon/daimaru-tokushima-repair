@@ -3,7 +3,6 @@ import { Header, Box, createStyles, Group, rem, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { SidebarDrawer } from '../sidebar/SidebarDrawer';
 
-
 const useStyles = createStyles((theme) => ({
   header: {
     paddingLeft: theme.spacing.md,
@@ -19,7 +18,7 @@ const useStyles = createStyles((theme) => ({
 
   links: {
     [theme.fn.smallerThan('md')]: {
-      display: 'none',
+      // display: 'none',
     },
   },
 
@@ -56,13 +55,10 @@ const HeaderArea = () => {
           <Flex display={{ md: 'none' }} gap={2}>
             <SidebarDrawer />
           </Flex>
-          <Box sx={{ display: 'none' }} display={{ lg: 'block' }}></Box>
         </Group>
         <Group>
           <Group ml={50} spacing={5} className={classes.links}>
-            <>
-              <HeaderMenu />
-            </>
+            <HeaderMenu />
           </Group>
         </Group>
       </div>

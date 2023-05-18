@@ -10,6 +10,7 @@ import {
 import Link from 'next/link';
 import { useMutateAuth } from '@/hooks/useMutateAuth';
 import { useRouter } from 'next/router';
+import { SidebarList } from './SidebarList';
 
 const data = [
   { link: '/repairs', label: '修理伝票一覧', icon: '' },
@@ -17,7 +18,7 @@ const data = [
   // { link: '/templates', label: 'テンプレート一覧', icon: '' },
   // { link: 'templates/new', label: 'テンプレート作成', icon: '' },
   // { link: '/profile', label: 'プロフィール', icon: '' },
-  { link: '/auth', label: '管理画面', icon: '' },
+  { link: '/settings/auth', label: '管理画面', icon: '' },
   { link: '/settings/factories', label: '工場登録', icon: '' },
 ];
 
@@ -27,19 +28,6 @@ export const Sidebar = () => {
   const { colorScheme } = useMantineColorScheme();
   const dark = colorScheme === 'dark';
   const { logout } = useMutateAuth();
-
-  const links = data.map((item, index) => (
-    <Link key={index} href={item.link} style={{ textDecoration: 'none' }}>
-      <Box
-        className={cx(classes.link, {
-          [classes.linkActive]: router.pathname === item.link,
-        })}
-        color={dark ? 'black' : 'white'}
-      >
-        <Box component="span">{item.label}</Box>
-      </Box>
-    </Link>
-  ));
 
   return (
     <Navbar
@@ -53,7 +41,7 @@ export const Sidebar = () => {
         <Group className={classes.header} position="apart">
           修理伝票
         </Group>
-        {links}
+        <SidebarList />
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
@@ -78,15 +66,17 @@ const useStyles = createStyles((theme) => ({
     color: theme.colorScheme === 'dark' ? 'white' : 'black',
     paddingBottom: theme.spacing.md,
     marginBottom: `calc(${theme.spacing.md} * 1.5)`,
-    borderBottom: `0.0625rem solid ${theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'
-      };`,
+    borderBottom: `0.0625rem solid ${
+      theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'
+    };`,
   },
 
   footer: {
     paddingTop: theme.spacing.md,
     marginTop: theme.spacing.md,
-    borderTop: `0.0625rem solid ${theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'
-      };`,
+    borderTop: `0.0625rem solid ${
+      theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'
+    };`,
   },
 
   link: {
@@ -98,23 +88,11 @@ const useStyles = createStyles((theme) => ({
     padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
     borderRadius: theme.radius.sm,
     fontWeight: 600,
-
-    '&:hover': {
-      // color: theme.colorScheme === "dark" ? "#12B886" : '#f4f4f4',
-      // opacity: 0.9
-    },
-  },
-
-  linkIcon: {
-    ref: getStylesRef('icon'),
-    color: theme.white,
-    opacity: 0.75,
-    marginRight: theme.spacing.sm,
   },
 
   linkActive: {
-    '&, &:hover': {
-      color: theme.colorScheme === 'dark' ? '#12B886' : '#12B886',
+    '&, &:active': {
+      color: '#12B886',
       opacity: 0.9,
     },
   },
