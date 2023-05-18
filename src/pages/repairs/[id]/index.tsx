@@ -1,4 +1,4 @@
-import { RepairEdit } from '@/conponents/repairs/RepairEdit';
+import { RepairEdit } from '@/conponents/repairs/edit/RepairEdit';
 import { useQueryRepair } from '@/hooks/repairs/useQueryRepair';
 import { useQueryRepairNext } from '@/hooks/repairs/useQueryRepairNext';
 import { useQueryRepairPrev } from '@/hooks/repairs/useQueryRepairPrev';
@@ -19,6 +19,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+import { RepairPDF } from '../../../conponents/repairs/RepairPDF';
 
 const Repair: NextPage = () => {
   const router = useRouter();
@@ -61,6 +62,7 @@ const Repair: NextPage = () => {
       withBorder
     >
       <RepairEdit repairId={repair?.id} />
+      <RepairPDF repairId={repair?.id} />
       <Stepper mt="md" color="teal" size="xs" active={active} breakpoint="md">
         <Stepper.Step label="倉庫" description="Picking" />
         <Stepper.Step label="工場直送" description="Direct" />

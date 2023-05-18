@@ -58,14 +58,14 @@ export type RepairInputs = {
   deliveryPlace: string;
   deadline: string;
   customer: string;
-  orderType: string;
   contents: {
     title: string;
     price: any;
     path: string;
     is_new: boolean;
   }[];
-  products: {
+  details: {
+    maker: string;
     product_name: string;
     size: string;
     quantity: any;

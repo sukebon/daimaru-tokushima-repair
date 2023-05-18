@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Text, Flex, Box, Stack, Table } from '@mantine/core';
-import useRepaireStore from '../../../store/useRepaireStore';
+import useRepaireStore from '../../../../store/useRepaireStore';
 
 export const RepaireConfirm: FC = () => {
   const repaire = useRepaireStore((state) => state.repair);
@@ -31,9 +31,6 @@ export const RepaireConfirm: FC = () => {
         <Flex gap={24} direction={{ base: 'column', md: 'row' }}>
           <Box>
             <Text fz="xs">タイプ</Text>
-            <Text fz="xl">
-              {repaire?.orderType === 'REPAIRE' ? '修理' : 'マーク'}
-            </Text>
           </Box>
           <Box>
             <Text fz="xs">入荷場所</Text>
@@ -92,7 +89,7 @@ export const RepaireConfirm: FC = () => {
               </tr>
             </thead>
             <tbody>
-              {repaire?.products.map(
+              {repaire?.details.map(
                 (
                   product,
                   index: number

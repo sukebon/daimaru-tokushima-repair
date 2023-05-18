@@ -1,7 +1,7 @@
 import { Box, Button, Checkbox, Flex, Input, NumberInput, Text, TextInput } from '@mantine/core';
 import React, { FC } from 'react';
 import { Control, UseFormGetValues, UseFormRegister, useFieldArray } from 'react-hook-form';
-import { RepairInputs } from '../../../types';
+import { RepairInputs } from '../../../../types';
 import { MdOutlineCancel } from 'react-icons/md';
 import { MdAddCircle } from 'react-icons/md';
 

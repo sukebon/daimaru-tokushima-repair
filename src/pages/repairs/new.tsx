@@ -1,4 +1,3 @@
-// import Input from '@mui/joy/Input';
 import {
   Button,
   TextInput,
@@ -16,11 +15,11 @@ import { RepairInputs } from '../../../types';
 import useStore from '../../../store';
 import useRepaireStore from '../../../store/useRepaireStore';
 import { RepaireStepper } from '@/conponents/repairs/RepaireStepper';
-import { RepaireConfirm } from '@/conponents/repairs/RepaireConfirm';
-import { RepaireComplete } from '@/conponents/repairs/RepaireComplete';
+import { RepaireConfirm } from '@/conponents/repairs/new/RepaireConfirm';
+import { RepaireComplete } from '@/conponents/repairs/new/RepaireComplete';
 import { FactoryModal } from '@/conponents/repairs/FactoryModal';
-import { RepairFormContents } from '@/conponents/repairs/RepairFormContents';
-import { RepairFormProducts } from '@/conponents/repairs/RepairFormProducts';
+import { RepairFormContents } from '@/conponents/repairs/new/RepairFormContents';
+import { RepairFormDetails } from '@/conponents/repairs/new/RepairFormDetails';
 import { Divider } from '@mantine/core';
 import { useMutateRepair } from '@/hooks/repairs/useMutateRepair';
 
@@ -123,27 +122,6 @@ const RepairNew = () => {
                   required
                   {...register('customer', { required: true })}
                 />
-
-                <Radio.Group
-                  withAsterisk
-                  label="タイプ"
-                  defaultValue={repair?.orderType}
-                >
-                  <Group mt="xs">
-                    <Radio
-                      color="teal"
-                      value="REPAIRE"
-                      label="修理"
-                      {...register('orderType', { required: true })}
-                    />
-                    <Radio
-                      color="teal"
-                      value="MARK"
-                      label="マーク"
-                      {...register('orderType', { required: true })}
-                    />
-                  </Group>
-                </Radio.Group>
                 <Radio.Group
                   withAsterisk
                   label="入荷場所"
@@ -184,7 +162,7 @@ const RepairNew = () => {
               label="修理明細"
               labelPosition="center"
             />
-            <RepairFormProducts
+            <RepairFormDetails
               register={register}
               control={control}
               getValues={getValues}

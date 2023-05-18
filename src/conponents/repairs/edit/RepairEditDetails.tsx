@@ -29,6 +29,13 @@ export const RepairEditDetails: FC<Props> = ({
           <td>
             <Input
               w="100%"
+              defaultValue={getValues(`repair_details.${index}.maker`)}
+              {...register(`repair_details.${index}.maker` as const, {})}
+            />
+          </td>
+          <td>
+            <Input
+              w="100%"
               defaultValue={getValues(`repair_details.${index}.product_name`)}
               {...register(`repair_details.${index}.product_name` as const, {})}
             />

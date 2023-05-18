@@ -15,7 +15,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { QueryClient } from '@tanstack/react-query';
 import React, { FC } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Factory } from '../../../types';
+import { Factory } from '../../../../types';
 import { RepairEditContents } from './RepairEditContents';
 import { RepairEditDetails } from './RepairEditDetails';
 
@@ -34,7 +34,7 @@ export const RepairEdit: FC<Props> = ({ repairId }) => {
     },
   });
 
-  const onSubmit: SubmitHandler<any> = (data) => {};
+  const onSubmit: SubmitHandler<any> = (data) => { };
   return (
     <>
       <Modal
