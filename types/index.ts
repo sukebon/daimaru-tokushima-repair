@@ -71,7 +71,7 @@ export type Repair = {
 };
 
 export type RepairInputs = {
-  factory: {
+  factories: {
     id: string;
     name: string;
   };

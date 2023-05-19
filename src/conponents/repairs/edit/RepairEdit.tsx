@@ -17,6 +17,7 @@ import { RepairEditContents } from './RepairEditContents';
 import { RepairEditDetails } from './RepairEditDetails';
 import { useMutateRepair } from '@/hooks/repairs/useMutateRepair';
 import { useQueryRepair } from '@/hooks/repairs/useQueryRepair';
+import { Repair, RepairInputs } from '../../../../types';
 
 type Props = {
   repairId: number | undefined;
@@ -24,8 +25,6 @@ type Props = {
 
 export const RepairEdit: FC<Props> = ({ repairId }) => {
   const [opened, { open, close }] = useDisclosure(false);
-  // const queryClient = useQueryClient();
-  // const data = queryClient.getQueryData<Repair>(['repairs', repairId]);
   const { data: repair } = useQueryRepair(Number(repairId));
   const {
     updateRepairMutation,
@@ -33,7 +32,7 @@ export const RepairEdit: FC<Props> = ({ repairId }) => {
     updateRepairDetailsMutation,
   } = useMutateRepair();
   const { classes } = useStyles();
-  const { register, handleSubmit, reset, control, getValues } = useForm({
+  const { register, handleSubmit, reset, control, getValues } = useForm<any>({
     defaultValues: {
       ...repair,
     },

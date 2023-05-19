@@ -55,7 +55,7 @@ const RepairNew = () => {
   const onSubmit: SubmitHandler<RepairInputs> = (data) => {
     console.log(data);
     nextStep();
-    setRepaire({ ...data, factory: { id: factory.id, name: factory.name } });
+    setRepaire({ ...data, factories: { id: factory.id, name: factory.name } });
   };
 
   return (
