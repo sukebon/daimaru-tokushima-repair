@@ -1,13 +1,26 @@
-import { Box, Button, Flex, NumberInput, Table, TextInput, createStyles } from '@mantine/core';
+import {
+  Box,
+  Button,
+  Flex,
+  NumberInput,
+  Table,
+  TextInput,
+  createStyles,
+} from '@mantine/core';
 import React, { FC, useState } from 'react';
-import { Control, FieldErrors, UseFormGetValues, UseFormRegister, useFieldArray } from 'react-hook-form';
+import {
+  Control,
+  FieldErrors,
+  UseFormGetValues,
+  UseFormRegister,
+  useFieldArray,
+} from 'react-hook-form';
 import { RepairInputs } from '../../../../types';
 import { MdDragIndicator } from 'react-icons/md';
 import { MdOutlineCancel } from 'react-icons/md';
 import { MdAddCircle } from 'react-icons/md';
 import useRepaireStore from '../../../../store/useRepaireStore';
-import { FaPlusCircle, FaMinusCircle } from "react-icons/fa";
-
+import { FaPlusCircle, FaMinusCircle } from 'react-icons/fa';
 
 type Props = {
   register: UseFormRegister<RepairInputs>;
@@ -16,17 +29,23 @@ type Props = {
   errors: any;
 };
 
-export const RepairFormDetails: FC<Props> = ({ register, control, getValues, errors }) => {
+export const RepairFormDetails: FC<Props> = ({
+  register,
+  control,
+  getValues,
+  errors,
+}) => {
   const [dragIndex, setDragIndex] = useState<any>(null);
   const { classes } = useStyles();
   const repair = useRepaireStore((state) => state.repair);
   const setRepair = useRepaireStore((state) => state.setRepair);
   const { fields, append, remove, update } = useFieldArray({
     control,
-    name: 'details',
+    name: 'repair_details',
   });
   const addProduct = () => {
     append({
+      id: '',
       maker: '',
       product_name: '',
       size: '',
@@ -46,8 +65,8 @@ export const RepairFormDetails: FC<Props> = ({ register, control, getValues, err
 
   const dragEnter = (index: any) => {
     if (index === dragIndex) return;
-    const startElement = { ...getValues().details[dragIndex] };
-    const enterElment = { ...getValues().details[index] };
+    const startElement = { ...getValues().repair_details[dragIndex] };
+    const enterElment = { ...getValues().repair_details[index] };
     update(index, {
       ...startElement,
     });
@@ -70,7 +89,7 @@ export const RepairFormDetails: FC<Props> = ({ register, control, getValues, err
       <Box sx={{ overflowX: 'auto' }}>
         <Table
           sx={{ width: '800px' }}
-          w={{ lg: "100%" }}
+          w={{ lg: '100%' }}
           verticalSpacing="xs"
           fontSize="sm"
           onDragOver={(e) => e.preventDefault()}
@@ -110,13 +129,15 @@ export const RepairFormDetails: FC<Props> = ({ register, control, getValues, err
                 <td width="50%">
                   <TextInput
                     required
-                    {...register(`details.${index}.product_name` as const)}
+                    {...register(
+                      `repair_details.${index}.product_name` as const
+                    )}
                   />
                 </td>
                 <td draggable={false}>
                   <TextInput
                     w="90px"
-                    {...register(`details.${index}.size` as const)}
+                    {...register(`repair_details.${index}.size` as const)}
                   />
                 </td>
                 <td>
@@ -124,34 +145,56 @@ export const RepairFormDetails: FC<Props> = ({ register, control, getValues, err
                     <FaMinusCircle
                       fontSize={16}
                       cursor="pointer"
-                      onClick={() => update(index, {
-                        maker: getValues(`details.${index}.maker`),
-                        product_name: getValues(`details.${index}.product_name`),
-                        quantity: Number(getValues(`details.${index}.quantity`)) - 1,
-                        size: getValues(`details.${index}.size`),
-                        comment: getValues(`details.${index}.comment`),
-                      })}
+                      onClick={() =>
+                        update(index, {
+                          id: getValues(`repair_details.${index}.id`),
+                          maker: getValues(`repair_details.${index}.maker`),
+                          product_name: getValues(
+                            `repair_details.${index}.product_name`
+                          ),
+                          quantity:
+                            Number(
+                              getValues(`repair_details.${index}.quantity`)
+                            ) - 1,
+                          size: getValues(`repair_details.${index}.size`),
+                          comment: getValues(`repair_details.${index}.comment`),
+                        })
+                      }
                     />
                     <TextInput
                       type="number"
                       w="90px"
                       sx={{
-                        textAlign: "right",
-                        border: getValues(`details.${index}.quantity`) < 0 ? "2px solid red" : "blue",
-                        borderRadius: "0.25rem",
+                        textAlign: 'right',
+                        border:
+                          getValues(`repair_details.${index}.quantity`) < 0
+                            ? '2px solid red'
+                            : 'blue',
+                        borderRadius: '0.25rem',
                       }}
-                      {...register(`details.${index}.quantity` as const, { required: true, min: 0 })}
+                      {...register(`repair_details.${index}.quantity`, {
+                        required: true,
+                        min: 0,
+                      })}
                     />
                     <FaPlusCircle
                       fontSize={16}
                       cursor="pointer"
-                      onClick={() => update(index, {
-                        maker: getValues(`details.${index}.maker`),
-                        product_name: getValues(`details.${index}.product_name`),
-                        quantity: Number(getValues(`details.${index}.quantity`)) + 1,
-                        size: getValues(`details.${index}.size`),
-                        comment: getValues(`details.${index}.comment`),
-                      })}
+                      onClick={() =>
+                        update(index, {
+                          id: getValues(`repair_details.${index}.id`),
+                          maker: getValues(`repair_details.${index}.maker`),
+                          product_name: getValues(
+                            `repair_details.${index}.product_name`
+                          ),
+                          quantity:
+                            Number(
+                              getValues(`repair_details.${index}.quantity`)
+                            ) + 1,
+                          size: getValues(`repair_details.${index}.size`),
+                          comment: getValues(`repair_details.${index}.comment`),
+                        })
+                      }
                     />
                   </Flex>
                 </td>
@@ -159,7 +202,7 @@ export const RepairFormDetails: FC<Props> = ({ register, control, getValues, err
                   <Flex gap={5} align="center">
                     <TextInput
                       w="150px"
-                      {...register(`details.${index}.comment`)}
+                      {...register(`repair_details.${index}.comment`)}
                     />
                     <MdOutlineCancel
                       size={20}
@@ -176,7 +219,7 @@ export const RepairFormDetails: FC<Props> = ({ register, control, getValues, err
             ))}
           </tbody>
         </Table>
-      </Box >
+      </Box>
 
       <Flex justify="center">
         <Button
@@ -193,14 +236,11 @@ export const RepairFormDetails: FC<Props> = ({ register, control, getValues, err
   );
 };
 
-
-
 const useStyles = createStyles((theme) => ({
   trDrag: {
-    borderTop: "2px #12b886 solid"
+    borderTop: '2px #12b886 solid',
   },
   trNotDrag: {
-    borderTop: "0px"
-  }
-}))
-
+    borderTop: '0px',
+  },
+}));

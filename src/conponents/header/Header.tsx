@@ -52,7 +52,7 @@ const HeaderArea = () => {
     <Header w="100%" height={56} className={classes.header}>
       <div className={classes.inner}>
         <Group>
-          <Flex display={{ md: 'none' }} gap={2}>
+          <Flex display={{ lg: 'none' }} gap={2}>
             <SidebarDrawer />
           </Flex>
         </Group>

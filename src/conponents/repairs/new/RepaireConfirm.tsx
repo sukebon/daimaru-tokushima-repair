@@ -52,22 +52,19 @@ export const RepaireConfirm: FC = () => {
               <tr>
                 <th>修理名</th>
                 <th>価格</th>
-                <th style={{ textAlign: "center" }}>新規/前回通り</th>
+                <th style={{ textAlign: 'center' }}>新規/前回通り</th>
               </tr>
             </thead>
             <tbody>
-              {repaire?.contents.map(
-                (
-                  content,
-                  index: number
-                ) => (
-                  <tr key={index}>
-                    <td style={{ width: "60%" }}>{content.title}</td>
-                    <td style={{ width: "20%" }}>{content.price}円</td>
-                    <td style={{ width: "20%", textAlign: "center" }}>{content.is_new ? "新規" : "前回通り"}</td>
-                  </tr>
-                )
-              )}
+              {repaire?.repair_contents.map((content, index: number) => (
+                <tr key={index}>
+                  <td style={{ width: '60%' }}>{content.title}</td>
+                  <td style={{ width: '20%' }}>{content.price}円</td>
+                  <td style={{ width: '20%', textAlign: 'center' }}>
+                    {content.is_new ? '新規' : '前回通り'}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </Table>
         </Box>
@@ -89,19 +86,14 @@ export const RepaireConfirm: FC = () => {
               </tr>
             </thead>
             <tbody>
-              {repaire?.details.map(
-                (
-                  product,
-                  index: number
-                ) => (
-                  <tr key={index}>
-                    <td style={{ width: "50%" }}>{product.product_name}</td>
-                    <td>{product.size}</td>
-                    <td>{product.quantity}</td>
-                    <td style={{ width: "25%" }}>{product.comment}</td>
-                  </tr>
-                )
-              )}
+              {repaire?.repair_details.map((detail, index: number) => (
+                <tr key={index}>
+                  <td style={{ width: '50%' }}>{detail.product_name}</td>
+                  <td>{detail.size}</td>
+                  <td>{detail.quantity}</td>
+                  <td style={{ width: '25%' }}>{detail.comment}</td>
+                </tr>
+              ))}
             </tbody>
           </Table>
         </Box>

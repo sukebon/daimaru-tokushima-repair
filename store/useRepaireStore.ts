@@ -17,7 +17,7 @@ const useRepaireStore = create<State>((set) => ({
     user_id: '',
     comment: '',
     status: 'PICKING',
-    contents: [
+    repair_contents: [
       {
         title: '',
         price: '',
@@ -25,8 +25,9 @@ const useRepaireStore = create<State>((set) => ({
         is_new: false,
       },
     ],
-    products: [
+    repair_details: [
       {
+        maker: '',
         product_name: '',
         size: '',
         quantity: '',
@@ -51,7 +52,7 @@ const useRepaireStore = create<State>((set) => ({
         user_id: '',
         comment: '',
         status: 'PICKING',
-        contents: [
+        repair_contents: [
           {
             title: '',
             price: 0,
@@ -59,8 +60,9 @@ const useRepaireStore = create<State>((set) => ({
             is_new: false,
           },
         ],
-        products: [
+        repair_details: [
           {
+            maker: '',
             product_name: '',
             size: '',
             quantity: '',
