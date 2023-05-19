@@ -29,6 +29,7 @@ export const RepairEditDetails: FC<Props> = ({
           <td>
             <Input
               w="100%"
+              size="xs"
               defaultValue={getValues(`repair_details.${index}.maker`)}
               {...register(`repair_details.${index}.maker` as const, {})}
             />
@@ -36,13 +37,15 @@ export const RepairEditDetails: FC<Props> = ({
           <td>
             <Input
               w="100%"
+              size="xs"
               defaultValue={getValues(`repair_details.${index}.product_name`)}
               {...register(`repair_details.${index}.product_name` as const, {})}
             />
           </td>
           <td>
             <Input
-              w="100px"
+              w="100%"
+              size="xs"
               defaultValue={getValues(`repair_details.${index}.size`)}
               {...register(`repair_details.${index}.size` as const, {
                 required: true,
@@ -51,8 +54,11 @@ export const RepairEditDetails: FC<Props> = ({
           </td>
           <td>
             <NumberInput
-              w="100px"
-              defaultValue={getValues(`repair_details.${index}.quantity`)}
+              w="100%"
+              size="xs"
+              defaultValue={Number(
+                getValues(`repair_details.${index}.quantity`)
+              )}
               {...register(`repair_details.${index}.quantity` as const, {
                 required: true,
               })}
@@ -64,6 +70,7 @@ export const RepairEditDetails: FC<Props> = ({
           <td>
             <Input
               w="100%"
+              size="xs"
               defaultValue={getValues(`repair_details.${index}.comment`)}
               {...register(`repair_details.${index}.comment` as const)}
             />

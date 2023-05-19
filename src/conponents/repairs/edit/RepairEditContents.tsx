@@ -1,4 +1,4 @@
-import { Box, Checkbox, Flex, Input, NumberInput } from '@mantine/core';
+import { Checkbox, Flex, Input, NumberInput } from '@mantine/core';
 import React, { FC } from 'react';
 import {
   Control,
@@ -29,6 +29,7 @@ export const RepairEditContents: FC<Props> = ({
           <td>
             <Input
               w="100%"
+              size="xs"
               defaultValue={getValues(`repair_contents.${index}.title`)}
               {...register(`repair_contents.${index}.title` as const, {})}
             />
@@ -36,7 +37,8 @@ export const RepairEditContents: FC<Props> = ({
           <td>
             <NumberInput
               w="100px"
-              defaultValue={getValues(`repair_contents.${index}.price`)}
+              size="xs"
+              defaultValue={Number(getValues(`repair_contents.${index}.price`))}
               {...register(`repair_contents.${index}.price` as const, {
                 required: true,
               })}

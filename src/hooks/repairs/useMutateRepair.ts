@@ -14,7 +14,6 @@ export const useMutateRepair = () => {
           deadline: repair.deadline,
           deliveryPlace: repair.deliveryPlace,
           customer: repair.customer,
-          order_type: repair.orderType,
           comment: repair.comment,
           status: repair.status,
           user_id: repair.user_id,
@@ -22,20 +21,21 @@ export const useMutateRepair = () => {
         .select();
       if (error) throw new Error(error.message);
 
-      const products = repair.products.map((product) => ({
-        product_name: product.product_name,
-        size: product.size,
-        quantity: product.quantity,
-        comment: product.comment,
+      const details = repair.repair_details.map((detail) => ({
+        maker: detail.maker,
+        product_name: detail.product_name,
+        size: detail.size,
+        quantity: detail.quantity,
+        comment: detail.comment,
         repair_id: data[0].id,
       }));
       const { data: productData } = await supabase
         .from('repair_details')
-        .insert([...products])
+        .insert([...details])
         .select();
       console.log('productData', productData);
 
-      const contents = repair.contents.map((content) => ({
+      const contents = repair.repair_contents.map((content) => ({
         title: content.title,
         price: Number(content.price),
         path: content.path,
@@ -51,11 +51,99 @@ export const useMutateRepair = () => {
       return data;
     },
     onSuccess: (data: any) => {
-      queryClient.setQueryData(['repair'], data[0]);
+      queryClient.setQueryData(['repairs'], data[0]);
     },
     onError: (err: any) => {
       alert(err.message);
     },
   });
-  return { createRepairMutation };
+
+  const updateRepairMutation = useMutation({
+    mutationFn: async (repair: RepairInputs & { id: string }) => {
+      const { data, error } = await supabase
+        .from('repairs')
+        .update({
+          deadline: repair.deadline,
+          deliveryPlace: repair.deliveryPlace,
+          customer: repair.customer,
+          comment: repair.comment,
+          status: repair.status,
+          user_id: repair.user_id,
+        })
+        .eq('id', repair.id)
+        .select();
+
+      if (error) throw new Error(error.message);
+
+      return data;
+    },
+    onSuccess: (data: any) => {
+      queryClient.invalidateQueries(['repairs'], data.id);
+    },
+    onError: (err: any) => {
+      alert(err.message);
+    },
+  });
+
+  const updateRepairContentsMutation = useMutation({
+    mutationFn: async (repair: RepairInputs & { id: string }) => {
+      const contents = repair?.repair_contents.map(async (content) => {
+        const { data, error } = await supabase
+          .from('repair_contents')
+          .update({
+            title: content.title,
+            price: Number(content.price),
+            path: content.path || '',
+            is_new: content.is_new,
+          })
+          .eq('id', content.id)
+          .select();
+        if (error) throw new Error(error.message);
+      });
+      if (contents) {
+        return repair.id;
+      }
+    },
+    onSuccess: (data: any) => {
+      queryClient.invalidateQueries(['repairs'], data);
+    },
+    onError: (err: any) => {
+      alert(err.message);
+    },
+  });
+
+  const updateRepairDetailsMutation = useMutation({
+    mutationFn: async (repair: RepairInputs & { id: string }) => {
+      const contents = repair?.repair_details.map(async (detail) => {
+        const { data, error } = await supabase
+          .from('repair_details')
+          .update({
+            maker: detail.maker,
+            product_name: detail?.product_name,
+            size: detail.size,
+            quantity: Number(detail.quantity),
+            comment: detail.comment,
+          })
+          .eq('id', detail.id)
+          .select();
+        if (error) throw new Error(error.message);
+      });
+      if (contents) {
+        return repair.id;
+      }
+    },
+    onSuccess: (data: any) => {
+      queryClient.invalidateQueries(['repairs'], data);
+    },
+    onError: (err: any) => {
+      alert(err.message);
+    },
+  });
+
+  return {
+    createRepairMutation,
+    updateRepairMutation,
+    updateRepairContentsMutation,
+    updateRepairDetailsMutation,
+  };
 };

@@ -158,6 +158,7 @@ export interface Database {
       };
       repair_details: {
         Row: {
+          maker: string | null;
           comment: string | null;
           created_at: string | null;
           id: string;
@@ -168,6 +169,7 @@ export interface Database {
           updated_at: string | null;
         };
         Insert: {
+          maker: string | null;
           comment?: string | null;
           created_at?: string | null;
           id?: string;
@@ -178,6 +180,7 @@ export interface Database {
           updated_at?: string | null;
         };
         Update: {
+          maker: string | null;
           comment?: string | null;
           created_at?: string | null;
           id?: string;

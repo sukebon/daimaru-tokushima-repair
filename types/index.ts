@@ -34,20 +34,40 @@ export type Repair = {
   deadline: string;
   deliveryPlace: string;
   comment: string;
-  repair_contents: {
-    id: string;
-    title: string;
-    price: number;
-    path: string;
-    is_new: boolean;
-  }[];
-  repair_details: {
-    id: string;
-    product_name: string;
-    size: string;
-    quantity: number;
-    comment: string;
-  }[];
+  repair_contents:
+    | {
+        id: string;
+        title: string;
+        price: any;
+        path: string;
+        is_new: boolean;
+      }
+    | {
+        id: string;
+        title: string;
+        price: any;
+        path: string;
+        is_new: boolean;
+      }[]
+    | null;
+  repair_details:
+    | {
+        id: string;
+        maker: string;
+        product_name: string;
+        size: string;
+        quantity: any;
+        comment: string;
+      }
+    | {
+        id: string;
+        maker: string;
+        product_name: string;
+        size: string;
+        quantity: any;
+        comment: string;
+      }[]
+    | null;
 };
 
 export type RepairInputs = {
@@ -58,13 +78,16 @@ export type RepairInputs = {
   deliveryPlace: string;
   deadline: string;
   customer: string;
-  contents: {
+  repair_contents: {
+    id: string;
     title: string;
     price: any;
     path: string;
     is_new: boolean;
   }[];
-  details: {
+
+  repair_details: {
+    id: string;
     maker: string;
     product_name: string;
     size: string;

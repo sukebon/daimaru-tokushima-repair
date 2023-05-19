@@ -1,6 +1,20 @@
-import { Box, Button, Checkbox, Flex, Input, NumberInput, Text, TextInput } from '@mantine/core';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Flex,
+  Input,
+  NumberInput,
+  Text,
+  TextInput,
+} from '@mantine/core';
 import React, { FC } from 'react';
-import { Control, UseFormGetValues, UseFormRegister, useFieldArray } from 'react-hook-form';
+import {
+  Control,
+  UseFormGetValues,
+  UseFormRegister,
+  useFieldArray,
+} from 'react-hook-form';
 import { RepairInputs } from '../../../../types';
 import { MdOutlineCancel } from 'react-icons/md';
 import { MdAddCircle } from 'react-icons/md';
@@ -11,18 +25,23 @@ type Props = {
   getValues: UseFormGetValues<RepairInputs>;
 };
 
-export const RepairFormContents: FC<Props> = ({ register, control, getValues }) => {
+export const RepairFormContents: FC<Props> = ({
+  register,
+  control,
+  getValues,
+}) => {
   const { fields, append, remove, update } = useFieldArray({
     control,
-    name: "contents"
+    name: 'repair_contents',
   });
 
   const addContent = () => {
     append({
+      id: '',
       title: '',
       price: 0,
       path: '',
-      is_new: false
+      is_new: false,
     });
   };
   const removeContent = (index: number) => {
@@ -33,30 +52,39 @@ export const RepairFormContents: FC<Props> = ({ register, control, getValues }) 
     <>
       <Box sx={{ overflowX: 'auto' }}>
         {fields.map((field, index) => (
-          <Box key={field.id} mb={16} sx={{ width: '800px' }} w={{ lg: "100%" }}>
-            <Flex gap={16}  >
+          <Box
+            key={field.id}
+            mb={16}
+            sx={{ width: '800px' }}
+            w={{ lg: '100%' }}
+          >
+            <Flex gap={16}>
               <TextInput
                 w="100%"
-                label={index === 0 ? "修理名" : ""}
+                label={index === 0 ? '修理名' : ''}
                 required
-                {...register(`contents.${index}.title` as const, { required: true })}
+                {...register(`repair_contents.${index}.title` as const, {
+                  required: true,
+                })}
               />
               <NumberInput
-                w='150px'
-                label={index === 0 ? "価格" : ""}
+                w="150px"
+                label={index === 0 ? '価格' : ''}
                 required
                 defaultValue={0}
-                {...register(`contents.${index}.price` as const, { required: true })}
+                {...register(`repair_contents.${index}.price` as const, {
+                  required: true,
+                })}
                 onChange={() => getValues()}
                 max={1000000}
                 min={0}
               />
               <TextInput
                 display="none"
-                {...register(`contents.${index}.path` as const)}
+                {...register(`repair_contents.${index}.path` as const)}
               />
               <Box>
-                {index === 0 ? <Box>　</Box> : ""}
+                {index === 0 ? <Box>　</Box> : ''}
                 <Flex align="center" gap={12}>
                   <Button color="teal">テンプレート</Button>
                   <MdOutlineCancel
@@ -74,13 +102,13 @@ export const RepairFormContents: FC<Props> = ({ register, control, getValues }) 
             <Checkbox
               mt="sm"
               label="新規の場合はチェック"
-              color='teal'
-              {...register(`contents.${index}.is_new` as const)}
+              color="teal"
+              {...register(`repair_contents.${index}.is_new` as const)}
             />
           </Box>
         ))}
       </Box>
-      <Flex justify="center" >
+      <Flex justify="center">
         <Button
           color="teal"
           leftIcon={<MdAddCircle />}
@@ -94,5 +122,3 @@ export const RepairFormContents: FC<Props> = ({ register, control, getValues }) 
     </>
   );
 };
-
-

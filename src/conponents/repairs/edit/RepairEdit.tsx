@@ -1,4 +1,3 @@
-import { useQueryRepair } from '@/hooks/repairs/useQueryRepair';
 import {
   Box,
   Button,
@@ -12,12 +11,12 @@ import {
   createStyles,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { QueryClient } from '@tanstack/react-query';
 import React, { FC } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Factory } from '../../../../types';
 import { RepairEditContents } from './RepairEditContents';
 import { RepairEditDetails } from './RepairEditDetails';
+import { useMutateRepair } from '@/hooks/repairs/useMutateRepair';
+import { useQueryRepair } from '@/hooks/repairs/useQueryRepair';
 
 type Props = {
   repairId: number | undefined;
@@ -25,16 +24,28 @@ type Props = {
 
 export const RepairEdit: FC<Props> = ({ repairId }) => {
   const [opened, { open, close }] = useDisclosure(false);
-  const { data: repair } = useQueryRepair(repairId || '');
-  console.log('repair', repair);
+  // const queryClient = useQueryClient();
+  // const data = queryClient.getQueryData<Repair>(['repairs', repairId]);
+  const { data: repair } = useQueryRepair(Number(repairId));
+  const {
+    updateRepairMutation,
+    updateRepairContentsMutation,
+    updateRepairDetailsMutation,
+  } = useMutateRepair();
   const { classes } = useStyles();
   const { register, handleSubmit, reset, control, getValues } = useForm({
     defaultValues: {
       ...repair,
     },
   });
-
-  const onSubmit: SubmitHandler<any> = (data) => { };
+  console.log(repair);
+  const onSubmit: SubmitHandler<any> = async (data) => {
+    updateRepairMutation.mutate(data);
+    updateRepairContentsMutation.mutate(data);
+    updateRepairDetailsMutation.mutate(data);
+    reset({ ...data });
+    close();
+  };
   return (
     <>
       <Modal
@@ -121,12 +132,21 @@ export const RepairEdit: FC<Props> = ({ repairId }) => {
               >
                 <thead>
                   <tr className={classes.tr}>
-                    <th style={{ textAlign: 'center' }}>商品名</th>
-                    <th style={{ width: '60px', textAlign: 'center' }}>
+                    <th style={{ width: '150px', textAlign: 'center' }}>
+                      メーカー名
+                    </th>
+                    <th style={{ width: '350px', textAlign: 'center' }}>
+                      商品名
+                    </th>
+                    <th style={{ width: '100px', textAlign: 'center' }}>
                       サイズ
                     </th>
-                    <th style={{ width: '60px', textAlign: 'center' }}>数量</th>
-                    <th style={{ textAlign: 'center' }}>備考</th>
+                    <th style={{ width: '110px', textAlign: 'center' }}>
+                      数量
+                    </th>
+                    <th style={{ width: '150px', textAlign: 'center' }}>
+                      備考
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -135,17 +155,6 @@ export const RepairEdit: FC<Props> = ({ repairId }) => {
                     control={control}
                     getValues={getValues}
                   />
-                  {/* {Array.isArray(repair?.repair_details) &&
-                    repair?.repair_details?.map((detail) => (
-                      <tr key={detail.id}>
-                        <td>{detail.product_name}</td>
-                        <td style={{ textAlign: 'center' }}>{detail.size} </td>
-                        <td style={{ textAlign: 'right' }}>
-                          {detail.quantity}
-                        </td>
-                        <td>{detail?.comment}</td>
-                      </tr>
-                    ))} */}
                 </tbody>
               </Table>
             </Box>
@@ -155,6 +164,11 @@ export const RepairEdit: FC<Props> = ({ repairId }) => {
               <Textarea {...register('comment')} />
             </Box>
           </Stack>
+          <Group mt="xl">
+            <Button type="submit" variant="outline">
+              更新
+            </Button>
+          </Group>
         </form>
       </Modal>
       <Group position="right">
