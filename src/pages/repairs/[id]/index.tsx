@@ -22,7 +22,7 @@ import { RepairPDF } from '../../../conponents/repairs/RepairPDF';
 
 const Repair: NextPage = () => {
   const router = useRouter();
-  const repairId = Number(router.asPath.split('/').pop()) || 0;
+  const repairId = String(router.asPath.split('/').pop() || "");
   const { data: repair } = useQueryRepair(repairId);
   const { data: prev } = useQueryRepairPrev(repairId);
   const prevpage = prev?.find((_, i) => i === 0) || '';

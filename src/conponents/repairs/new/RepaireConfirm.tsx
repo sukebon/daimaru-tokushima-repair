@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Text, Flex, Box, Stack, Table } from '@mantine/core';
 import useRepaireStore from '../../../../store/useRepaireStore';
 
 export const RepaireConfirm: FC = () => {
-  const repaire = useRepaireStore((state) => state.repair);
+  const repair = useRepaireStore((state) => state.repair);
   return (
     <>
       <Flex p={6} justify="center">
@@ -12,20 +12,20 @@ export const RepaireConfirm: FC = () => {
       <Stack mt={24} p={6} spacing={24}>
         <Box>
           <Text fz="xs">工場名</Text>
-          <Text fz="xl">{repaire?.factory.name}</Text>
+          <Text fz="xl">{repair.factories.name}</Text>
         </Box>
         <Flex gap={24} direction={{ base: 'column', md: 'row' }}>
           <Box>
             <Text fz="xs">希望納期</Text>
-            <Text fz="xl">{repaire?.deadline}</Text>
+            <Text fz="xl">{repair?.deadline}</Text>
           </Box>
           <Box>
             <Text fz="xs">出荷先</Text>
-            <Text fz="xl">{repaire?.deliveryPlace}</Text>
+            <Text fz="xl">{repair?.deliveryPlace}</Text>
           </Box>
           <Box>
             <Text fz="xs">顧客名</Text>
-            <Text fz="xl">{repaire?.customer}</Text>
+            <Text fz="xl">{repair?.customer}</Text>
           </Box>
         </Flex>
         <Flex gap={24} direction={{ base: 'column', md: 'row' }}>
@@ -35,7 +35,7 @@ export const RepaireConfirm: FC = () => {
           <Box>
             <Text fz="xs">入荷場所</Text>
             <Text fz="xl">
-              {repaire?.status === 'PICKING' ? '倉庫' : '工場直送'}
+              {repair?.status === 'PICKING' ? '倉庫' : '工場直送'}
             </Text>
           </Box>
         </Flex>
@@ -56,7 +56,7 @@ export const RepaireConfirm: FC = () => {
               </tr>
             </thead>
             <tbody>
-              {repaire?.repair_contents.map((content, index: number) => (
+              {repair?.repair_contents.map((content, index: number) => (
                 <tr key={index}>
                   <td style={{ width: '60%' }}>{content.title}</td>
                   <td style={{ width: '20%' }}>{content.price}円</td>
@@ -86,7 +86,7 @@ export const RepaireConfirm: FC = () => {
               </tr>
             </thead>
             <tbody>
-              {repaire?.repair_details.map((detail, index: number) => (
+              {repair?.repair_details.map((detail, index: number) => (
                 <tr key={index}>
                   <td style={{ width: '50%' }}>{detail.product_name}</td>
                   <td>{detail.size}</td>
@@ -99,7 +99,7 @@ export const RepaireConfirm: FC = () => {
         </Box>
         <Box>
           <Text fz="xs">コメント</Text>
-          <Box sx={{ whiteSpace: 'pre-wrap' }}>{repaire?.comment}</Box>
+          <Box sx={{ whiteSpace: 'pre-wrap' }}>{repair?.comment}</Box>
         </Box>
       </Stack>
     </>

@@ -10,7 +10,7 @@ export const useMutateRepair = () => {
       const { data, error } = await supabase
         .from('repairs')
         .insert({
-          factory_id: repair.factory.id,
+          factory_id: repair.factories.id,
           deadline: repair.deadline,
           deliveryPlace: repair.deliveryPlace,
           customer: repair.customer,
@@ -51,7 +51,8 @@ export const useMutateRepair = () => {
       return data;
     },
     onSuccess: (data: any) => {
-      queryClient.setQueryData(['repairs'], data[0]);
+      queryClient.invalidateQueries(['repairs'], data);
+      // queryClient.setQueryData(['repairs'], data[0]);
     },
     onError: (err: any) => {
       alert(err.message);
@@ -63,18 +64,16 @@ export const useMutateRepair = () => {
       const { data, error } = await supabase
         .from('repairs')
         .update({
-          deadline: repair.deadline,
-          deliveryPlace: repair.deliveryPlace,
-          customer: repair.customer,
-          comment: repair.comment,
-          status: repair.status,
-          user_id: repair.user_id,
+          deadline: repair?.deadline,
+          deliveryPlace: repair?.deliveryPlace,
+          customer: repair?.customer,
+          comment: repair?.comment,
+          status: repair?.status,
         })
         .eq('id', repair.id)
         .select();
 
       if (error) throw new Error(error.message);
-
       return data;
     },
     onSuccess: (data: any) => {
@@ -92,7 +91,7 @@ export const useMutateRepair = () => {
           .from('repair_contents')
           .update({
             title: content.title,
-            price: Number(content.price),
+            price: Number(content.price) || 0,
             path: content.path || '',
             is_new: content.is_new,
           })
@@ -121,7 +120,7 @@ export const useMutateRepair = () => {
             maker: detail.maker,
             product_name: detail?.product_name,
             size: detail.size,
-            quantity: Number(detail.quantity),
+            quantity: Number(detail.quantity) || 0,
             comment: detail.comment,
           })
           .eq('id', detail.id)

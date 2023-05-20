@@ -1,7 +1,7 @@
 import { supabase } from '../../../utils/supabase';
 import { useQuery } from '@tanstack/react-query';
 
-export const useQueryRepair = (repairId: number) => {
+export const useQueryRepair = (repairId: string) => {
   const getRepair = async () => {
     const { data } = await supabase
       .from('repairs')
@@ -9,7 +9,6 @@ export const useQueryRepair = (repairId: number) => {
         `
       id,
       user_id,
-      category,
       customer,
       deadline,
       deliveryPlace,
@@ -23,6 +22,7 @@ export const useQueryRepair = (repairId: number) => {
       )
       .eq('id', repairId)
       .single();
+    console.log(data);
     return data;
   };
   return useQuery({
