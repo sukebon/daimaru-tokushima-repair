@@ -7,7 +7,7 @@ type State = {
 };
 const useRepaireStore = create<State>((set) => ({
   repair: {
-    factory_id: '',
+    factories: { id: '', name: '' },
     factory_name: '',
     deadline: '',
     deliveryPlace: '',
@@ -42,8 +42,7 @@ const useRepaireStore = create<State>((set) => ({
   resetRepair: () =>
     set({
       repair: {
-        factory_id: '',
-        factory_name: '',
+        factories: { id: '', name: '' },
         deadline: '',
         deliveryPlace: '',
         customer: '',
