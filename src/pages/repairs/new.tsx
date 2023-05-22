@@ -14,14 +14,14 @@ import { useState } from 'react';
 import { RepairInputs } from '../../../types';
 import useStore from '../../../store';
 import useRepaireStore from '../../../store/useRepaireStore';
-import { RepaireStepper } from '@/conponents/repairs/RepaireStepper';
-import { RepaireConfirm } from '@/conponents/repairs/new/RepaireConfirm';
-import { RepaireComplete } from '@/conponents/repairs/new/RepaireComplete';
-import { FactoryModal } from '@/conponents/repairs/FactoryModal';
-import { RepairFormContents } from '@/conponents/repairs/new/RepairFormContents';
-import { RepairFormDetails } from '@/conponents/repairs/new/RepairFormDetails';
+import { RepaireComplete } from '@/components/reapirs/new/RepaireComplete';
+import { FactoryModal } from '@/components/reapirs/FactoryModal';
 import { Divider } from '@mantine/core';
 import { useMutateRepair } from '@/hooks/repairs/useMutateRepair';
+import { RepaireStepper } from '@/components/reapirs/RepaireStepper';
+import { RepairFormContents } from '@/components/reapirs/new/RepairFormContents';
+import { RepairFormDetails } from '@/components/reapirs/new/RepairFormDetails';
+import { RepaireConfirm } from '@/components/reapirs/new/RepaireConfirm';
 
 const RepairNew = () => {
   const session = useStore((state) => state.session);
@@ -45,6 +45,7 @@ const RepairNew = () => {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors },
   } = useForm<RepairInputs>({
     defaultValues: {
@@ -144,17 +145,11 @@ const RepairNew = () => {
                 </Radio.Group>
               </Flex>
             </Stack>
-            <Divider
-              mt={50}
-              mb={10}
-              variant="dashed"
-              label="修理内容"
-              labelPosition="center"
-            />
             <RepairFormContents
               register={register}
               control={control}
               getValues={getValues}
+              watch={watch}
             />
             <Divider
               mt={50}

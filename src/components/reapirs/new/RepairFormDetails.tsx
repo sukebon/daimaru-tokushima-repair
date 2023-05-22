@@ -88,8 +88,8 @@ export const RepairFormDetails: FC<Props> = ({
     <>
       <Box sx={{ overflowX: 'auto' }}>
         <Table
-          sx={{ width: '800px' }}
-          w={{ lg: '100%' }}
+          sx={{ width: '1000px' }}
+          w={{ md: '100%' }}
           verticalSpacing="xs"
           fontSize="sm"
           onDragOver={(e) => e.preventDefault()}
@@ -97,6 +97,7 @@ export const RepairFormDetails: FC<Props> = ({
           <thead>
             <tr>
               <th></th>
+              <th>メーカー</th>
               <th>品名</th>
               <th>サイズ</th>
               <th>数量</th>
@@ -126,7 +127,13 @@ export const RepairFormDetails: FC<Props> = ({
                     size="25px"
                   />
                 </td>
-                <td width="50%">
+                <td width="200px">
+                  <TextInput
+                    required
+                    {...register(`repair_details.${index}.maker` as const)}
+                  />
+                </td>
+                <td width="300px">
                   <TextInput
                     required
                     {...register(

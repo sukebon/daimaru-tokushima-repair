@@ -82,7 +82,7 @@ export type RepairInputs = {
     id: string;
     title: string;
     price: any;
-    path: string;
+    image_url: string;
     is_new: boolean;
   }[];
 
@@ -106,10 +106,11 @@ export type Factory = {
   created_at: string;
 };
 
-export type EditedTask = {
-  id: number;
-  title: string;
-  description?: string | null | undefined;
+export type Category = {
+  id: string;
+  name: string;
+  updated_at: string | null;
+  created_at: string;
 };
 
 export type Task = {

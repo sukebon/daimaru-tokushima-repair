@@ -16,11 +16,12 @@ export const SidebarList: FC<Props> = ({ close }) => {
   const data = [
     { link: '/repairs', label: '修理伝票一覧', icon: '' },
     { link: '/repairs/new', label: '修理伝票作成', icon: '' },
-    // { link: '/templates', label: 'テンプレート一覧', icon: '' },
+    { link: '/templates', label: 'テンプレート一覧', icon: '' },
     { link: '/templates/new', label: 'テンプレート作成', icon: '' },
     // { link: '/profile', label: 'プロフィール', icon: '' },
     { link: '/settings/auth', label: '管理画面', icon: '' },
     { link: '/settings/factories', label: '工場登録', icon: '' },
+    { link: '/settings/categories', label: 'カテゴリー登録', icon: '' },
   ];
 
   return (
@@ -51,15 +52,17 @@ const useStyles = createStyles((theme) => ({
     color: theme.colorScheme === 'dark' ? 'white' : 'black',
     paddingBottom: theme.spacing.md,
     marginBottom: `calc(${theme.spacing.md} * 1.5)`,
-    borderBottom: `0.0625rem solid ${theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'
-      };`,
+    borderBottom: `0.0625rem solid ${
+      theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'
+    };`,
   },
 
   footer: {
     paddingTop: theme.spacing.md,
     marginTop: theme.spacing.md,
-    borderTop: `0.0625rem solid ${theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'
-      };`,
+    borderTop: `0.0625rem solid ${
+      theme.colorScheme === 'dark' ? '#2C2E33' : '#e9ecef'
+    };`,
   },
 
   link: {

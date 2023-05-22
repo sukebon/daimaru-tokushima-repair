@@ -36,12 +36,15 @@ export const useMutateFactory = () => {
 
   const deleteFactoryMutation = useMutation({
     mutationFn: async (factory: Omit<Factory, 'created_at' | 'updated_at'>) => {
-      const { data, error } = await supabase
+      const { data, error, status } = await supabase
         .from('factories')
         .delete()
         .eq('id', factory.id);
+      if (error) {
+        window.alert('削除できませんでした。');
+      }
     },
-    onSuccess: (data: any) => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries(['factories']);
     },
   });

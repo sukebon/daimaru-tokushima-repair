@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
-import Layout from '@/conponents/Layout';
+import Layout from '@/components/Layout';
 import {
   MantineProvider,
   ColorSchemeProvider,

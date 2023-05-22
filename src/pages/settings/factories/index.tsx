@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useMutateFactory } from '@/hooks/settings/useMutateFactory';
 import { useQueryFactories } from '@/hooks/settings/useQueryFactories';
 import { Factory } from '../../../../types';
-import { EditFactoryModal } from '@/conponents/settings/EditFactoryModal';
+import { EditFactoryModal } from '@/components/settings/EditFactoryModal';
 import { FaTrashAlt } from 'react-icons/fa';
 
 const Factory = () => {
