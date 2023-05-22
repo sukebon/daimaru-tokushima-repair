@@ -10,12 +10,12 @@ const Repairs: NextPage = () => {
   const { data, isLoading } = useQueryRepairs();
   const { classes } = useStyles();
 
-  const getTotalQuantity = (arr: { quantity: number | null; }[]) => {
+  const getTotalQuantity = (arr: { quantity: number | null }[]) => {
     let total = 0;
     arr.forEach((value) => (total += Number(value?.quantity) || 0));
     return total;
   };
-  const getTotalPrice = (arr: { price: number | null; }[]) => {
+  const getTotalPrice = (arr: { price: number | null }[]) => {
     let total = 0;
     arr.forEach((value) => (total += Number(value?.price) || 0));
     return total;
@@ -70,55 +70,61 @@ const Repairs: NextPage = () => {
         </thead>
 
         <tbody>
-          {data && data?.map((repair) => (
-            <tr key={repair?.id}>
-              <td>
-                <Link href={`/repairs/${repair.id}`}>
-                  <Button size="xs" color="teal">
-                    詳細
-                  </Button>
-                </Link>
-              </td>
-              {/* <td>{getBadgeColor(repair.status)}</td> */}
-              <td>{repair.id}</td>
-              <td>
-                {!Array.isArray(repair?.profiles) && repair?.profiles?.username}
-              </td>
-              <td>{repair.customer}</td>
-              <td>
-                {Array.isArray(repair?.repair_contents) &&
-                  repair?.repair_contents?.map((content) => (
-                    <React.Fragment key={content.id}>
-                      <Box>{content?.title}</Box>
-                    </React.Fragment>
-                  ))}
-              </td>
-              <td className={classes.td}>
-                {Array.isArray(repair?.repair_contents) &&
-                  repair?.repair_contents?.map((content) => (
-                    <React.Fragment key={content.id}>
-                      <Box>{content?.price}円</Box>
-                    </React.Fragment>
-                  ))}
-              </td>
-              <td className={classes.td}>
-                {Array.isArray(repair?.repair_details) &&
-                  getTotalQuantity(repair?.repair_details)}
-              </td>
-              <td className={classes.td}>
-                {Array.isArray(repair?.repair_contents) &&
-                  repair?.repair_contents?.map((content) => (
-                    <React.Fragment key={content.id}>
-                      {Array.isArray(repair?.repair_details) && (
-                        <Box>{(content?.price || 0) * getTotalQuantity(repair?.repair_details)}円</Box>
-                      )}
-                    </React.Fragment>
-                  ))}
-              </td>
-              <td>{repair.deliveryPlace}</td>
-              <td>{repair.deadline}</td>
-            </tr>
-          ))}
+          {data &&
+            data?.map((repair) => (
+              <tr key={repair?.id}>
+                <td>
+                  <Link href={`/repairs/${repair.id}`}>
+                    <Button size="xs" color="teal">
+                      詳細
+                    </Button>
+                  </Link>
+                </td>
+                <td>{getBadgeColor(repair.status)}</td>
+                <td>{repair.id}</td>
+                <td>
+                  {!Array.isArray(repair?.profiles) &&
+                    repair?.profiles?.username}
+                </td>
+                <td>{repair.customer}</td>
+                <td>
+                  {Array.isArray(repair?.repair_contents) &&
+                    repair?.repair_contents?.map((content) => (
+                      <React.Fragment key={content.id}>
+                        <Box>{content?.title}</Box>
+                      </React.Fragment>
+                    ))}
+                </td>
+                <td className={classes.td}>
+                  {Array.isArray(repair?.repair_contents) &&
+                    repair?.repair_contents?.map((content) => (
+                      <React.Fragment key={content.id}>
+                        <Box>{content?.price}円</Box>
+                      </React.Fragment>
+                    ))}
+                </td>
+                <td className={classes.td}>
+                  {Array.isArray(repair?.repair_details) &&
+                    getTotalQuantity(repair?.repair_details)}
+                </td>
+                <td className={classes.td}>
+                  {Array.isArray(repair?.repair_contents) &&
+                    repair?.repair_contents?.map((content) => (
+                      <React.Fragment key={content.id}>
+                        {Array.isArray(repair?.repair_details) && (
+                          <Box>
+                            {(content?.price || 0) *
+                              getTotalQuantity(repair?.repair_details)}
+                            円
+                          </Box>
+                        )}
+                      </React.Fragment>
+                    ))}
+                </td>
+                <td>{repair.deliveryPlace}</td>
+                <td>{repair.deadline}</td>
+              </tr>
+            ))}
         </tbody>
       </Table>
     </Paper>
@@ -131,8 +137,8 @@ const useStyles = createStyles((theme) => ({
     padding: 0,
   },
   td: {
-    textAlign: "right"
-  }
+    textAlign: 'right',
+  },
 }));
 
 export default Repairs;

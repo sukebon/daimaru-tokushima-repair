@@ -1,4 +1,5 @@
-import { RepairEdit } from '@/conponents/repairs/edit/RepairEdit';
+import { RepairPDF } from '@/components/reapirs/RepairPDF';
+import { RepairEdit } from '@/components/reapirs/edit/RepairEdit';
 import { useQueryRepair } from '@/hooks/repairs/useQueryRepair';
 import { useQueryRepairNext } from '@/hooks/repairs/useQueryRepairNext';
 import { useQueryRepairPrev } from '@/hooks/repairs/useQueryRepairPrev';
@@ -18,11 +19,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
-import { RepairPDF } from '../../../conponents/repairs/RepairPDF';
 
 const Repair: NextPage = () => {
   const router = useRouter();
-  const repairId = String(router.asPath.split('/').pop() || "");
+  const repairId = String(router.asPath.split('/').pop() || '');
   const { data: repair } = useQueryRepair(repairId);
   const { data: prev } = useQueryRepairPrev(repairId);
   const prevpage = prev?.find((_, i) => i === 0) || '';

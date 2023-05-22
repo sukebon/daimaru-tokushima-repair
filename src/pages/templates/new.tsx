@@ -1,25 +1,45 @@
 import { useQueryFactories } from '@/hooks/settings/useQueryFactories';
-import { Box, Button, FileInput, Image, Input, NumberInput, Paper, Select, Stack, TextInput } from '@mantine/core';
+import {
+  Box,
+  Button,
+  FileInput,
+  Image,
+  NumberInput,
+  Paper,
+  Select,
+  Stack,
+  TextInput,
+} from '@mantine/core';
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { supabase } from '../../../utils/supabase';
 import { v4 as uuidv4 } from 'uuid';
 import { useMutateTemplate } from '@/hooks/templates/useMutateTemplate';
+import { useQueryCategories } from '@/hooks/settings/useQueryCategories';
 
 const Templatesnew = () => {
+  const router = useRouter();
+  const { data: categories } = useQueryCategories();
   const { data: factories } = useQueryFactories();
-  const [factory, setFactory] = useState("");
+  const [factory, setFactory] = useState('');
+  const [category, setCategory] = useState('');
   const [uploadFile, setUploadFile] = useState<File | null>();
   const { createTemplateMutation } = useMutateTemplate();
-
   const { register, handleSubmit, getValues } = useForm();
   const onSubmit: SubmitHandler<any> = async (data) => {
     if (!factory) return;
-    if (!uploadFile || uploadFile.length == 0) return;
-    const imageUrl = await addImage(uploadFile);
-    createTemplateMutation.mutate({ ...data, factory_id: factory, path: uploadFile, image_url: imageUrl });
-    console.log({ ...data, factory_id: factory, path: uploadFile });
-    console.log("imageUrl", imageUrl);
+    let imageUrl = null;
+    if (uploadFile) {
+      imageUrl = await addImage(uploadFile);
+    }
+    createTemplateMutation.mutate({
+      ...data,
+      factory_id: factory,
+      category_id: category,
+      image_url: imageUrl,
+    });
+    router.push('/templates');
   };
 
   const handleImageChange = (e: File | null) => {
@@ -38,7 +58,7 @@ const Templatesnew = () => {
       .from('repairs')
       .upload(filePath, file, {
         cacheControl: '3600',
-        upsert: false
+        upsert: false,
       });
     if (error) {
       console.log(error);
@@ -47,22 +67,18 @@ const Templatesnew = () => {
     const { data } = supabase.storage.from('repairs').getPublicUrl(filePath);
     const imageUrl = data.publicUrl;
     return imageUrl;
-
-    // 画像のURLをDBに保存
-    const { error: databaseError } = await supabase
-      .from('repair_templates')
-      .insert({ imageUrl: imageUrl });
   };
 
-
   return (
-    <Paper w="100%"
-      maw="1050px"
+    <Paper
+      w="100%"
+      maw="850px"
       shadow="md"
       radius="md"
       p="lg"
       m="auto"
-      withBorder>
+      withBorder
+    >
       <Box>修理・マークのテンプレートを作成する</Box>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack>
@@ -70,17 +86,31 @@ const Templatesnew = () => {
             <Select
               required
               label="工場名"
-              placeholder='工場を選択してください'
+              placeholder="工場を選択してください"
               value={factory}
               onChange={(e: string) => setFactory(e)}
-              data={factories?.map((factory) => (
-                { value: factory.id, label: factory.name }
-              ))}
+              data={factories?.map((factory) => ({
+                value: factory.id,
+                label: factory.name,
+              }))}
+            />
+          )}
+          {categories && (
+            <Select
+              required
+              label="カテゴリー名"
+              placeholder="カテゴリーを選択してください"
+              value={category}
+              onChange={(e: string) => setCategory(e)}
+              data={categories?.map((category) => ({
+                value: category.id,
+                label: category.name,
+              }))}
             />
           )}
           <NumberInput
             w="100%"
-            label='価格'
+            label="価格"
             required
             {...register(`price`, {
               required: true,
@@ -97,16 +127,21 @@ const Templatesnew = () => {
             value={uploadFile}
             onChange={handleImageChange}
           />
-          <Button type="submit" color="teal">登録</Button>
+          <Button type="submit" color="teal">
+            登録
+          </Button>
           {uploadFile && (
             <>
               <Button onClick={() => setUploadFile(null)}>キャンセル</Button>
-              <Image src={URL.createObjectURL(uploadFile)} alt={uploadFile.name} />
+              <Image
+                src={URL.createObjectURL(uploadFile)}
+                alt={uploadFile.name}
+              />
             </>
           )}
         </Stack>
       </form>
-    </Paper >
+    </Paper>
   );
 };
 

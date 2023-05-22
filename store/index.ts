@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { EditedProfile, EditedTask } from '../types';
+import { EditedProfile } from '../types';
 import { Session } from '@supabase/supabase-js';
 
 type State = {
