@@ -1,4 +1,3 @@
-import React from 'react';
 import { supabase } from '../../../utils/supabase';
 import { useQuery } from '@tanstack/react-query';
 
@@ -9,7 +8,6 @@ export const useQueryRepairs = () => {
       .select(
         `
       id,user_id,
-      category,
       customer,
       deadline,
       deliveryPlace,

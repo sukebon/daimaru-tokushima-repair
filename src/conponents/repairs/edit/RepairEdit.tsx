@@ -5,19 +5,24 @@ import {
   Group,
   Input,
   Modal,
+  Select,
   Stack,
   Table,
   Textarea,
   createStyles,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { RepairEditContents } from './RepairEditContents';
 import { RepairEditDetails } from './RepairEditDetails';
 import { useMutateRepair } from '@/hooks/repairs/useMutateRepair';
 import { useQueryRepair } from '@/hooks/repairs/useQueryRepair';
+<<<<<<< HEAD
 import { Repair, RepairInputs } from '../../../../types';
+=======
+import { RepairInputs } from '../../../../types';
+>>>>>>> 87316b22920c0f7309c52d32519589717e886473
 
 type Props = {
   repairId: number | undefined;
@@ -25,16 +30,35 @@ type Props = {
 
 export const RepairEdit: FC<Props> = ({ repairId }) => {
   const [opened, { open, close }] = useDisclosure(false);
+<<<<<<< HEAD
   const { data: repair } = useQueryRepair(Number(repairId));
+=======
+  const { data: repair } = useQueryRepair(String(repairId));
+  const [factory, setFactory] = useState(!Array.isArray(repair?.factories) && repair?.factories || "");
+>>>>>>> 87316b22920c0f7309c52d32519589717e886473
   const {
     updateRepairMutation,
     updateRepairContentsMutation,
     updateRepairDetailsMutation,
   } = useMutateRepair();
   const { classes } = useStyles();
+<<<<<<< HEAD
   const { register, handleSubmit, reset, control, getValues } = useForm<any>({
+=======
+
+  const defaultValuesObj = {
+    id: repair?.id,
+    deadline: repair?.deadline || "",
+    deliveryPlace: repair?.deliveryPlace || "",
+    customer: repair?.customer || "",
+    comment: repair?.comment || "",
+    repair_contents: repair?.repair_contents || "",
+    repair_details: repair?.repair_details || ""
+  };
+  const { register, handleSubmit, reset, control, getValues } = useForm({
+>>>>>>> 87316b22920c0f7309c52d32519589717e886473
     defaultValues: {
-      ...repair,
+      ...defaultValuesObj
     },
   });
   console.log(repair);
@@ -79,7 +103,8 @@ export const RepairEdit: FC<Props> = ({ repairId }) => {
             <Flex gap={24} direction={{ base: 'column', md: 'row' }}>
               <Box>
                 <Box fz="xs">工場名</Box>
-                <Input {...register('factories.name')} />
+                <Box mt={6}>{!Array.isArray(repair?.factories) && repair?.factories?.name || ""}</Box>
+
               </Box>
               <Box>
                 <Box fz="xs">希望納期</Box>

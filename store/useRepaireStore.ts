@@ -7,10 +7,8 @@ type State = {
 };
 const useRepaireStore = create<State>((set) => ({
   repair: {
-    factory: {
-      id: '',
-      name: '',
-    },
+    factories: { id: '', name: '' },
+    factory_name: '',
     deadline: '',
     deliveryPlace: '',
     customer: '',
@@ -19,6 +17,7 @@ const useRepaireStore = create<State>((set) => ({
     status: 'PICKING',
     repair_contents: [
       {
+        id: '',
         title: '',
         price: '',
         path: '',
@@ -27,6 +26,7 @@ const useRepaireStore = create<State>((set) => ({
     ],
     repair_details: [
       {
+        id: '',
         maker: '',
         product_name: '',
         size: '',
@@ -42,10 +42,7 @@ const useRepaireStore = create<State>((set) => ({
   resetRepair: () =>
     set({
       repair: {
-        factory: {
-          id: '',
-          name: '',
-        },
+        factories: { id: '', name: '' },
         deadline: '',
         deliveryPlace: '',
         customer: '',
@@ -54,14 +51,16 @@ const useRepaireStore = create<State>((set) => ({
         status: 'PICKING',
         repair_contents: [
           {
+            id: '',
             title: '',
-            price: 0,
+            price: '',
             path: '',
             is_new: false,
           },
         ],
         repair_details: [
           {
+            id: '',
             maker: '',
             product_name: '',
             size: '',

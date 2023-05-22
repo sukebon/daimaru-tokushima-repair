@@ -70,7 +70,7 @@ const Repairs: NextPage = () => {
         </thead>
 
         <tbody>
-          {data?.map((repair) => (
+          {data && data?.map((repair) => (
             <tr key={repair?.id}>
               <td>
                 <Link href={`/repairs/${repair.id}`}>
@@ -79,7 +79,7 @@ const Repairs: NextPage = () => {
                   </Button>
                 </Link>
               </td>
-              <td>{getBadgeColor(repair.status)}</td>
+              {/* <td>{getBadgeColor(repair.status)}</td> */}
               <td>{repair.id}</td>
               <td>
                 {!Array.isArray(repair?.profiles) && repair?.profiles?.username}
