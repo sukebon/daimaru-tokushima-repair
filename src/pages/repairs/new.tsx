@@ -22,6 +22,7 @@ import { RepaireStepper } from '@/components/reapirs/RepaireStepper';
 import { RepairFormContents } from '@/components/reapirs/new/RepairFormContents';
 import { RepairFormDetails } from '@/components/reapirs/new/RepairFormDetails';
 import { RepaireConfirm } from '@/components/reapirs/new/RepaireConfirm';
+import { RepaireNotePaste } from '@/components/reapirs/new/RepaireNotePaste';
 
 const RepairNew = () => {
   const session = useStore((state) => state.session);
@@ -74,13 +75,6 @@ const RepairNew = () => {
       </Flex>
       {active === 1 && (
         <>
-          <Group position="center" mt="xl">
-            <Button.Group buttonBorderWidth={1}>
-              <Button variant="outline" size="xs" color="teal">
-                ノート貼付
-              </Button>
-            </Button.Group>
-          </Group>
           <form onSubmit={handleSubmit(onSubmit)} style={{ marginTop: '30px' }}>
             <Stack w="100%">
               <Flex
@@ -159,6 +153,7 @@ const RepairNew = () => {
             />
             <RepairFormDetails
               register={register}
+              watch={watch}
               control={control}
               getValues={getValues}
               errors={errors}

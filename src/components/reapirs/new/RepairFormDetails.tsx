@@ -2,7 +2,7 @@ import {
   Box,
   Button,
   Flex,
-  NumberInput,
+  Group,
   Table,
   TextInput,
   createStyles,
@@ -10,20 +10,22 @@ import {
 import React, { FC, useState } from 'react';
 import {
   Control,
-  FieldErrors,
   UseFormGetValues,
   UseFormRegister,
+  UseFormWatch,
   useFieldArray,
 } from 'react-hook-form';
 import { RepairInputs } from '../../../../types';
 import { MdDragIndicator } from 'react-icons/md';
 import { MdOutlineCancel } from 'react-icons/md';
 import { MdAddCircle } from 'react-icons/md';
-import useRepaireStore from '../../../../store/useRepaireStore';
+// import useRepaireStore from '../../../../store/useRepaireStore';
 import { FaPlusCircle, FaMinusCircle } from 'react-icons/fa';
+import { RepaireNotePaste } from './RepaireNotePaste';
 
 type Props = {
   register: UseFormRegister<RepairInputs>;
+  watch: UseFormWatch<RepairInputs>;
   control: Control<RepairInputs>;
   getValues: UseFormGetValues<RepairInputs>;
   errors: any;
@@ -31,19 +33,19 @@ type Props = {
 
 export const RepairFormDetails: FC<Props> = ({
   register,
+  watch,
   control,
   getValues,
-  errors,
 }) => {
   const [dragIndex, setDragIndex] = useState<any>(null);
   const { classes } = useStyles();
-  const repair = useRepaireStore((state) => state.repair);
-  const setRepair = useRepaireStore((state) => state.setRepair);
+  // const repair = useRepaireStore((state) => state.repair);
+  // const setRepair = useRepaireStore((state) => state.setRepair);
   const { fields, append, remove, update } = useFieldArray({
     control,
     name: 'repair_details',
   });
-  const addProduct = () => {
+  const addDetail = () => {
     append({
       id: '',
       maker: '',
@@ -54,16 +56,27 @@ export const RepairFormDetails: FC<Props> = ({
     });
   };
 
+  const updateDetail = (data: string[], index: number) => {
+    update(index, {
+      id: '',
+      maker: data[0] || '',
+      product_name: data[1] || '',
+      size: data[2] || '',
+      quantity: Number(data[3]) || 0,
+      comment: data[4] || '',
+    });
+  };
+
   const removeProduct = (index: number) => {
     remove(index);
   };
 
   // ドラッグ&ドロップ
-  const dragStart = (index: any) => {
+  const dragStart = (index: number) => {
     setDragIndex(index);
   };
 
-  const dragEnter = (index: any) => {
+  const dragEnter = (index: number) => {
     if (index === dragIndex) return;
     const startElement = { ...getValues().repair_details[dragIndex] };
     const enterElment = { ...getValues().repair_details[index] };
@@ -229,15 +242,23 @@ export const RepairFormDetails: FC<Props> = ({
       </Box>
 
       <Flex justify="center">
-        <Button
-          color="teal"
-          leftIcon={<MdAddCircle />}
-          variant="outline"
-          size="md"
-          onClick={addProduct}
-        >
-          行を追加
-        </Button>
+        <Group mt="xl" position="right">
+          <Button
+            color="teal"
+            leftIcon={<MdAddCircle />}
+            variant="outline"
+            size="md"
+            onClick={addDetail}
+          >
+            行を追加
+          </Button>
+          <RepaireNotePaste
+            watch={watch}
+            control={control}
+            addDetail={addDetail}
+            updateDetail={updateDetail}
+          />
+        </Group>
       </Flex>
     </>
   );
