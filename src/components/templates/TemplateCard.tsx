@@ -66,10 +66,10 @@ export const TemplateCard: FC<Props> = ({
             template?.repair_categories?.name}
         </Badge>
       </Group>
-      <Box>{template.price}</Box>
-      <Text size="xs" color="dimmed">
+      <Box>{template.price}円</Box>
+      {/* <Text size="xs" color="dimmed">
         コメント
-      </Text>
+      </Text> */}
       {pageType === 'drawer' ? (
         <Button
           color="teal"

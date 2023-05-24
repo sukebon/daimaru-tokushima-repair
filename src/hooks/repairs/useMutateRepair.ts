@@ -20,7 +20,6 @@ export const useMutateRepair = () => {
         })
         .select();
       if (error) throw new Error(error.message);
-
       const details = repair.repair_details.map((detail) => ({
         maker: detail.maker,
         product_name: detail.product_name,
@@ -38,7 +37,7 @@ export const useMutateRepair = () => {
       const contents = repair.repair_contents.map((content) => ({
         title: content.title,
         price: Number(content.price),
-        path: content.path,
+        image_url: content.image_url,
         is_new: content.is_new,
         repair_id: data[0].id,
       }));
@@ -92,7 +91,7 @@ export const useMutateRepair = () => {
           .update({
             title: content.title,
             price: Number(content.price) || 0,
-            path: content.path || '',
+            image_url: content.image_url || '',
             is_new: content.is_new,
           })
           .eq('id', content.id)

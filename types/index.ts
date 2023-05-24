@@ -99,6 +99,16 @@ export type RepairInputs = {
   status: 'PICKING' | 'DIRECT';
 };
 
+export type TemplateInputs = {
+  factory_id: string;
+  category_id: string;
+  tag: string;
+  price: number;
+  title: string;
+  comment: string;
+  image_url: string | null | undefined;
+};
+
 export type Factory = {
   id: string;
   name: string;

@@ -1,14 +1,11 @@
 import {
   Box,
   Button,
-  Checkbox,
   Divider,
   Flex,
   Image,
-  Input,
   NumberInput,
-  Paper,
-  Text,
+  Switch,
   TextInput,
 } from '@mantine/core';
 import React, { FC } from 'react';
@@ -84,11 +81,11 @@ export const RepairFormContents: FC<Props> = ({
               labelPosition="left"
             />
             <Box mt={12} sx={{ width: '800px' }} w={{ md: '100%' }}>
-              <Flex gap={16}>
+              <Flex justify="center" gap={16}>
                 {watch(`repair_contents.${index}.title`) && (
                   <>
                     <TextInput
-                      w="100%"
+                      w="550px"
                       label={index === 0 ? '修理名' : ''}
                       required
                       {...register(`repair_contents.${index}.title`, {
@@ -111,6 +108,18 @@ export const RepairFormContents: FC<Props> = ({
                       display="none"
                       {...register(`repair_contents.${index}.image_url`)}
                     />
+                    <Flex w="100px" pb={3} align="flex-end">
+                      <Switch
+                        defaultChecked={getValues(
+                          `repair_contents.${index}.is_new`
+                        )}
+                        size="lg"
+                        onLabel="新規案件"
+                        offLabel="前回通り"
+                        color="teal"
+                        {...register(`repair_contents.${index}.is_new`)}
+                      />
+                    </Flex>
                   </>
                 )}
 
@@ -135,14 +144,6 @@ export const RepairFormContents: FC<Props> = ({
               </Flex>
 
               <>
-                <Checkbox
-                  mt="sm"
-                  label="新規の場合はチェック"
-                  color="teal"
-                  defaultChecked={false}
-                  {...register(`repair_contents.${index}.is_new`)}
-                />
-
                 <Image
                   mt={24}
                   src={watch(`repair_contents.${index}.image_url`)}

@@ -1,15 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { supabase } from '../../../utils/supabase';
 import useStore from '../../../store';
-
-type TemplateInputs = {
-  title: string;
-  category_id: string;
-  price: number;
-  factory_id: string;
-  image_url: string;
-  user_id: string;
-};
+import { TemplateInputs } from '../../../types';
 
 export const useMutateTemplate = () => {
   const session = useStore((state) => state.session);
@@ -24,6 +16,7 @@ export const useMutateTemplate = () => {
           factory_id: data.factory_id || null,
           category_id: data.category_id || null,
           price: data.price,
+          comment: data.comment,
           image_url: data.image_url || null,
           user_id: session?.user.id,
         })
