@@ -39,6 +39,8 @@ export const RepaireNotePaste: FC<Props> = ({
     newArray.forEach((row, index) => {
       updateDetail(row, index);
     });
+    close();
+    setContent('');
   };
 
   return (
@@ -59,7 +61,13 @@ export const RepaireNotePaste: FC<Props> = ({
           }
         ></Textarea>
         <Group mt="xl" position="right">
-          <Button color="teal" variant="outline" onClick={() => close()}>
+          <Button
+            color="teal"
+            variant="outline"
+            onClick={() => {
+              setContent(''), close();
+            }}
+          >
             閉じる
           </Button>
           <Button color="teal" onClick={notePaste}>

@@ -81,7 +81,7 @@ export const RepairFormContents: FC<Props> = ({
               labelPosition="left"
             />
             <Box mt={12} sx={{ width: '800px' }} w={{ md: '100%' }}>
-              <Flex gap={16}>
+              <Flex justify="center" gap={16}>
                 {watch(`repair_contents.${index}.title`) && (
                   <>
                     <TextInput
@@ -144,14 +144,6 @@ export const RepairFormContents: FC<Props> = ({
               </Flex>
 
               <>
-                {/* <Checkbox
-                  mt="sm"
-                  label="新規の場合はチェック"
-                  color="teal"
-                  defaultChecked={false}
-                  {...register(`repair_contents.${index}.is_new`)}
-                /> */}
-
                 <Image
                   mt={24}
                   src={watch(`repair_contents.${index}.image_url`)}

@@ -3,12 +3,14 @@ import {
   Box,
   Button,
   FileInput,
+  Flex,
   Image,
   NumberInput,
   Paper,
   Select,
   Stack,
   TextInput,
+  Textarea,
 } from '@mantine/core';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -17,6 +19,7 @@ import { supabase } from '../../../utils/supabase';
 import { v4 as uuidv4 } from 'uuid';
 import { useMutateTemplate } from '@/hooks/templates/useMutateTemplate';
 import { useQueryCategories } from '@/hooks/settings/useQueryCategories';
+import { TemplateInputs } from '../../../types';
 
 const Templatesnew = () => {
   const router = useRouter();
@@ -26,8 +29,8 @@ const Templatesnew = () => {
   const [category, setCategory] = useState('');
   const [uploadFile, setUploadFile] = useState<File | null>();
   const { createTemplateMutation } = useMutateTemplate();
-  const { register, handleSubmit, getValues } = useForm();
-  const onSubmit: SubmitHandler<any> = async (data) => {
+  const { register, handleSubmit, getValues } = useForm<TemplateInputs>();
+  const onSubmit: SubmitHandler<TemplateInputs> = async (data) => {
     if (!factory) return;
     let imageUrl = null;
     if (uploadFile) {
@@ -95,31 +98,42 @@ const Templatesnew = () => {
               }))}
             />
           )}
-          {categories && (
-            <Select
+          <Flex gap="md">
+            {categories && (
+              <Select
+                w="100%"
+                required
+                label="カテゴリー名"
+                placeholder="カテゴリーを選択してください"
+                value={category}
+                onChange={(e: string) => setCategory(e)}
+                data={categories?.map((category) => ({
+                  value: category.id,
+                  label: category.name,
+                }))}
+              />
+            )}
+            <TextInput w="100%" label="タグ名" {...register('tag')} />
+          </Flex>
+          <Flex gap="md">
+            <TextInput
+              w="100%"
               required
-              label="カテゴリー名"
-              placeholder="カテゴリーを選択してください"
-              value={category}
-              onChange={(e: string) => setCategory(e)}
-              data={categories?.map((category) => ({
-                value: category.id,
-                label: category.name,
-              }))}
+              label="修理名"
+              {...register('title')}
             />
-          )}
-          <NumberInput
-            w="100%"
-            label="価格"
-            required
-            {...register(`price`, {
-              required: true,
-            })}
-            onChange={() => getValues()}
-            max={1000000}
-            min={0}
-          />
-          <TextInput label="修理名" {...register('title')} />
+            <NumberInput
+              label="価格"
+              required
+              {...register(`price`, {
+                required: true,
+              })}
+              onChange={() => getValues()}
+              max={1000000}
+              min={0}
+            />
+          </Flex>
+          <Textarea label="コメント" {...register('comment')} />
           <FileInput
             placeholder="修理・マーク伝票ファイル"
             label="ファイルをアップロード"
@@ -127,18 +141,24 @@ const Templatesnew = () => {
             value={uploadFile}
             onChange={handleImageChange}
           />
-          <Button type="submit" color="teal">
-            登録
-          </Button>
           {uploadFile && (
             <>
-              <Button onClick={() => setUploadFile(null)}>キャンセル</Button>
+              <Button
+                variant="outline"
+                color="teal"
+                onClick={() => setUploadFile(null)}
+              >
+                画像を取り消す
+              </Button>
               <Image
                 src={URL.createObjectURL(uploadFile)}
                 alt={uploadFile.name}
               />
             </>
           )}
+          <Button type="submit" color="teal">
+            登録
+          </Button>
         </Stack>
       </form>
     </Paper>
