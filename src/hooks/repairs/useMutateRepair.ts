@@ -131,7 +131,7 @@ export const useMutateRepair = () => {
       }
     },
     onSuccess: (data: any) => {
-      queryClient.invalidateQueries(['repairs'], data);
+      queryClient.invalidateQueries(['repairs']);
     },
     onError: (err: any) => {
       alert(err.message);

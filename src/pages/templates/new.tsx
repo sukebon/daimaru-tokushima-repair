@@ -134,15 +134,19 @@ const Templatesnew = () => {
             />
           </Flex>
           <Textarea label="コメント" {...register('comment')} />
-          <FileInput
-            placeholder="修理・マーク伝票ファイル"
-            label="ファイルをアップロード"
-            withAsterisk
-            value={uploadFile}
-            onChange={handleImageChange}
-          />
-          {uploadFile && (
-            <>
+          <Flex
+            gap="md"
+            align={{ base: 'flex-start', sm: 'flex-end' }}
+            direction={{ base: 'column', sm: 'row' }}
+          >
+            <FileInput
+              placeholder="修理・マーク伝票ファイル"
+              label="ファイルをアップロード"
+              withAsterisk
+              value={uploadFile}
+              onChange={handleImageChange}
+            />
+            {uploadFile && (
               <Button
                 variant="outline"
                 color="teal"
@@ -150,6 +154,10 @@ const Templatesnew = () => {
               >
                 画像を取り消す
               </Button>
+            )}
+          </Flex>
+          {uploadFile && (
+            <>
               <Image
                 src={URL.createObjectURL(uploadFile)}
                 alt={uploadFile.name}

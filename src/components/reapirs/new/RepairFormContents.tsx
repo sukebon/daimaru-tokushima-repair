@@ -86,7 +86,7 @@ export const RepairFormContents: FC<Props> = ({
                   <>
                     <TextInput
                       w="550px"
-                      label={index === 0 ? '修理名' : ''}
+                      label="修理名"
                       required
                       {...register(`repair_contents.${index}.title`, {
                         required: true,
@@ -94,7 +94,7 @@ export const RepairFormContents: FC<Props> = ({
                     />
                     <NumberInput
                       w="150px"
-                      label={index === 0 ? '価格' : ''}
+                      label="価格"
                       required
                       defaultValue={getValues(`repair_contents.${index}.price`)}
                       {...register(`repair_contents.${index}.price`, {
@@ -122,9 +122,10 @@ export const RepairFormContents: FC<Props> = ({
                     </Flex>
                   </>
                 )}
-
-                <Box>
-                  {index === 0 ? <Box>　</Box> : ''}
+                <Box
+                  w={watch(`repair_contents.${index}.title`) ? 'auto' : '100%'}
+                >
+                  {<Box>　</Box>}
                   <Flex align="center" gap={12}>
                     <TemplateDrawer
                       selectContent={selectContent}
@@ -142,13 +143,13 @@ export const RepairFormContents: FC<Props> = ({
                   </Flex>
                 </Box>
               </Flex>
-
               <>
                 <Image
                   mt={24}
                   src={watch(`repair_contents.${index}.image_url`)}
                   alt=""
                   width="100%"
+                  maw="600px"
                 />
               </>
             </Box>

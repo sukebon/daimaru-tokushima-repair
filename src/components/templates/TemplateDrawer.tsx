@@ -37,8 +37,8 @@ export const TemplateDrawer: FC<Props> = ({ selectContent, rowIndex }) => {
         </Grid>
       </Drawer>
 
-      <Group position="center">
-        <Button color="teal" onClick={open}>
+      <Group w="100%" position="center">
+        <Button w="100%" color="teal" onClick={open}>
           テンプレート
         </Button>
       </Group>
