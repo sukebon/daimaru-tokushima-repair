@@ -71,60 +71,58 @@ export const RepairFormContents: FC<Props> = ({
 
   return (
     <>
-      <Box sx={{ overflowX: 'auto' }}>
+      <Box mt={36} sx={{ overflowX: 'auto' }}>
         {fields.map((field, index) => (
           <React.Fragment key={field.id}>
-            <Divider
-              mt={24}
-              variant="dashed"
-              label={`■修理 ${index + 1}`}
-              labelPosition="left"
-            />
-            <Box mt={12} sx={{ width: '800px' }} w={{ md: '100%' }}>
+            <Box mt={12}>{`■修理 ${index + 1}`}</Box>
+            <Box mt={12} sx={{ width: '800px' }} w={{ lg: '100%' }}>
               <Flex justify="center" gap={16}>
-                {watch(`repair_contents.${index}.title`) && (
-                  <>
-                    <TextInput
-                      w="550px"
-                      label="修理名"
-                      required
-                      {...register(`repair_contents.${index}.title`, {
-                        required: true,
-                      })}
+                <>
+                  <TextInput
+                    disabled={
+                      watch(`repair_contents.${index}.title`) ? false : true
+                    }
+                    w="550px"
+                    label="修理名"
+                    required
+                    {...register(`repair_contents.${index}.title`, {
+                      required: true,
+                    })}
+                  />
+                  <NumberInput
+                    disabled={
+                      Number(watch(`repair_contents.${index}.title`)) ===  0 ? true : false
+                    }
+                    w="150px"
+                    label="価格"
+                    required
+                    defaultValue={getValues(`repair_contents.${index}.price`)}
+                    {...register(`repair_contents.${index}.price`, {
+                      required: true,
+                    })}
+                    onChange={() => getValues()}
+                    max={1000000}
+                    min={0}
+                  />
+                  <TextInput
+                    display="none"
+                    {...register(`repair_contents.${index}.image_url`)}
+                  />
+                  <Flex w="100px" pb={3} align="flex-end">
+                    <Switch
+                      defaultChecked={getValues(
+                        `repair_contents.${index}.is_new`
+                      )}
+                      size="lg"
+                      onLabel="新規案件"
+                      offLabel="前回通り"
+                      color="teal"
+                      {...register(`repair_contents.${index}.is_new`)}
                     />
-                    <NumberInput
-                      w="150px"
-                      label="価格"
-                      required
-                      defaultValue={getValues(`repair_contents.${index}.price`)}
-                      {...register(`repair_contents.${index}.price`, {
-                        required: true,
-                      })}
-                      onChange={() => getValues()}
-                      max={1000000}
-                      min={0}
-                    />
-                    <TextInput
-                      display="none"
-                      {...register(`repair_contents.${index}.image_url`)}
-                    />
-                    <Flex w="100px" pb={3} align="flex-end">
-                      <Switch
-                        defaultChecked={getValues(
-                          `repair_contents.${index}.is_new`
-                        )}
-                        size="lg"
-                        onLabel="新規案件"
-                        offLabel="前回通り"
-                        color="teal"
-                        {...register(`repair_contents.${index}.is_new`)}
-                      />
-                    </Flex>
-                  </>
-                )}
-                <Box
-                  w={watch(`repair_contents.${index}.title`) ? 'auto' : '100%'}
-                >
+                  </Flex>
+                </>
+
+                <Box>
                   {<Box>　</Box>}
                   <Flex align="center" gap={12}>
                     <TemplateDrawer
@@ -149,7 +147,7 @@ export const RepairFormContents: FC<Props> = ({
                   src={watch(`repair_contents.${index}.image_url`)}
                   alt=""
                   width="100%"
-                  maw="600px"
+                  maw="300px"
                 />
               </>
             </Box>
@@ -158,7 +156,7 @@ export const RepairFormContents: FC<Props> = ({
       </Box>
       <Flex justify="center">
         <Button
-          mt={24}
+          mt={12}
           color="teal"
           leftIcon={<MdAddCircle />}
           variant="outline"

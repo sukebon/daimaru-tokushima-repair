@@ -50,7 +50,7 @@ export const RepaireNotePaste: FC<Props> = ({
         onClose={close}
         title="ノート貼付"
         size="lg"
-        yOffset={150}
+        yOffset={100}
         zIndex={10000}
       >
         <Textarea

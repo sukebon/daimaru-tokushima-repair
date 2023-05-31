@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { Text, Flex, Box, Stack, Table } from '@mantine/core';
 import useRepaireStore from '../../../../store/useRepaireStore';
 

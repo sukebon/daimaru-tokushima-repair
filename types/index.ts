@@ -116,6 +116,14 @@ export type Factory = {
   created_at: string;
 };
 
+export type Customer = {
+  id: string;
+  name: string;
+  code: number;
+  updated_at: string | null;
+  created_at: string;
+};
+
 export type Category = {
   id: string;
   name: string;

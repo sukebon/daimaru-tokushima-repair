@@ -23,6 +23,8 @@ import { RepairFormContents } from '@/components/reapirs/new/RepairFormContents'
 import { RepairFormDetails } from '@/components/reapirs/new/RepairFormDetails';
 import { RepaireConfirm } from '@/components/reapirs/new/RepaireConfirm';
 import { RepaireNotePaste } from '@/components/reapirs/new/RepaireNotePaste';
+import {LayoutOneCol} from '@/components/LayoutOneCol';
+import Layout from '@/components/Layout';
 
 const RepairNew = () => {
   const session = useStore((state) => state.session);
@@ -61,9 +63,10 @@ const RepairNew = () => {
   };
 
   return (
+    <Layout>
     <Paper
       w="100%"
-      maw="1050px"
+      maw="1000px"
       shadow="md"
       radius="md"
       p="lg"
@@ -204,6 +207,7 @@ const RepairNew = () => {
       )}
       {active === 3 && <RepaireComplete />}
     </Paper>
+    </Layout>
   );
 };
 
