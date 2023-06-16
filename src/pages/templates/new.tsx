@@ -20,6 +20,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useMutateTemplate } from '@/hooks/templates/useMutateTemplate';
 import { useQueryCategories } from '@/hooks/settings/useQueryCategories';
 import { TemplateInputs } from '../../../types';
+import Layout from '@/components/Layout';
 
 const Templatesnew = () => {
   const router = useRouter();
@@ -73,95 +74,113 @@ const Templatesnew = () => {
   };
 
   return (
-    <Paper
-      w="100%"
-      maw="850px"
-      shadow="md"
-      radius="md"
-      p="lg"
-      m="auto"
-      withBorder
-    >
-      <Box>修理・マークのテンプレートを作成する</Box>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Stack>
-          {factories && (
-            <Select
-              required
-              label="工場名"
-              placeholder="工場を選択してください"
-              value={factory}
-              onChange={(e: string) => setFactory(e)}
-              data={factories?.map((factory) => ({
-                value: factory.id,
-                label: factory.name,
-              }))}
-            />
-          )}
-          <Flex gap="md">
-            {categories && (
+    <Layout>
+      <Paper
+        w="100%"
+        maw="850px"
+        shadow="md"
+        radius="md"
+        p="lg"
+        m="auto"
+        withBorder
+      >
+        <Box>修理・マークのテンプレートを作成する</Box>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Stack mt={36}>
+            {factories && (
               <Select
-                w="100%"
                 required
-                label="カテゴリー名"
-                placeholder="カテゴリーを選択してください"
-                value={category}
-                onChange={(e: string) => setCategory(e)}
-                data={categories?.map((category) => ({
-                  value: category.id,
-                  label: category.name,
+                label="工場名"
+                placeholder="工場を選択してください"
+                value={factory}
+                onChange={(e: string) => setFactory(e)}
+                data={factories?.map((factory) => ({
+                  value: factory.id,
+                  label: factory.name,
                 }))}
               />
             )}
-            <TextInput w="100%" label="タグ名" {...register('tag')} />
-          </Flex>
-          <Flex gap="md">
-            <TextInput
-              w="100%"
-              required
-              label="修理名"
-              {...register('title')}
-            />
-            <NumberInput
-              label="価格"
-              required
-              {...register(`price`, {
-                required: true,
-              })}
-              onChange={() => getValues()}
-              max={1000000}
-              min={0}
-            />
-          </Flex>
-          <Textarea label="コメント" {...register('comment')} />
-          <FileInput
-            placeholder="修理・マーク伝票ファイル"
-            label="ファイルをアップロード"
-            withAsterisk
-            value={uploadFile}
-            onChange={handleImageChange}
-          />
-          {uploadFile && (
-            <>
-              <Button
-                variant="outline"
-                color="teal"
-                onClick={() => setUploadFile(null)}
-              >
-                画像を取り消す
-              </Button>
-              <Image
-                src={URL.createObjectURL(uploadFile)}
-                alt={uploadFile.name}
+            <Flex gap="md">
+              {categories && (
+                <Select
+                  w="100%"
+                  required
+                  label="カテゴリー名"
+                  placeholder="カテゴリーを選択してください"
+                  value={category}
+                  onChange={(e: string) => setCategory(e)}
+                  data={categories?.map((category) => ({
+                    value: category.id,
+                    label: category.name,
+                  }))}
+                />
+              )}
+              <TextInput w="100%" label="タグ名" {...register('tag')} />
+            </Flex>
+            <Flex>
+              <TextInput
+                w="100%"
+                required
+                label="お客様名"
+                {...register('title')}
               />
-            </>
-          )}
-          <Button type="submit" color="teal">
-            登録
-          </Button>
-        </Stack>
-      </form>
-    </Paper>
+            </Flex>
+            <Flex gap="md">
+              <TextInput
+                w="100%"
+                required
+                label="修理名"
+                {...register('title')}
+              />
+              <NumberInput
+                label="価格"
+                required
+                {...register(`price`, {
+                  required: true,
+                })}
+                onChange={() => getValues()}
+                max={1000000}
+                min={0}
+              />
+            </Flex>
+            <Textarea label="コメント" {...register('comment')} />
+            <Flex
+              gap="md"
+              align={{ base: 'flex-start', sm: 'flex-end' }}
+              direction={{ base: 'column', sm: 'row' }}
+            >
+              <FileInput
+                placeholder="修理・マーク伝票ファイル"
+                label="ファイルをアップロード"
+                withAsterisk
+                value={uploadFile}
+                onChange={handleImageChange}
+              />
+              {uploadFile && (
+                <Button
+                  variant="outline"
+                  color="teal"
+                  onClick={() => setUploadFile(null)}
+                >
+                  画像を取り消す
+                </Button>
+              )}
+            </Flex>
+            {uploadFile && (
+              <>
+                <Image
+                  src={URL.createObjectURL(uploadFile)}
+                  alt={uploadFile.name}
+                />
+              </>
+            )}
+            <Button type="submit" color="teal">
+              登録
+            </Button>
+          </Stack>
+        </form>
+      </Paper>
+    </Layout>
   );
 };
 

@@ -80,9 +80,7 @@ export default function App({ Component, pageProps }: AppProps) {
               fontFamily: 'Verdana, sans-serif',
             }}
           >
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <Component {...pageProps} />
           </MantineProvider>
         </ColorSchemeProvider>
         <ReactQueryDevtools />

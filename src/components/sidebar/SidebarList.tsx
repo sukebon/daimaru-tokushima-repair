@@ -21,6 +21,7 @@ export const SidebarList: FC<Props> = ({ close }) => {
     // { link: '/profile', label: 'プロフィール', icon: '' },
     { link: '/settings/auth', label: '管理画面', icon: '' },
     { link: '/settings/factories', label: '工場登録', icon: '' },
+    { link: '/settings/customers', label: '顧客登録', icon: '' },
     { link: '/settings/categories', label: 'カテゴリー登録', icon: '' },
   ];
 
